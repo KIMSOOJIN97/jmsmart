@@ -1,0 +1,25 @@
+
+{% block contents %}
+<div clsas="container">
+    <h1>sign up!</h1>
+
+    <form action="POST" action="%url 'signup'%}">
+        {% csrf_token %}
+        Username:
+        <br>
+        <input name ="username"type="text">
+        <br>
+        Password:
+        <br>
+        <input name ="password1" type = "password">
+        <br>
+        Confirm Password:
+        <br>
+        <input name ="password2" type = "password">
+        <br><br>
+      <!--  <input name ="submit" class="btn btn-primary" value="sign up">-->
+       <button type = "submit" class = "btn btn-primary">회원가입</button>
+    </form>
+</div>
+
+{% endblock %}

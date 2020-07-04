@@ -26,8 +26,10 @@ SECRET_KEY = '*)-k&$by7rnua#1g3vsuie58(+x!$#y5-si*w7#-yf_&=+nk00'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    ".ap-northeast-2.compute.amazonaws.com"
-	  ".shoppuppydoc.io",
+    ".ap-northeast-2.compute.amazonaws.com",
+	".shoppuppydoc.io",
+    "localhost",
+    "127.0.0.1",
 ]
 
 
@@ -109,7 +111,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ko'
 
 TIME_ZONE = 'UTC'
 
