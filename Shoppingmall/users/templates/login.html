@@ -1,21 +1,20 @@
+{%extends 'top.html'%}
 
-{% block contents %}
-<div clsas="container">
-    <h1>login!</h1>
-
-    <form action="POST" action="%url 'login'%}">
-        {% csrf_token %}
-        Username:
-        <br>
-        <input name ="username"type="text">
-        <br>
-        Password:
-        <br>
-        <input name ="password" type = "password">
-        <br><br>
-      <!--  <input name ="submit" class="btn btn-primary" value="sign up">-->
-       <input type = "submit" value = "로그인">
-    </form>
+{% block content %}
+<div style="text-align:center;">
+    <div clsas="container">
+        <h1>로그인</h1>
+        <form action="POST" action="%url 'home'%}">
+            {% csrf_token %}
+            Username:
+            <input name ="username"type="text">
+            <br><br>
+            Password:
+            <input name ="password" type = "password">
+            <br><br>
+        <!--  <input name ="submit" class="btn btn-primary" value="sign up">-->
+        <input type = "submit" value = "로그인">
+        </form>
+    </div>
 </div>
-
 {% endblock %}
