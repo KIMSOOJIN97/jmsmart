@@ -1,13 +1,13 @@
 
 {% block contents %}
-<div clsas="container">
+<div class="container">
     <h1>sign up!</h1>
 
-    <form action="POST" action="%url 'signup'%}">
+    <form method="POST" action="{%url 'signup'%}">
         {% csrf_token %}
         Username:
         <br>
-        <input name ="username"type="text">
+        <input name ="username" type="text">
         <br>
         Password:
         <br>
@@ -17,8 +17,8 @@
         <br>
         <input name ="password2" type = "password">
         <br><br>
-      <!--  <input name ="submit" class="btn btn-primary" value="sign up">-->
-       <button type = "submit" class = "btn btn-primary">회원가입</button>
+        <!--<input name ="submit" class="btn btn-primary" value="sign up">-->
+        <button type = "submit" class = "btn btn-primary">회원가입</button>
     </form>
 </div>
 
