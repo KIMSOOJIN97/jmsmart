@@ -3,7 +3,7 @@ from users.models import User
 from django.contrib import auth
 
 from django.http import HttpResponse
-from django.contrib.auth.hashers import make_password,check_password
+from django.contrib.auth.hashers import make_password,check_password 
 
 def home(request):
     return render(request, 'home.html')
@@ -22,7 +22,7 @@ def signup(request):   #회원가입 페이지를 보여주기 위한 함수
         number = request.POST.get('number',None)
         e_mail = request.POST.get('e_mail',None)
 
-        res_data = {}
+        res_data = {} 
         if not (ID and username and password and re_password and address and number and e_mail and postcode) :
             res_data['error'] = "모든 값을 입력해야 합니다."
             print("here1")
@@ -52,12 +52,12 @@ def login(request):
 
         if not (login_username and login_password):
             response_data['error']="아이디와 비밀번호를 모두 입력해주세요."
-        else :
-            myuser = User.objects.get(userID=login_username)
+        else : 
+            myuser = User.objects.get(userID=login_username) 
             print(login_username)
             #db에서 꺼내는 명령. Post로 받아온 username으로 , db의 username을 꺼내온다.
             if check_password(login_password, myuser.password):
-                request.session['user'] = myuser.id
+              #  request.session['user'] = myuser.id
                 #세션도 딕셔너리 변수 사용과 똑같이 사용하면 된다.
                 #세션 user라는 key에 방금 로그인한 id를 저장한것.
                 return redirect('/')

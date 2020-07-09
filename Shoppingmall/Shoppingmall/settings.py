@@ -23,6 +23,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '*)-k&$by7rnua#1g3vsuie58(+x!$#y5-si*w7#-yf_&=+nk00'
 
 # SECURITY WARNING: don't run with debug turned on in production!
+# DEBUG = False
+#원래는
 DEBUG = True
 
 ALLOWED_HOSTS = [
@@ -129,4 +131,4 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-
+LOGIN_REDIRECT_URL = '/'

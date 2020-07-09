@@ -1,21 +1,56 @@
+{%extends 'top.html'%}
 
-{% block contents %}
-<div clsas="container">
-    <h1>login!</h1>
+{% block content %}
 
-    <form action="POST" action="%url 'login'%}">
-        {% csrf_token %}
-        Username:
-        <br>
-        <input name ="username"type="text">
-        <br>
-        Password:
-        <br>
-        <input name ="password" type = "password">
-        <br><br>
-      <!--  <input name ="submit" class="btn btn-primary" value="sign up">-->
-       <button type = "submit" class = "btn btn-primary">로그인</button>
+
+
+<article class="container">
+    <div style="text-align:center">
+        <div class="top_menu">
+            <p>로그인</p>
+        </div>
+    </div>
+    <br><br>
+    <form method="POST" action="{%url 'login'%}">
+        <div class="text_style">
+            <p>
+                <tr>
+                    <td>
+                        <table width="100%" cellpadding="20" cellspacing="20" border="0">
+
+                            {% csrf_token %}
+                            <tr>
+                                <div class="form-group">
+                                    <td style="color:black; font-size:1em; padding:20px" align="center">아이디</td>
+                                    <td width="*">
+                                        <input type="text" class="form-control" id="ID" name="ID" style="width:400px">
+                                    </td>
+                                </div>
+                            </tr>
+                            <tr>
+                                <div class="form-group">
+                                    <td style="color:black; font-size:1em; padding:20px" align="center">비밀번호</td>
+                                    <td width="*">
+                                            <input type="password" class="form-control" id="password" name="password"style="width:400px">
+                                    </td>
+                                </div>
+                            </tr>
+
+                        </table>
+                    </td>
+                </tr>
+            </div>
+        </p>
+            <br><br>
+            <div align="center">
+                <button type="submit" class="btn btn-dark"><p style="font-size:1.5em">로그인</p></button>
+                <button type="button" class="btn btn-light" onclick="location.href='/' "><p style="font-size:1.5em">가입취소</p></button>
+        </div>
+
+
     </form>
-</div>
+
+<br><br>
+</article>
 
 {% endblock %}
