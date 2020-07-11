@@ -19,11 +19,18 @@
   <div class="text-right">
   <ul class="nav nav-tabs"> 
   
-  
+  {% if request.session.user %}
+  <li class="nav-item">
+    <a class="nav-link"  href="/logout"><span style="color:black; font-size:1.25em;">LOGOUT</span>
+        <br> </a>
+  </li>
+  {% else %}
     <li class="nav-item">
         <a class="nav-link"  href="/login"><span style="color:black; font-size:1.25em;">LOGIN</span>
             <br> </a>
     </li>
+  {% endif %}
+
     <li class="nav-item">
       <a class="nav-link"  href="/signup"><span style="color:black; font-size:1.25em;">JOIN</span>
         <br> </a>
