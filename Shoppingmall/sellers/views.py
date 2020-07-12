@@ -1,8 +1,9 @@
-from django.shortcuts import render
-
 # Create your views here.
 from django.shortcuts import render,redirect
-from sellers.models import Seller
+from .models import Seller
+from .models import Notice
+from django.utils import  timezone
+
 from django.contrib import auth
 
 from django.http import HttpResponse
@@ -40,9 +41,26 @@ def signup(request):   #회원가입 페이지를 보여주기 위한 함수
 
 
 def notice(request):
+
     return render(request, 'notice.html')
 
 
 def notice_addPost(request):
-    return render(request, 'notice_addPost.html')
+    if request.method == "GET":
+        return render(request, 'notice_addPost.html')
+
+    elif request.method == "POST":
+        title = request.POST.get('TITLE',None)
+        content =request.POST.get('CONTENTS',None)
+
+        res_data = {}
+        if not (title and content) :
+            res_data['error'] = "모든 값을 입력해야 합니다."
+            return render(request, 'notice_addPost.html', res_data) #register를 요청받으면 register.html 로 응답.
+
+        else :
+            # author = "ddd",
+            addPost = Notice(title=title,content=content)
+            addPost.save()
+            return redirect('/sellers/notice')
 

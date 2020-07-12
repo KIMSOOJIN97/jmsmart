@@ -8,7 +8,7 @@ admin.site.register(Seller)
 #admin.site.register(Notice)
 @admin.register(Notice)
 class NoticeAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title','pub_date','author')
+    list_display = ('id', 'title','pub_date')  #,'author'
     list_filter = ('pub_date',)
     search_fields =  ('title', 'content')
 
