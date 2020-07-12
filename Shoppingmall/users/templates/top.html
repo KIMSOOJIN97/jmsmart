@@ -1,4 +1,4 @@
-<!-- 화면창 -->
+
 
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -9,21 +9,28 @@
 <link rel="stylesheet" href="{% static 'css/users.css' %}">
 
 <title>제이엠스마트</title>
-<head>
-  <div style="overflow:scroll; width:100vw; height:100vh;">
+
+<div style="overflow:scroll; width:100vw; height:100vh;">
 
   <nav class="navbar navbar-expand-md">
-
+  
     <div class="collapse navbar-collapse" id="navbarSupportedContent"></div>
-
+  
   <div class="text-right">
-  <ul class="nav nav-tabs">
-
-
+  <ul class="nav nav-tabs"> 
+  
+  {% if request.session.user %}
+  <li class="nav-item">
+    <a class="nav-link"  href="/logout"><span style="color:black; font-size:1.25em;">LOGOUT</span>
+        <br> </a>
+  </li>
+  {% else %}
     <li class="nav-item">
         <a class="nav-link"  href="/login"><span style="color:black; font-size:1.25em;">LOGIN</span>
             <br> </a>
     </li>
+  {% endif %}
+
     <li class="nav-item">
       <a class="nav-link"  href="/signup"><span style="color:black; font-size:1.25em;">JOIN</span>
         <br> </a>
@@ -37,47 +44,13 @@
         <br> </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="/notice"><span style="color:black;  font-size:1.25em;">NOTICE</span>
+      <a class="nav-link" href="/sellers/notice"><span style="color:black;  font-size:1.25em;">NOTICE</span>
         <br> </a>
     </li>
   </ul>
   </div>
   </nav>
-</head>
-<!--<div style="overflow:scroll; width:100vw; height:100vh;">-->
-
-  <!--<nav class="navbar navbar-expand-md">-->
-  <!---->
-    <!--<div class="collapse navbar-collapse" id="navbarSupportedContent"></div>-->
-  <!---->
-  <!--<div class="text-right">-->
-  <!--<ul class="nav nav-tabs"> -->
-  <!---->
-  <!---->
-    <!--<li class="nav-item">-->
-        <!--<a class="nav-link"  href="/login"><span style="color:black; font-size:1.25em;">LOGIN</span>-->
-            <!--<br> </a>-->
-    <!--</li>-->
-    <!--<li class="nav-item">-->
-      <!--<a class="nav-link"  href="/signup"><span style="color:black; font-size:1.25em;">JOIN</span>-->
-        <!--<br> </a>-->
-    <!--</li>-->
-    <!--<li class="nav-item">-->
-        <!--<a class="nav-link" href="/cart"><span style="color:black; font-size:1.25em;">CART</span>-->
-          <!--<br> </a>-->
-      <!--</li>-->
-    <!--<li class="nav-item">-->
-      <!--<a class="nav-link" href="/user_mypage"><span style="color:black; font-size:1.25em;">MYPAGE</span>-->
-        <!--<br> </a>-->
-    <!--</li>-->
-    <!--<li class="nav-item">-->
-      <!--<a class="nav-link" href="/notice"><span style="color:black;  font-size:1.25em;">NOTICE</span>-->
-        <!--<br> </a>-->
-    <!--</li>-->
-  <!--</ul>-->
-  <!--</div>-->
-  <!--</nav>-->
-  <!---->
+  
 
   <br><br>
   

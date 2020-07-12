@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/3.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
-
+from django.conf import settings
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -130,4 +130,17 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+
+# 로그인 완료 후 next 인자가 지정되면 해당 URL 페이지로 이동
+# next 인자가 없으면 아래 URL로 이동
 LOGIN_REDIRECT_URL = '/'
+
+# 로그아웃 후에 next 인자기 지정되면 해당 URL 페이지로 이동
+# next 인자가 없으면 LOGOUT_REDIRECT_URL로 이동
+# LOGOUT_REDIRECT_URL이 None(디폴트)이면, 'registration/logged_out.html' 템플릿 렌더링
+# LOGOUT_REDIRECT_URL = None
+
+# #인증에 사용할 커스텀 User모델 지정 : '앱이름.모델명'
+# AUTH_USER_MODEL = 'users.User'
+# AUTH_SELLER_MODEL = 'sellers.Seller'
