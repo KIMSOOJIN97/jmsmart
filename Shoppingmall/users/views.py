@@ -14,9 +14,12 @@ def home(request):
         
     return render(request, 'home.html')
 
-def signup(request):   #회원가입 페이지를 보여주기 위한 함수
+def signup(request):
+    return render(request, 'signup.html')
+
+def users_signup(request):   #회원가입 페이지를 보여주기 위한 함수
     if request.method == "GET":
-        return render(request, 'signup.html')
+        return render(request, 'users_signup.html')
 
     elif request.method == "POST":
         ID = request.POST.get('ID',None)   #딕셔너리형태
@@ -31,18 +34,20 @@ def signup(request):   #회원가입 페이지를 보여주기 위한 함수
         res_data = {} 
         if not (ID and username and password and re_password and address and number and e_mail and postcode) :
             res_data['error'] = "모든 값을 입력해야 합니다."
-            print("here1")
-            return render(request, 'signup.html', res_data) #register를 요청받으면 register.html 로 응답.
+            return render(request, 'users_signup.html', res_data) #register를 요청받으면 register.html 로 응답.
 
         if password != re_password :
             #return HttpResponse('비밀번호가 다릅니다.')
             res_data['error'] = '비밀번호가 다릅니다.'
             print("gere2")
-            return render(request, 'signup.html', res_data) #register를 요청받으면 register.html 로 응답.
+            return render(request, 'users_signup.html', res_data) #register를 요청받으면 register.html 로 응답.
         else :
             user = User(userID = ID, password=make_password(password),username=username,postcode = postcode, address = address, phone=number,e_mail = e_mail)
-            user.save()
-        return render(request, 'home.html', res_data) #register를 요청받으면 register.html 로 응답.
+            user.save()            
+            print("pint hgere3")                
+            return redirect('/')
+
+            #return render(request, 'home.html', res_data) #register를 요청받으면 register.html 로 응답.
 
 
 def login(request):
