@@ -2,10 +2,6 @@
 
 {% block content %}
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
 <article class="container">
     <div style="text-align:center">
         <div class="top_menu">
@@ -13,6 +9,8 @@
         </div>
     </div>
     <br><br>
+
+
     <div class="container">
         <br>
     <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -50,12 +48,26 @@
                                             </td>
                                         </div>
                                     </tr>
-        
                                 </table>
                             </td>
                         </tr>
                     </div>
                 </p>
+
+                <br>
+
+            {% if messages %}
+            {% for message in messages %}
+                <div class="row" style="text-align:center">
+                <div class="col-sm-6" style="text-align:center">
+                    <div class="alert alert-danger" style="text-align:center">
+                    <strong>{{ message.tags }}!</strong> {{ message.message }}
+                    </div>
+                </div>
+                </div>
+            {% endfor %}
+            {% endif %}
+
                     <br><br>
                     <div align="center">
                         <button type="submit" class="btn btn-dark"><p style="font-size:1.5em">로그인</p></button>
@@ -94,6 +106,8 @@
                         </tr>
                     </div>
                 </p>
+                <br>
+                
                     <br><br>
                     <div align="center">
                         <button type="submit" class="btn btn-dark"><p style="font-size:1.5em">로그인</p></button>

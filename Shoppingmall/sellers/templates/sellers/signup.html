@@ -107,6 +107,17 @@
                 </tr>
             </div>
         </p>
+        {% if messages %}
+            {% for message in messages %}
+                <div class="row" style="text-align:center">
+                <div class="col-sm-6" style="text-align:center">
+                    <div class="alert alert-danger" style="text-align:center">
+                    <strong>{{ message.tags }}!</strong> {{ message.message }}
+                    </div>
+                </div>
+                </div>
+            {% endfor %}
+        {% endif %}
             <br><br>
             <div align="center">
                 <button type="submit" class="btn btn-dark"><p style="font-size:1.5em">회원가입</p></button>
