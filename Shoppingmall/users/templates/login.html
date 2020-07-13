@@ -1,68 +1,106 @@
+{%extends 'top.html'%}
 
-  {%extends 'top.html'%}
-  {% block content %}
-  
-  
-  
-  <html lang="ko">
-    <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-      
-    
-      <title>SHOPPING</title>
-      <!-- Bootstrap CSS -->
-<body>
-         <!-- /BREADCRUMB -->
-   <!-- section -->
-   <div class="section-join">
-    <!-- container -->
-    <div class="container">
-       <!-- row -->
-       <div id="login_tab">
-             <div class="col-md-12">
-                <div class="billing-details">        
-                   <br><br>
-                   <div class="col-md-6">
-                      <div class="section-title">
-                         <h4 class="title">일반회원</h4>
-                         <p> 만 14세 이상의 개인 구매자</p>
-                      </div>
-                      <input type="button" value="구매자 가입하기" onclick="location.href='users/signup' " class="main-btn pull-right"
-                      style="width: 100%; height: 130px; font-size: 200%;" />
-                   </div>
-                   <div class="col-md-6">
-                      <div class="section-title">
-                         <h4 class="title">기업회원</h4>
-                         <p> 사업자 등록증을 보유한 기업/법인의 판매자</p>
-                      </div>
-                      <input type="button" value="판매자 가입하기" onclick="location.href='sellers/signup' " class="main-btn pull-right"
-                      style="width: 100%; height: 130px; font-size: 200%;" />
-                   </div>
-                </div>
-             </div>
-       </div>
-       <!-- /row -->
+{% block content %}
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+<article class="container">
+    <div style="text-align:center">
+        <div class="top_menu">
+            <p>로그인</p>
+        </div>
     </div>
-    <!-- /container -->
- </div>
- <!-- /section -->
-    
+    <br><br>
+    <div class="container">
+        <br>
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item">
+          <a class="nav-link active" data-toggle="tab" href="#user">구매자 로그인</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="tab" href="#seller">판매자 로그인</a>
+        </li>
+      </ul>
+      <br><br>
+      <div class="tab-content">
+        <div class="container tab-pane active" id="user">
+            <form method="POST" action="{%url 'login'%}">
+                <div class="text_style">
+                    <p>
+                        <tr>
+                            <td>
+                                <table width="100%" cellpadding="20" cellspacing="20" border="0">
+        
+                                    {% csrf_token %}
+                                    <tr>
+                                        <div class="form-group">
+                                            <td style="color:black; font-size:1em; padding:20px" align="center">아이디</td>
+                                            <td width="*">
+                                                <input type="text" class="form-control" id="ID" name="ID" style="width:400px">
+                                            </td>
+                                        </div>
+                                    </tr>
+                                    <tr>
+                                        <div class="form-group">
+                                            <td style="color:black; font-size:1em; padding:20px" align="center">비밀번호</td>
+                                            <td width="*">
+                                                    <input type="password" class="form-control" id="password" name="password"style="width:400px">
+                                            </td>
+                                        </div>
+                                    </tr>
+        
+                                </table>
+                            </td>
+                        </tr>
+                    </div>
+                </p>
+                    <br><br>
+                    <div align="center">
+                        <button type="submit" class="btn btn-dark"><p style="font-size:1.5em">로그인</p></button>
+                </div>        
+            </form>
+        </div>
 
 
+        <div class="container tab-pane" id="seller">
+            <form method="POST" action="{%url 'sellers_login'%}">
+                <div class="text_style">
+                    <p>
+                        <tr>
+                            <td>
+                                <table width="100%" cellpadding="20" cellspacing="20" border="0">
+        
+                                    {% csrf_token %}
+                                    <tr>
+                                        <div class="form-group">
+                                            <td style="color:black; font-size:1em; padding:20px" align="center">아이디</td>
+                                            <td width="*">
+                                                <input type="text" class="form-control" id="ID" name="ID" style="width:400px">
+                                            </td>
+                                        </div>
+                                    </tr>
+                                    <tr>
+                                        <div class="form-group">
+                                            <td style="color:black; font-size:1em; padding:20px" align="center">비밀번호</td>
+                                            <td width="*">
+                                                    <input type="password" class="form-control" id="password" name="password"style="width:400px">
+                                            </td>
+                                        </div>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </div>
+                </p>
+                    <br><br>
+                    <div align="center">
+                        <button type="submit" class="btn btn-dark"><p style="font-size:1.5em">로그인</p></button>
+                </div>
+            </form></div>
+      </div>
+<br><br>
+</article>
 
-
-
-
-
-
-
-
-
-
-
-  </body>
-  
-  </html>
-  
-  {% endblock %}
-  
+{% endblock %}

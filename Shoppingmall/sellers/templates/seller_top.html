@@ -19,7 +19,7 @@
   <div class="text-right">
   <ul class="nav nav-tabs"> 
   
-  {% if request.session.user %}
+  {% if request.session.seller %}
   <li class="nav-item">
     <a class="nav-link"  href="/logout"><span style="color:black; font-size:1.25em;">LOGOUT</span>
         <br> </a>
@@ -32,11 +32,7 @@
   {% endif %}
 
     <li class="nav-item">
-      <a class="nav-link"  href="/signup"><span style="color:black; font-size:1.25em;">JOIN</span>
-        <br> </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="/cart"><span style="color:black; font-size:1.25em;">CART</span>
+        <a class="nav-link" href="/cart"><span style="color:black; font-size:1.25em;">ADD PRODUCT</span>
           <br> </a>
       </li>
     <li class="nav-item">
