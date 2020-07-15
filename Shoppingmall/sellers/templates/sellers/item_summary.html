@@ -1,0 +1,54 @@
+{% extends "users/top.html" %}
+
+{% block content %}
+  <main>
+    <div class="container-fluid">
+    <div class="table-responsive text-nowrap">
+    <h1>상품 관리</h1>
+    <br><br>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">상품사진</th>
+            <th scope="col">상품명</th>
+            <th scope="col">가격</th>
+            <th scope="col">상품설명</th>
+            <th scope="col">재고</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for item in items %}
+        <tr>
+            <td>{{ empty }}</td>
+            <!-- 사진 넣을 자리 -->
+            <td><a href = "/">
+                {{ item.name }}</a></td>
+            <!-- 이름누르면 해당 상품 관리 -->
+            <td>{{ item.price }}</td>
+            <td>{{ item.description }}</td>
+            <td>{{ item.stock }}</td>
+
+
+        </tr>
+            {% if items is none %}
+        <tr>
+            <td colspan='5'>Your list is empty</td>
+        </tr>
+            {% endif %}
+        {% endfor %}
+        <tr>
+            <td colspan="5">
+            <a class='btn btn-primary float-right' href='register/'>판매등록</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    </div>
+
+    </div>
+  </main>
+
+{% endblock content %}
+
+
