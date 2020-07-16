@@ -8,7 +8,7 @@
 {% load static %}
 <link rel="stylesheet" href="{% static 'css/users.css' %}">
 
-<title>제이엠스마트</title>
+<title> 제이엠스마트 </title>
 
 <div style="overflow:scroll; width:100vw; height:100vh;">
 
@@ -40,11 +40,11 @@
           <br> </a>
       </li>
     <li class="nav-item">
-      <a class="nav-link" href="/user_mypage"><span style="color:black; font-size:1.25em;">MYPAGE</span>
+      <a class="nav-link" href="{% url 'users:profile' user.pk %"><span style="color:black; font-size:1.25em;">MYPAGE</span>
         <br> </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="/sellers/notice"><span style="color:black;  font-size:1.25em;">NOTICE</span>
+      <a class="nav-link" href="/notice"><span style="color:black;  font-size:1.25em;">NOTICE</span>
         <br> </a>
     </li>
   </ul>

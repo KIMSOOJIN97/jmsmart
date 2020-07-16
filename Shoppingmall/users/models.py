@@ -15,3 +15,8 @@ class User(models.Model): #장고에서 제공하는 models.Model를 상속받�
 
     def __str__(self):
         return self.userID
+
+# class Profile(models.Model):
+#     user = models.OneToOneField(User, on_delete=models.CASCADE)# 현 계정의 사용자를 가져올 수 있음.
+#     nickname = models.TextField(max_length=10)
+#     profile_photo = models.ImageField(blank=True)  # 값을 채워넣지 않아도 되는 속성.

@@ -1,13 +1,14 @@
 # Create your views here.
 from django.shortcuts import render,redirect
-from .models import Seller
-from .models import Notice
+from .models import *
 from django.utils import  timezone
 
 from django.contrib import auth
 
 from django.http import HttpResponse
-from django.contrib.auth.hashers import make_password,check_password 
+from django.contrib.auth.hashers import make_password,check_password
+from django.views.generic import *
+
 
 
 def signup(request):   #회원가입 페이지를 보여주기 위한 함수
@@ -40,14 +41,26 @@ def signup(request):   #회원가입 페이지를 보여주기 위한 함수
             return redirect('/')
 
 
+from django.views import generic
+
+class NoticeListView(generic.ListView):
+    model = Notice
+    paginate_by = 10
+
+class NoticeDetailView(generic.DetailView):
+    model = Notice
+
 def notice(request):
+    notice_list = Notice.objects.all()
+    return render(request,'notice.html',{'notice_list':notice_list})
 
-    return render(request, 'notice.html')
-
+def noticedetail(request):
+    notice_list = Notice.objects.all()
+    return render(request,'notice_detail.html',{'notice_list':notice_list})
 
 def notice_addPost(request):
     if request.method == "GET":
-        return render(request, 'notice_addPost.html')
+        return render(request, 'sellers/notice_addPost.html')
 
     elif request.method == "POST":
         title = request.POST.get('TITLE',None)
@@ -56,11 +69,11 @@ def notice_addPost(request):
         res_data = {}
         if not (title and content) :
             res_data['error'] = "모든 값을 입력해야 합니다."
-            return render(request, 'notice_addPost.html', res_data) #register를 요청받으면 register.html 로 응답.
+            return render(request, 'sellers/notice_addPost.html', res_data) #register를 요청받으면 register.html 로 응답.
 
         else :
             # author = "ddd",
             addPost = Notice(title=title,content=content)
             addPost.save()
-            return redirect('/sellers/notice')
+            return redirect('/sellers/notice/')
 

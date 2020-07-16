@@ -33,18 +33,17 @@ class Notice(models.Model):
     #     verbose_name_plural='notices'
     #     db_table='blog_notice'
     #     ordering = ('-mod_date')
-
+    class Meta:
+        ordering = ['-pub_date']
     def __str__(self):
         return self.title
 
-    # def get_absolute_url(self):
-    #     return reverse('blog:notice_detail', arg=(self.id))
-    #
-    # def get_previous(self):
-    #     return self.get_previous_by_mod_date()
-    #
-    # def get_next(self):
-    #     return self.get_next_by_mod_date()
+    def get_absolute_url(self):
+        return reverse('notice_detail', args=[str(self.id)])
+
+    def get_absolute_url2(self):
+        return reverse('usernotice_detail', args=[str(self.id)])
+
 
 
 

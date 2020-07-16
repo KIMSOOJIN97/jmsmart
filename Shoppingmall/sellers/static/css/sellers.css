@@ -1,0 +1,11 @@
+.uiTable{
+list-style: none;
+margin: 0;
+padding: 0px;
+width: 131px;
+float: left;
+background-color: black;
+color: white;
+text-align: center;
+border-left: 1px solid white;
+}

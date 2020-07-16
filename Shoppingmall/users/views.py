@@ -1,5 +1,6 @@
 from django.shortcuts import render,redirect
-from users.models import User
+from .models import User
+from django.db import models
 from django.contrib import auth
 
 from django.http import HttpResponse
@@ -79,3 +80,18 @@ def logout(request):
     if request.session.get('user'):
         del(request.session['user'])
     return redirect('/')
+
+from django.views import generic
+class ProfileView(generic.DetailView):
+    #session id로 받은 유저 id를 입력받아야함!!!!
+
+    context_object_name = 'profile_user' # model로 지정해준 User모델에 대한 객체와 로그인한 사용자랑 명칭이 겹쳐버리기 때문에 이를 지정해줌.
+    model = User
+    template_name = 'users/profile.html'
+
+    # userdata = models.OneToOneField(User)
+    # # model로 지정해준 User모델에 대한 객체와 로그인한 사용자랑 명칭이 겹쳐버리기 때문에 이를 지정해줌.
+    # model = User
+
+    # return render( request, 'users/mypage.html', userdata)
+
