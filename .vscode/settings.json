@@ -1,3 +1,7 @@
 {
+<<<<<<< HEAD
     "python.pythonPath": "c:\\Users\\jwsim\\django_env\\Scripts\\python.exe"
+=======
+    "python.pythonPath": "/Library/Developer/CommandLineTools/usr/bin/python3"
+>>>>>>> master
 }

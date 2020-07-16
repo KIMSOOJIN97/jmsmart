@@ -1,11 +1,9 @@
 
 
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+
 <!--정적 파일 실행-->
 {% load static %}
 <link rel="stylesheet" href="{% static 'css/users.css' %}">
@@ -21,7 +19,7 @@
   <div class="text-right">
   <ul class="nav nav-tabs"> 
   
-  {% if request.session.user %}
+  {% if request.session.seller %}
   <li class="nav-item">
     <a class="nav-link"  href="/logout"><span style="color:black; font-size:1.25em;">LOGOUT</span>
         <br> </a>
@@ -34,11 +32,7 @@
   {% endif %}
 
     <li class="nav-item">
-      <a class="nav-link"  href="/signup"><span style="color:black; font-size:1.25em;">JOIN</span>
-        <br> </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="/cart"><span style="color:black; font-size:1.25em;">CART</span>
+        <a class="nav-link" href="/cart"><span style="color:black; font-size:1.25em;">ADD PRODUCT</span>
           <br> </a>
       </li>
     <li class="nav-item">
@@ -58,10 +52,12 @@
   
 
 <br>
+<div style="text-align:center;">
     <div col-md-3>
       <span class="input-group-btn" > 
-        <a class="nav-link"  href="/"><h1><span style="color:black; text-align:center">JMSmart</h1></span></a>
+        <a class="nav-link"  href="/"><h1><span style="color:black">JMSmart</h1></span></a>
     </div>
+</div>
 
 
 </a> 

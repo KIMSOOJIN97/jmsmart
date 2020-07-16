@@ -23,6 +23,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '*)-k&$by7rnua#1g3vsuie58(+x!$#y5-si*w7#-yf_&=+nk00'
 
 # SECURITY WARNING: don't run with debug turned on in production!
+# DEBUG = False
+#원래는
 DEBUG = True
 
 ALLOWED_HOSTS = [
@@ -43,9 +45,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'users',
+<<<<<<< HEAD
     'product',
     'order',
     'sellers',
+=======
+    'sellers'
+>>>>>>> master
 ]
 
 MIDDLEWARE = [
@@ -63,7 +69,9 @@ ROOT_URLCONF = 'Shoppingmall.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            os.path.join(BASE_DIR, 'templates'),
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -114,7 +122,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'ko'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Seoul'
 
 USE_I18N = True
 
