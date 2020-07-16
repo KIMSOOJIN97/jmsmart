@@ -1,5 +1,12 @@
 from django.db import models
 
+<<<<<<< HEAD
+class Item(models.Model):
+    name = models.CharField(max_length = 32, verbose_name="상품명")
+    price = models.IntegerField(verbose_name = "상품가격",default=0)
+    description = models.TextField(verbose_name="상품설명")
+    stock = models.IntegerField(verbose_name="재고",default=1)
+=======
 # Create your models here.
 
 class Seller(models.Model): #장고에서 제공하는 models.Model를 상속받아야한다.
@@ -25,6 +32,7 @@ class Item(models.Model):
     description = models.TextField(verbose_name="상품설명")
     stock = models.IntegerField(verbose_name="재고")
     registered_date = models.DateTimeField(verbose_name="등록시간", auto_now_add=True)
+>>>>>>> master
 
     def __str__(self):
         return self.name

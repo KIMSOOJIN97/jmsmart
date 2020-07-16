@@ -11,7 +11,13 @@ class User(models.Model): #장고에서 제공하는 models.Model를 상속받�
     address = models.CharField(max_length=64,verbose_name = '주소')
     phone = models.CharField(max_length=64,verbose_name = '전화번호')
     e_mail = models.CharField(max_length=64,verbose_name = '이메일')
+<<<<<<< HEAD
+    
+    def __str__(self):
+        return self.name
+=======
 
 
     def __str__(self):
         return self.userID
+>>>>>>> master
