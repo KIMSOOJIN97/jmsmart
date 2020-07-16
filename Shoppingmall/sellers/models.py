@@ -1,13 +1,5 @@
 from django.db import models
-
-<<<<<<< HEAD
-class Item(models.Model):
-    name = models.CharField(max_length = 32, verbose_name="상품명")
-    price = models.IntegerField(verbose_name = "상품가격",default=0)
-    description = models.TextField(verbose_name="상품설명")
-    stock = models.IntegerField(verbose_name="재고",default=1)
-=======
-# Create your models here.
+from django.conf import settings
 
 class Seller(models.Model): #장고에서 제공하는 models.Model를 상속받아야한다.
     
@@ -20,7 +12,6 @@ class Seller(models.Model): #장고에서 제공하는 models.Model를 상속받
     e_mail = models.CharField(max_length=64,verbose_name = '이메일')
     corporate_number = models.CharField(max_length=64,verbose_name = '사업자등록번호')
 
-
     def __str__(self):
         return self.sellerID
 
@@ -28,11 +19,10 @@ class Seller(models.Model): #장고에서 제공하는 models.Model를 상속받
 
 class Item(models.Model):
     name = models.CharField(max_length = 32, verbose_name="상품명")
-    price = models.IntegerField(verbose_name = "상품가격")
+    price = models.IntegerField(verbose_name = "상품가격",default=0)
     description = models.TextField(verbose_name="상품설명")
-    stock = models.IntegerField(verbose_name="재고")
-    registered_date = models.DateTimeField(verbose_name="등록시간", auto_now_add=True)
->>>>>>> master
-
+    stock = models.IntegerField(verbose_name="재고",default=1)
+    
     def __str__(self):
         return self.name
+

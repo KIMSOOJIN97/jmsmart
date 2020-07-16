@@ -45,13 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'users',
-<<<<<<< HEAD
-    'product',
-    'order',
     'sellers',
-=======
-    'sellers'
->>>>>>> master
 ]
 
 MIDDLEWARE = [
