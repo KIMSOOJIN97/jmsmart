@@ -22,7 +22,9 @@ class Item(models.Model):
     price = models.IntegerField(verbose_name = "상품가격",default=0)
     description = models.TextField(verbose_name="상품설명")
     stock = models.IntegerField(verbose_name="재고",default=1)
-    
+    image = models.ImageField(verbose_name="상품사진")
+    detail_image = models.ImageField(verbose_name="상품상세사진")
+  
     def __str__(self):
         return self.name
 

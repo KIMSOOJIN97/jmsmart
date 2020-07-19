@@ -1,11 +1,9 @@
-{%extends 'users/top.html'%}
+{%extends 'sellers/top.html'%}
 {% block content %}
 
 
 <!--폼 안에다가 입력해줘야한다. (안써주면 에러발생), csrf_token 폼의 경우에는 , 데이터를 서버에 전달하는 기능.이때 암호화된 키를 숨겨놓아 크로스도메인을 막기 위함. -->
 <!-- bootstrap -component - forms -->
-
-
 
 <article class="container">
     <div style="text-align:center">
@@ -15,13 +13,13 @@
     </div>
     <br><br>
     <!--페이지에서 독립적-->
-    <form method="POST" action="{%url 'register'%}">
+    <form method="POST" action="{%url 'register'%}" enctype = multipart/form-data>{% csrf_token %}
+
         <div class="text_style">
             <p>
                 <tr>
                     <td>
                         <table>
-                            {% csrf_token %}
                             <tr>
                                 <div class="form-group">
                                     <td align="center">상품명</td>
@@ -61,6 +59,8 @@
                                     </td>
                                 </div>
                             </tr>
+
+                           
                         </table>
                     </td>
                 </tr>
@@ -69,10 +69,8 @@
             <br><br>
             <div align="center">
                 <button type="submit" class="btn btn-dark"><p style="font-size:1.5em">등록</p></button>
-                <button type="button" class="btn btn-light" onclick="location.href='/' "><p style="font-size:1.5em">취소</p></button>
+                <button type="button" class="btn btn-light" onclick="location.href='/sellers' "><p style="font-size:1.5em">취소</p></button>
         </div>
-
-
     </form>
 
 
