@@ -1,20 +1,39 @@
 from django.shortcuts import render,redirect
-from users.models import User
+from users.models import *
+from sellers.models import *
+
 from django.contrib import auth
 
 from django.http import HttpResponse
 from django.contrib.auth.hashers import make_password,check_password 
 from django.contrib import messages
 
+def product(request):
+    products = Item.objects.all()
+    #모든 item을 product_list에 저장
+    
+    product_list = {'products' : products}
+   
+    #product_list를 products라는 변수로 product.html에 전달
+    return render(request, 'users/product.html',product_list)
 
 
 def home(request):
-    user_id = request.session.get('user')
-    if user_id :
-        myuser_info = User.objects.get(pk=user_id)
-#        return HttpResponse(myuser_info.userID)
-        
-    return render(request, 'users/home.html')
+
+    request.session.get('user')
+
+    products = Item.objects.all()
+    #모든 item을 product_list에 저장
+    product_list = {'products' : products}
+    
+    return render(request, 'users/home.html',product_list)
+
+'''
+    #product_list를 product.html에 전달
+    render(request, 'users/product.html'
+    '''
+
+
 
 def signup(request):
     return render(request, 'users/signup.html')
@@ -35,7 +54,7 @@ def users_signup(request):   #회원가입 페이지를 보여주기 위한 함�
 
         if not (ID and username and password and re_password and address and number and e_mail and postcode) :
             messages.add_message(request, messages.INFO, '모든 값을 입력해야 합니다.') # 첫번째, 초기지원
-            return render(request, 'users/signup.html', res_data) #register를 요청받으면 register.html 로 응답.
+            return render(request, 'users/signup.html') #register를 요청받으면 register.html 로 응답.
 
         if password != re_password :
             #return HttpResponse('비밀번호가 다릅니다.')
@@ -82,3 +101,5 @@ def logout(request):
     if request.session.get('user'):
         del(request.session['user'])
     return redirect('/')
+
+

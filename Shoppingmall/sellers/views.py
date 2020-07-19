@@ -10,9 +10,14 @@ from django.contrib.auth.hashers import make_password,check_password
 
 from django.contrib import messages
 
+#crsf_token error 
+from django.views.decorators.csrf import csrf_exempt
+
+
 
 def home(request):
     seller_id = request.session.get('seller')
+    print(seller_id)
     if seller_id:
         seller_info = Seller.objects.get(pk=seller_id)
 #        return HttpResponse( .userID)     
@@ -63,7 +68,8 @@ def login(request):
                 seller = Seller.objects.get(sellerID=login_username) 
                 #db에서 꺼내는 명령. Post로 받아온 username으로 , db의 username을 꺼내온다.
                 if check_password(login_password, seller.password):
-                    request.session['seller'] = seller.id 
+                    request.session['seller'] = seller.sellerID 
+                    print(seller.sellerID )
                     #세션도 딕셔너리 변수 사용과 똑같이 사용하면 된다.
                     #세션 user라는 key에 방금 로그인한 id를 저장한것.
                     return redirect('/sellers')
@@ -85,6 +91,8 @@ def item(request):
     context = {'items':items} #context에 모든 후보에 대한 정보를 저장
     return render(request, 'sellers/item_summary.html', context)# context로 html에 모든 후보에 대한 정보를 전달
 
+
+@csrf_exempt
 def register(request):
     if request.method == "GET":
         return render(request, 'sellers/register.html')
@@ -93,14 +101,15 @@ def register(request):
         price = request.POST.get('price',None)
         description = request.POST.get('description',None)
         stock = request.POST.get('stock', None) 
-        
+        image =request.POST.get('image',None)
+        detail_image =request.POST.get('detail_image',None)
         res_data = {} 
 
-        if not (name and price and description and stock):
+        if not (name and price and description and stock and image and detail_image):
             res_data['error'] = "모든 값을 입력해야 합니다."
             return render(request, 'sellers/register.html', res_data) 
         else:
-            item = Item(name= name, price=price,description=description,stock=stock)
+            item = Item(name= name, price=price,description=description,stock=stock, image =image, detail_image = detail_image)
             item.save()
         return render(request, 'sellers/success.html', res_data) 
 
