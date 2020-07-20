@@ -85,7 +85,7 @@ def login(request):
 def logout(request):
     if request.session.get('seller'):
         del(request.session['seller'])
-    return redirect('/')
+    return redirect('/sellers')
 
 def item(request):
     items = Item.objects.all()

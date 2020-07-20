@@ -23,7 +23,7 @@
   
   {% if request.session.seller %}
   <li class="nav-item">
-    <a class="nav-link"  href="/logout"><span style="color:black; font-size:1.25em;">LOGOUT</span>
+    <a class="nav-link"  href="/sellers/logout"><span style="color:black; font-size:1.25em;">LOGOUT</span>
         <br> </a>
   </li>
 
@@ -48,7 +48,10 @@
         <br> </a>
     </li>
     {% else %}
-
+    <li class="nav-item">
+      <a class="nav-link" onClick="alert('판매자 로그인이 필요합니다')"><span style="color:black; font-size:1.25em;">MYPAGE</span>
+        <br> </a>
+    </li>
     <!--로그인안하면안된다는 경고메세지-->
 
     {% endif %}
@@ -59,10 +62,21 @@
         <br> </a>
     </li>
     {% else %}
-        <li class="nav-item">
-      <a class="nav-link" href="/notice"><span style="color:black;  font-size:1.25em;">NOTICE</span>
+    <!--로그인하라고하애햐함-->
+
+    <li class="nav-item">
+      <a class="nav-link"  onClick="alert('판매자 로그인이 필요합니다')"><span style="color:black;  font-size:1.25em;">NOTICE</span>
         <br> </a>
     </li>
+    <!--<script>-->
+        <!--var result = confirm("로그아웃 하시겠습니까?");-->
+        <!--if(result)-->
+        <!--{-->
+        <!--}-->
+        <!--else-->
+        <!--{-->
+        <!--}-->
+    <!--</script>-->
     {% endif %}
 
   </ul>

@@ -42,6 +42,7 @@
         <a class="nav-link" href="/cart"><span style="color:black; font-size:1.25em;">CART</span>
           <br> </a>
       </li>
+
     {{% if request.session.user %}
     <li class="nav-item">
       <a class="nav-link" href="/mypage"><span style="color:black; font-size:1.25em;">MYPAGE</span>
@@ -49,7 +50,13 @@
     </li>
     {% else %}
     <!--로그인안하면안된다는 경고메세지-->
+    <li class="nav-item">
+      <a class="nav-link" onClick="alert('구매자 로그인이 필요합니다')"><span style="color:black; font-size:1.25em;">MYPAGE</span>
+        <br> </a>
+    </li>
+
     {% endif %}
+
     <li class="nav-item">
       <a class="nav-link" href="/notice"><span style="color:black;  font-size:1.25em;">NOTICE</span>
         <br> </a>
