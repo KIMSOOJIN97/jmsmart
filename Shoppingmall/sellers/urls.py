@@ -13,5 +13,5 @@ urlpatterns = [
     path('notice/addPost', views.notice_addPost, name='notice_addPost'),
     path('notice/<int:pk>', views.NoticeDetailView.as_view(), name='notice_detail'),
 
-
+    path('mypage/', views.mypage, name='sellermypage'),
 ]

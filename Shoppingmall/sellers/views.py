@@ -87,6 +87,12 @@ def logout(request):
         del(request.session['seller'])
     return redirect('/sellers')
 
+def mypage(request):
+    myseller_id = request.session.get('seller')
+    myseller_info =Seller.objects.get(sellerID=myseller_id)
+    return render(request, 'sellers/mypage.html',{'myseller_info':myseller_info})
+
+
 def item(request):
     items = Item.objects.all()
     context = {'items':items} #context에 모든 후보에 대한 정보를 저장
