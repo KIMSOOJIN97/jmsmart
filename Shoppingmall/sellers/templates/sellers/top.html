@@ -10,7 +10,7 @@
 {% load static %}
 <link rel="stylesheet" href="{% static 'css/users.css' %}">
 
-<title>제이엠스마트</title>
+<title>탐나냥</title>
 
 <div style="overflow:scroll; width:100vw; height:100vh;">
 
@@ -23,7 +23,7 @@
   
   {% if request.session.seller %}
   <li class="nav-item">
-    <a class="nav-link"  href="/logout"><span style="color:black; font-size:1.25em;">LOGOUT</span>
+    <a class="nav-link"  href="/sellers/logout"><span style="color:black; font-size:1.25em;">LOGOUT</span>
         <br> </a>
   </li>
 
@@ -42,14 +42,43 @@
         <a class="nav-link" href="/cart"><span style="color:black; font-size:1.25em;">CART</span>
           <br> </a>
       </li>
+    {% if request.session.seller %}
     <li class="nav-item">
-      <a class="nav-link" href="/user_mypage"><span style="color:black; font-size:1.25em;">MYPAGE</span>
+      <a class="nav-link" href="/sellers/mypage"><span style="color:black; font-size:1.25em;">MYPAGE</span>
         <br> </a>
     </li>
+    {% else %}
     <li class="nav-item">
-      <a class="nav-link" href="/notice"><span style="color:black;  font-size:1.25em;">NOTICE</span>
+      <a class="nav-link" onClick="alert('판매자 로그인이 필요합니다')"><span style="color:black; font-size:1.25em;">MYPAGE</span>
         <br> </a>
     </li>
+    <!--로그인안하면안된다는 경고메세지-->
+
+    {% endif %}
+
+    {% if request.session.seller %}
+    <li class="nav-item">
+      <a class="nav-link" href="/sellers/notice"><span style="color:black;  font-size:1.25em;">NOTICE</span>
+        <br> </a>
+    </li>
+    {% else %}
+    <!--로그인하라고하애햐함-->
+
+    <li class="nav-item">
+      <a class="nav-link"  onClick="alert('판매자 로그인이 필요합니다')"><span style="color:black;  font-size:1.25em;">NOTICE</span>
+        <br> </a>
+    </li>
+    <!--<script>-->
+        <!--var result = confirm("로그아웃 하시겠습니까?");-->
+        <!--if(result)-->
+        <!--{-->
+        <!--}-->
+        <!--else-->
+        <!--{-->
+        <!--}-->
+    <!--</script>-->
+    {% endif %}
+
   </ul>
   </div>
   </nav>
@@ -61,7 +90,7 @@
 <br>
     <div col-md-3>
       <span class="input-group-btn" > 
-        <a class="nav-link"  href="/"><h1><span style="color:black; text-align:center">JMSmart</h1></span></a>
+        <a class="nav-link"  href="/sellers"><h1><span style="color:black; text-align:center">탐나냥</h1></span></a>
     </div>
 
 
@@ -72,7 +101,7 @@
     <div class="">
       <ul class="nav nav-tabs">
         <li class="nav-item">
-            <a class="nav-link"  href="/"><span style="color:black; font-size:1.25em;">MAIN</span>
+            <a class="nav-link"  href=""><span style="color:black; font-size:1.25em;">MAIN</span>
                 <br> </a>
         </li>
         <li class="nav-item">

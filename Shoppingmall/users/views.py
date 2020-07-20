@@ -85,7 +85,7 @@ def login(request):
                 myuser = User.objects.get(userID=login_username) 
                 #db에서 꺼내는 명령. Post로 받아온 username으로 , db의 username을 꺼내온다.
                 if check_password(login_password, myuser.password):
-                    request.session['user'] = myuser.id 
+                    request.session['user'] = myuser.userID
                     #세션도 딕셔너리 변수 사용과 똑같이 사용하면 된다.
                     #세션 user라는 key에 방금 로그인한 id를 저장한것.
                     return redirect('/')
@@ -101,5 +101,26 @@ def logout(request):
     if request.session.get('user'):
         del(request.session['user'])
     return redirect('/')
+
+
+def mypage(request):
+    myuser_id = request.session.get('user')
+    myuser_info =User.objects.get(userID=myuser_id)
+    return render(request, 'users/mypage.html',{'myuser_info':myuser_info})
+
+
+
+
+def notice(request):
+    notice_list = Notice.objects.all()
+    return render(request,'users/notice.html',{'notice_list':notice_list})
+
+def noticedetail(request,pk):
+    notice = Notice.objects.get(id=pk)
+    return render(request,'users/notice_detail.html',{'notice':notice})
+
+
+
+
 
 
