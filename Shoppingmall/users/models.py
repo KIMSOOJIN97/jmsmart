@@ -15,3 +15,4 @@ class User(models.Model): #장고에서 제공하는 models.Model를 상속받�
     #admin에서 테이블 이름 설정 
     def __str__(self):
         return self.userID
+
