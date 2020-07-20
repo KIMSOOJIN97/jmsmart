@@ -103,6 +103,10 @@ def logout(request):
     return redirect('/')
 
 
+def mypage(request):
+    return render(request, 'users/mypage.html')
+
+
 
 
 def notice(request):

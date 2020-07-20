@@ -11,4 +11,6 @@ urlpatterns = [
 
     path('notice/', views.notice, name='usernotice'),
     path('notice/<int:pk>', views.noticedetail, name='usernotice_detail'),
+    
+    path('mypage/', views.mypage, name='usermypage'),
 ]
