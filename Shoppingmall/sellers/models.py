@@ -24,7 +24,8 @@ class Item(models.Model):
     stock = models.IntegerField(verbose_name="재고",default=1)
     image = models.ImageField(verbose_name="상품사진")
     detail_image = models.ImageField(verbose_name="상품상세사진")
-
+    register_date = models.DateField(verbose_name="등록날짜", null = True)
+    register_time = models.TimeField(verbose_name="등록시간", null = True)
     def __str__(self):
         return self.name
 
