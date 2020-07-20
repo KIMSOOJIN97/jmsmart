@@ -103,3 +103,18 @@ def logout(request):
     return redirect('/')
 
 
+
+
+def notice(request):
+    notice_list = Notice.objects.all()
+    return render(request,'users/notice.html',{'notice_list':notice_list})
+
+def noticedetail(request,pk):
+    notice = Notice.objects.get(id=pk)
+    return render(request,'users/notice_detail.html',{'notice':notice})
+
+
+
+
+
+

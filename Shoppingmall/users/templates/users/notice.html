@@ -1,0 +1,9 @@
+
+{%extends 'sellers/notice_list.html'%}
+{% block url %}
+<li><a href="{{ notice.get_absolute_url2 }}">{{notice.title}}</a></li>
+
+{% endblock %}
+
+{% block button %}
+{% endblock %}

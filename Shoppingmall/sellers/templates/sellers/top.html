@@ -46,10 +46,19 @@
       <a class="nav-link" href="/user_mypage"><span style="color:black; font-size:1.25em;">MYPAGE</span>
         <br> </a>
     </li>
+
+    {% if request.session.seller %}
     <li class="nav-item">
+      <a class="nav-link" href="notice"><span style="color:black;  font-size:1.25em;">NOTICE</span>
+        <br> </a>
+    </li>
+    {% else %}
+        <li class="nav-item">
       <a class="nav-link" href="/notice"><span style="color:black;  font-size:1.25em;">NOTICE</span>
         <br> </a>
     </li>
+    {% endif %}
+
   </ul>
   </div>
   </nav>

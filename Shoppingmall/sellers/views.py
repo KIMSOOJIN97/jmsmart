@@ -2,13 +2,14 @@ import datetime
 
 # Create your views here.
 from django.shortcuts import render,redirect
-from .models import Seller,Item
+from .models import *
 from django.contrib import auth
 
 from django.http import HttpResponse
 from django.contrib.auth.hashers import make_password,check_password 
 
 from django.contrib import messages
+
 
 #crsf_token error 
 from django.views.decorators.csrf import csrf_exempt
@@ -115,3 +116,42 @@ def register(request):
 
 def back(request):
     return render(request, 'sellers/item_summary.html')
+
+
+
+from django.views import generic
+
+class NoticeListView(generic.ListView):
+    model = Notice
+    paginate_by = 10
+
+class NoticeDetailView(generic.DetailView):
+    model = Notice
+
+# def notice(request):
+#     notice_list = Notice.objects.all()
+#     return render(request,'notice.html',{'notice_list':notice_list})
+#
+# def noticedetail(request):
+#     notice_list = Notice.objects.all()
+#     return render(request,'notice_detail.html',{'notice_list':notice_list})
+
+def notice_addPost(request):
+    if request.method == "GET":
+        return render(request, 'sellers/notice_addPost.html')
+
+    elif request.method == "POST":
+        title = request.POST.get('TITLE',None)
+        content =request.POST.get('CONTENTS',None)
+
+        res_data = {}
+        if not (title and content) :
+            res_data['error'] = "모든 값을 입력해야 합니다."
+            # return render(request, 'sellers/notice_addPost.html', res_data) #register를 요청받으면 register.html 로 응답.
+
+        else :
+            # author = "ddd",
+            addPost = Notice(title=title,content=content)
+            addPost.save()
+            return redirect('/sellers/notice/')
+
