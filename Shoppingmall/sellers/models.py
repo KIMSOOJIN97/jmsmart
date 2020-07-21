@@ -1,6 +1,6 @@
 from django.db import models
 from django.conf import settings
-from django.utils import  timezone
+from django.utils import timezone
 from django.urls import reverse
 
 
@@ -18,7 +18,10 @@ class Seller(models.Model): #장고에서 제공하는 models.Model를 상속받
     def __str__(self):
         return self.sellerID
 
-
+class Category(models.Model):
+    name = models.CharField(max_length=40, null=False)
+    def __str__(self):
+        return self.name
 
 class Item(models.Model):
     name = models.CharField(max_length = 32, verbose_name="상품명")
@@ -27,9 +30,14 @@ class Item(models.Model):
     description = models.TextField(verbose_name="상품설명")
     stock = models.IntegerField(verbose_name="재고",default=1)
     image = models.ImageField(verbose_name="상품사진")
-    detail_image = models.ImageField(verbose_name="상품상세사진")
     register_date = models.DateField(verbose_name="등록날짜", null = True)
     register_time = models.TimeField(verbose_name="등록시간", null = True)
+    detail_image = models.ImageField(verbose_name="상품상세사진",null = True)
+    upload_date = models.DateTimeField(default=timezone.now,verbose_name="등록날짜")
+    category = models.ForeignKey(Category, null=False, on_delete=models.CASCADE,verbose_name="카테고리")
+    comment = models.CharField(max_length = 1000, verbose_name="댓글",null = True)
+    view = models.IntegerField(verbose_name = "조회수", null = True, default = 0)
+
     def __str__(self):
         return self.name
 

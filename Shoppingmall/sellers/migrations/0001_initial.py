@@ -13,7 +13,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Item',
+            name='Category',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=32, verbose_name='상품명')),
@@ -25,6 +25,9 @@ class Migration(migrations.Migration):
                 ('register_date', models.DateField(null=True, verbose_name='등록날짜')),
                 ('register_time', models.TimeField(null=True, verbose_name='등록시간')),
             ],
+            options={
+                'ordering': ['-pub_date'],
+            },
         ),
         migrations.CreateModel(
             name='Notice',
@@ -50,6 +53,21 @@ class Migration(migrations.Migration):
                 ('phone', models.CharField(max_length=64, verbose_name='전화번호')),
                 ('e_mail', models.CharField(max_length=64, verbose_name='이메일')),
                 ('corporate_number', models.CharField(max_length=64, verbose_name='사업자등록번호')),
+            ],
+        ),
+        migrations.CreateModel(
+            name='Item',
+            fields=[
+                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('name', models.CharField(max_length=32, verbose_name='상품명')),
+                ('price', models.IntegerField(default=0, verbose_name='상품가격')),
+                ('description', models.TextField(verbose_name='상품설명')),
+                ('stock', models.IntegerField(default=1, verbose_name='재고')),
+                ('image', models.ImageField(upload_to='', verbose_name='상품사진')),
+                ('detail_image', models.ImageField(upload_to='', verbose_name='상품상세사진')),
+                ('upload_date', models.DateTimeField(default=django.utils.timezone.now)),
+                ('comment', models.CharField(max_length=1000, verbose_name='댓글')),
+                ('category', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='sellers.Category')),
             ],
         ),
     ]

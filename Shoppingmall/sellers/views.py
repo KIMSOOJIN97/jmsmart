@@ -59,7 +59,7 @@ def login(request):
         return render(request, 'sellers/login.html')
 
     elif request.method == "POST":
-        login_username = request.POST.get('ID', None)
+        login_username = request.POST.get('ID', None)   
         login_password = request.POST.get('password', None)
 
         if not (login_username and login_password):
