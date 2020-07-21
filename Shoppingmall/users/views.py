@@ -120,7 +120,5 @@ def noticedetail(request,pk):
     return render(request,'users/notice_detail.html',{'notice':notice})
 
 
-
-
-
-
+def category(request,category):
+    return HttpResponse("{}의 블로그 글 리스트가 출력됩니다!".format(category))
