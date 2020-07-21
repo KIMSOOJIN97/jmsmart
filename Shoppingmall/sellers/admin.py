@@ -4,7 +4,7 @@ from .models import *   #같은 경로의 models.py에서 User라는 클래스�
 #admin DB에 데이터 등록
 admin.site.register(Seller)
 admin.site.register(Item)
-
+admin.site.register(Category)
 @admin.register(Notice)
 class NoticeAdmin(admin.ModelAdmin):
     list_display = ('id', 'title','pub_date')  #,'author'
