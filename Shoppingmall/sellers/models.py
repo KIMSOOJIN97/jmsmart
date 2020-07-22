@@ -33,7 +33,7 @@ class Item(models.Model):
 
 #공지사항 database
 class Notice(models.Model):
-    # author = models.ForeignKey(Seller,on_delete=models.CASCADE)
+    author = models.ForeignKey(Seller,on_delete=models.CASCADE)
     title = models.CharField(verbose_name='제목',max_length=200)
     content = models.TextField(verbose_name='내용', default='')
     pub_date = models.DateTimeField(verbose_name='날짜',default= timezone.now)

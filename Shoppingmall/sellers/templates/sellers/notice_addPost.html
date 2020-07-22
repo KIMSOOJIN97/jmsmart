@@ -25,10 +25,17 @@
                             {% csrf_token %}
                             <tr>
                                 <div class="form-group">
-                                    <td style="color:black; font-size:1em; padding:40px" align="center">제목</td>
+                                    <td style="color:black; font-size:1em; padding:10px 0" align="center">제목</td>
                                     <td width="*">
                                         <input type="text" class="form-control" id="TITLE" name="TITLE" style="width:700px">
                                     </td>
+                                </div>
+                            </tr>
+
+                            <tr>
+                                <div class="form-group">
+                                    <td style="color:black; font-size:1em; padding:10px 0" align="center">작성자 </td>
+                                    <td>{{myseller_id}}</td>
                                 </div>
                             </tr>
 
