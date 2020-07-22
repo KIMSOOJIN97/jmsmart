@@ -130,25 +130,29 @@ from django.views import generic
 class NoticeListView(generic.ListView):
     model = Notice
     paginate_by = 10
+    def get_context_data(self, **kwargs):
+        a =self.request.session.get('seller')
+        notice_list = Notice.objects.all()
+        return {"sellerid": a, "notice_list":notice_list}
+
+
+
 
 class NoticeDetailView(generic.DetailView):
     model = Notice
 
-# def notice(request):
-#     notice_list = Notice.objects.all()
-#     return render(request,'notice.html',{'notice_list':notice_list})
-#
-# def noticedetail(request):
-#     notice_list = Notice.objects.all()
-#     return render(request,'notice_detail.html',{'notice_list':notice_list})
+
 
 def notice_addPost(request):
+    myseller_id = request.session.get('seller')
     if request.method == "GET":
-        return render(request, 'sellers/notice_addPost.html')
+        return render(request, 'sellers/notice_addPost.html',{"myseller_id" :myseller_id})
 
     elif request.method == "POST":
+        author = Seller.objects.get(sellerID = myseller_id)
         title = request.POST.get('TITLE',None)
         content =request.POST.get('CONTENTS',None)
+
 
         res_data = {}
         if not (title and content) :
@@ -157,7 +161,7 @@ def notice_addPost(request):
 
         else :
             # author = "ddd",
-            addPost = Notice(title=title,content=content)
+            addPost = Notice(title=title,content=content,author= author)
             addPost.save()
-            return redirect('/sellers/notice/')
+            return redirect('/sellers/notice/',{"myseller_id" :myseller_id})
 
