@@ -3,7 +3,7 @@
 <article class="container">
     <div style="text-align:center">
         <div class="top_menu">
-            <p>공지사항</p>
+            <p>공지사항 </p>
         </div>
     </div>
     <br><br>
@@ -29,7 +29,7 @@
         <tr>
             <td> {{ notice.id }} </td>
             <td> <a href="{{ notice.get_absolute_url }}">{{notice.title}} </a></td>
-            <td> 작성자 </td>
+            <td> {{notice.author}} </td>
             <td> {{notice.pub_date}} </td>
             <td> 00 </td>
         </tr>
@@ -45,12 +45,21 @@
     </table>
 
     {%block button%}
+    {% if sellerid == None %}
+    <div class="text_style">
+        <br>
+        <div align="center">
+            <button type="button" class="btn btn-dark" onclick="alert('판매자 로그인이 필요합니다'); location.href='/login' "><p style="font-size:1.5em">글쓰기</p></button>
+        </div>
+    </div>
+    {%else%}
     <div class="text_style">
         <br><br>
         <div align="center">
             <button type="button" class="btn btn-dark" onclick="location.href='/sellers/notice/addPost' "><p style="font-size:1.5em">글쓰기</p></button>
     </div>
     </div>
+    {%endif%}
     {% endblock %}
 
 </article>
