@@ -89,50 +89,26 @@
 
 <br>
     <div col-md-3>
-      <span class="input-group-btn" > 
-        <a class="nav-link"  href="/sellers"><h1><span style="color:black; text-align:center">폼나냥</h1></span></a>
+      <div>
+
+      <span class="input-group-btn" >
+        <a class="nav-link"  href="/"><h1><span style="color:black;position:absolute; left:680;">폼나냥</h1></span></a>
     </div>
+  </div>
 
-
-</a> 
-</br></br>
+</a>
+<br><br><br><br>
 <div class="">
 <div class="container-fluid">
     <div class="">
       <ul class="nav nav-tabs">
+        {% for category in allcategory%}
         <li class="nav-item">
-            <a class="nav-link"  href=""><span style="color:black; font-size:1.25em;">MAIN</span>
-                <br> </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link"  href="/list"><span style="color:black; font-size:1.25em;">NEW</span>
-            <br> </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/list"><span style="color:black; font-size:1.25em;">BEST30</span>
+            <a class="nav-link" href="/category/{{category.name}}"><span style="color:black; font-size:1.25em;">{{category.name}}</span>
               <br> </a>
           </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/list/no-1"><span style="color:black; font-size:1.25em;">OUTER</span>
-            <br> </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/top"><span style="color:black; font-size:1.25em;">TOP</span>
-            <br> </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/list/no-3"><span style="color:black; font-size:1.25em;">BOTTOM</span>
-            <br> </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/list/no-4"><span style="color:black; font-size:1.25em;">SHOES</span>
-            <br> </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/cart">
-              <i class="fa fa-fw fa-shopping-cart"></i><span style="color:black; font-size:1.25em;">ACC</span>
-              <br> </a>
-        </li>
+        {% endfor %}
+
       </ul>
     </div>
   </div>

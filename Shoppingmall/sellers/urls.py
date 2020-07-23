@@ -16,4 +16,6 @@ urlpatterns = [
     path('notice/<int:pk>', views.NoticeDetailView.as_view(), name='notice_detail'),
 
     path('mypage/', views.mypage, name='sellermypage'),
+    path('mypage/addproduct', views.item, name = 'item')
+
 ]
