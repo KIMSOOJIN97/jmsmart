@@ -129,7 +129,7 @@ def register(request):
             print( name, category,price,description,stock)
             return render(request, 'sellers/register.html', res_data) 
         else:
-            item = Item(name= name,category = category, price=price,description=description,stock=stock) #image =image, detail_image = detail_image
+            item = Item(name= name,category = category, price=price,description=description,stock=stock,image = image) #image =image, detail_image = detail_image
             item.save()
             print( name, category,price,description,stock)
 
