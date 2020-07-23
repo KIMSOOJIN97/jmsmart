@@ -101,24 +101,33 @@ def item(request):
 
 @csrf_exempt
 def register(request):
+    allcategory=Category.objects.all()
+    res_data = {}
+    res_data['allcategory'] = allcategory
+    selectcategory = request.POST.get('selectcategory',"nothing")
     if request.method == "GET":
-        return render(request, 'sellers/register.html')
+        return render(request, 'sellers/register.html',res_data)
     elif request.method == "POST":
         name = request.POST.get('name',None)   #딕셔너리형태
+        category = Category.objects.get(name=selectcategory)
         price = request.POST.get('price',None)
         description = request.POST.get('description',None)
         stock = request.POST.get('stock', None) 
         image =request.POST.get('image',None)
         detail_image =request.POST.get('detail_image',None)
-        res_data = {} 
 
-        if not (name and price and description and stock and image and detail_image):
+
+        if not (name and category and price and description and stock ):#and image and detail_image
             res_data['error'] = "모든 값을 입력해야 합니다."
+            print("모든값입력")
+            print( name, category,price,description,stock)
             return render(request, 'sellers/register.html', res_data) 
         else:
-            item = Item(name= name, price=price,description=description,stock=stock, image =image, detail_image = detail_image)
+            item = Item(name= name,category = category, price=price,description=description,stock=stock) #image =image, detail_image = detail_image
             item.save()
-        return render(request, 'sellers/success.html', res_data) 
+            print( name, category,price,description,stock)
+
+        return render(request, 'sellers/success.html', res_data)
 
 def back(request):
     return render(request, 'sellers/item_summary.html')

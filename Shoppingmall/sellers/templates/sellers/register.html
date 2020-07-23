@@ -30,6 +30,21 @@
                             </tr>
                             <tr>
                                 <div class="form-group">
+                                    <td align="center">카테고리</td>
+                                    <td>
+                                        <select name ="selectcategory"  >
+                                            <!--onchange="location = this.value;"-->
+                                            <option value="hello">== 카테고리선택 ===</option>
+                                            {% for category in allcategory %}
+                                            <option value= "{{category.name}}">{{category.name}} </option>
+                                            {%endfor%}
+                                        </select>
+                                        <!--<input type ="submit" value ="선택">-->
+                                    </td>
+                                </div>
+                            </tr>
+                            <tr>
+                                <div class="form-group">
                                     <td align="center">상품가격</td>
                                     <td>
                                         <input type="integer" class="form-control" id="price" name="price"
