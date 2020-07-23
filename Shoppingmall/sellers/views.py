@@ -18,7 +18,6 @@ from django.views.decorators.csrf import csrf_exempt
 
 def home(request):
     seller_id = request.session.get('seller')
-    print(seller_id)
     if seller_id:
         seller_info = Seller.objects.get(pk=seller_id)
 #        return HttpResponse( .userID)     
@@ -70,7 +69,6 @@ def login(request):
                 #db에서 꺼내는 명령. Post로 받아온 username으로 , db의 username을 꺼내온다.
                 if check_password(login_password, seller.password):
                     request.session['seller'] = seller.sellerID 
-                    print(seller.sellerID )
                     #세션도 딕셔너리 변수 사용과 똑같이 사용하면 된다.
                     #세션 user라는 key에 방금 로그인한 id를 저장한것.
                     return redirect('/sellers')
@@ -117,16 +115,16 @@ def register(request):
         image =request.POST.get('image',None)
         detail_image =request.POST.get('detail_image',None)
 
+        print(image)
 
-        if not (name and category and price and description and stock ):#and image and detail_image
+        if not (name and category and price and description and stock and image ):#and image and detail_image
             res_data['error'] = "모든 값을 입력해야 합니다."
             print("모든값입력")
             print( name, category,price,description,stock)
             return render(request, 'sellers/register.html', res_data) 
         else:
-            item = Item(name= name,category = category, price=price,description=description,stock=stock) #image =image, detail_image = detail_image
+            item = Item(name= name,category = category, price=price,description=description,stock=stock,image = image) #image =image, detail_image = detail_image
             item.save()
-            print( name, category,price,description,stock)
 
         return render(request, 'sellers/success.html', res_data)
 
