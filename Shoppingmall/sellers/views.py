@@ -12,13 +12,6 @@ from django.contrib import messages
 from django.views.decorators.csrf import csrf_exempt
 
 def home(request):
-<<<<<<< HEAD
-    seller_id = request.session.get('seller')
-    if seller_id:
-        seller_info = Seller.objects.get(pk=seller_id)
-#        return HttpResponse( .userID)     
-    return render(request, 'sellers/home.html')
-=======
     request.session.get('user')
     products = Item.objects.all().order_by('-view')
     # 모든 item을 product_list에 저장
