@@ -16,17 +16,9 @@ def home(request):
     products = Item.objects.all().order_by('-view')
     # 모든 item을 product_list에 저장
     product_list = {'products': products}
-#
-#
-#     seller_id = request.session.get('seller')
-#     print(seller_id)
-#     if seller_id:
-#         seller_info = Seller.objects.get(pk=seller_id)
-# #        return HttpResponse( .userID)
     return render(request, 'sellers/home.html', product_list)
 
 
->>>>>>> soojin
 
 def signup(request):   #회원가입 페이지를 보여주기 위한 함수
     if request.method == "GET":
