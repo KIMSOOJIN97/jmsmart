@@ -2,8 +2,8 @@ from django.db import models
 from django.conf import settings
 from django.utils import timezone
 from django.urls import reverse
-# from imagekit.models import ProcessedImageField
-# from imagekit.processors import ResizeToFill
+from imagekit.models import ProcessedImageField
+from imagekit.processors import ResizeToFill
 
 class Seller(models.Model): #장고에서 제공하는 models.Model를 상속받아야한다.
     
@@ -38,11 +38,6 @@ class Item(models.Model):
 
     def __str__(self):
         return self.name
-    
-    # @property
-    # def update_counter(self):
-    #     self.view = self.view+1
-    #     self.save()
 
     class Meta:
         ordering = ['seller']
@@ -70,5 +65,3 @@ class Notice(models.Model):
 
     def get_absolute_url2(self):
         return reverse('usernotice_detail', args=[str(self.id)])
-
-        
