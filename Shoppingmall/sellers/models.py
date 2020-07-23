@@ -25,14 +25,21 @@ class Category(models.Model):
 
 class Item(models.Model):
     name = models.CharField(max_length = 32, verbose_name="상품명")
+<<<<<<< HEAD
+=======
     # category  = models.CharField(max_length = 32, verbose_name="카테고리", null = True)
+>>>>>>> fe5bef33643e593d00a82b1b430b528f60aaf15e
     price = models.IntegerField(verbose_name = "상품가격",default=0)
     description = models.TextField(verbose_name="상품설명")
     stock = models.IntegerField(verbose_name="재고",default=1)
     image = models.ImageField(verbose_name="상품사진")
     detail_image = models.ImageField(verbose_name="상품상세사진",null = True)
     upload_date = models.DateTimeField(default=timezone.now,verbose_name="등록날짜")
+<<<<<<< HEAD
+    category = models.ForeignKey(Category, null=True, on_delete=models.CASCADE,verbose_name="카테고리")
+=======
     category = models.ForeignKey(Category, on_delete=models.CASCADE,verbose_name="카테고리")
+>>>>>>> fe5bef33643e593d00a82b1b430b528f60aaf15e
     comment = models.CharField(max_length = 1000, verbose_name="댓글",null = True)
     view = models.IntegerField(verbose_name = "조회수", null = True, default = 0)
 
