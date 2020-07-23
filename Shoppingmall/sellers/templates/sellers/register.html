@@ -25,11 +25,8 @@
                                     <td align="center">상품명</td>
                                     <td>
                                         <input type="text" class="form-control" id="name" name="name" style="width:800px">
-                                        <br>
-                                    </td>                                
-
+                                    </td>
                                 </div>
-
                             </tr>
                             <tr>
                                 <div class="form-group">
@@ -41,7 +38,7 @@
                                             {% for category in allcategory %}
                                             <option value= "{{category.name}}">{{category.name}} </option>
                                             {%endfor%}
-                                        </select>                                        
+                                        </select>
                                         <!--<input type ="submit" value ="선택">-->
                                     </td>
                                 </div>
@@ -52,7 +49,6 @@
                                     <td>
                                         <input type = "file" class="form-control" id="image" name="image"
                                         style="widows: 200px" accept=".png, .jpeg, .jpg">
-                                        <br>
                                     </td>
                                 </div>
                             </tr>
@@ -62,7 +58,6 @@
                                     <td>
                                         <input type = "file" class="form-control" id="detail_image" name="detail_image"
                                         style="widows: 200px" accept=".png, .jpeg, .jpg" multiple>
-                                        <br>
                                     </td>
                                 </div>
                             </tr>
@@ -72,7 +67,6 @@
                                     <td>
                                         <input type="integer" class="form-control" id="price" name="price"
                                         style="width:200px">
-                                        <br>
                                     </td>
                                 </div>
                             </tr>
@@ -84,10 +78,8 @@
 										class="form-control"
 										name="description"
 										id = "description"
-                                        style="height:500px;width: 800px;">
-                                        <br>
-                                    </td>
-                                    
+										style="height:500px;width: 800px;">
+									</td>
 								</div>
                             </tr>
 
@@ -97,10 +89,11 @@
                                     <td>
                                         <input type="integer" class="form-control" id="stock" name="stock"
                                         style="width:200px">
-                                        <br>
                                     </td>
                                 </div>
-                            </tr>                   
+                            </tr>
+
+                           
                         </table>
                     </td>
                 </tr>
