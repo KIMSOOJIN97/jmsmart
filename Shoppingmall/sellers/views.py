@@ -4,16 +4,20 @@ import datetime
 from django.shortcuts import render,redirect
 from .models import *
 from django.contrib import auth
+
 from django.http import HttpResponse
 from django.contrib.auth.hashers import make_password,check_password 
-from django.core.files.storage import FileSystemStorage
+
 from django.contrib import messages
+
+
 #crsf_token error 
 from django.views.decorators.csrf import csrf_exempt
 
+
+
 def home(request):
     seller_id = request.session.get('seller')
-    print(seller_id)
     if seller_id:
         seller_info = Seller.objects.get(pk=seller_id)
 #        return HttpResponse( .userID)     
@@ -65,7 +69,6 @@ def login(request):
                 #db에서 꺼내는 명령. Post로 받아온 username으로 , db의 username을 꺼내온다.
                 if check_password(login_password, seller.password):
                     request.session['seller'] = seller.sellerID 
-                    print(seller.sellerID )
                     #세션도 딕셔너리 변수 사용과 똑같이 사용하면 된다.
                     #세션 user라는 key에 방금 로그인한 id를 저장한것.
                     return redirect('/sellers')
@@ -95,37 +98,32 @@ def item(request):
 
 
 @csrf_exempt
-
 def register(request):
     allcategory=Category.objects.all()
     res_data = {}
     res_data['allcategory'] = allcategory
-    selectcategory = request.POST.get('selectcategory',None)
+    selectcategory = request.POST.get('selectcategory',"nothing")
     if request.method == "GET":
         return render(request, 'sellers/register.html',res_data)
     elif request.method == "POST":
+        category = request.POST.get('category',None)
         name = request.POST.get('name',None)   #딕셔너리형태
         category = Category.objects.get(name=selectcategory)
         price = request.POST.get('price',None)
         description = request.POST.get('description',None)
-        stock = request.POST.get('stock', None)
+        stock = request.POST.get('stock', None) 
+        image =request.POST.get('image',None)
+        detail_image =request.POST.get('detail_image',None)
 
-        image = request.FILES['image']
-        detail_image = request.FILES['detail_image']
+        print(image)
 
-        fs = FileSystemStorage()
-
-        image_name = fs.save(image.name, image)
-        detail_image_name = fs.save(detail_image.name, detail_image)
-
-        res_data['image_url'] = fs.url(image.name)
-        res_data['detail_image_url'] = fs.url(detail_image.name)
-
-        if not (image and detail_image and name and category and price and description and stock):
-            messages.add_message(request, messages.INFO, '모든 값을 입력해야 합니다.')
+        if not (name and category and price and description and stock and image ):#and image and detail_image
+            res_data['error'] = "모든 값을 입력해야 합니다."
+            print("모든값입력")
+            print( name, category,price,description,stock)
             return render(request, 'sellers/register.html', res_data) 
         else:
-            item = Item(image=image, detail_image = detail_image, name= name,category = category, price=price,description=description,stock=stock)
+            item = Item(name= name,category = category, price=price,description=description,stock=stock,image = image) #image =image, detail_image = detail_image
             item.save()
 
         return render(request, 'sellers/success.html', res_data)
