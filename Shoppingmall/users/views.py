@@ -140,8 +140,6 @@ def category(request,category):
 
 def product(request,product):
     product = Item.objects.get(name = product)
-    print(product.price)
-
     product_info = {'product' : product}
     return render(request, 'users/product.html',product_info)
 '''

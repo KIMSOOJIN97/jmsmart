@@ -13,7 +13,6 @@ from django.views.decorators.csrf import csrf_exempt
 
 def home(request):
     seller_id = request.session.get('seller')
-    print(seller_id)
     if seller_id:
         seller_info = Seller.objects.get(pk=seller_id)
 #        return HttpResponse( .userID)     
@@ -65,7 +64,6 @@ def login(request):
                 #db에서 꺼내는 명령. Post로 받아온 username으로 , db의 username을 꺼내온다.
                 if check_password(login_password, seller.password):
                     request.session['seller'] = seller.sellerID 
-                    print(seller.sellerID )
                     #세션도 딕셔너리 변수 사용과 똑같이 사용하면 된다.
                     #세션 user라는 key에 방금 로그인한 id를 저장한것.
                     return redirect('/sellers')
@@ -109,7 +107,6 @@ def register(request):
         price = request.POST.get('price',None)
         description = request.POST.get('description',None)
         stock = request.POST.get('stock', None)
-
         image = request.FILES['image']
         detail_image = request.FILES['detail_image']
 
