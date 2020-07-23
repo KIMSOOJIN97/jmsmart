@@ -156,7 +156,6 @@ def category(request,category):
 
 
 
-
     
 
 
