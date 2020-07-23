@@ -13,13 +13,22 @@
     </div>
     <br><br>
     <!--페이지에서 독립적-->
-    <form method="POST" action="{%url 'register'%}" enctype = multipart/form-data>{% csrf_token %}
+    <form method="POST" action="{%url 'register'%}" enctype = "multipart/form-data">{% csrf_token %}
 
         <div class="text_style">
             <p>
                 <tr>
                     <td>
                         <table>
+                            <tr>
+                                <div class="form-group">
+                                    <td align="center">카테고리</td>
+                                    <td>
+                                        <input type="text" class="form-control" id="category" name="category"
+                                        style="width:200px">
+                                    </td>
+                                </div>
+                            </tr>
                             <tr>
                                 <div class="form-group">
                                     <td align="center">상품명</td>
@@ -59,7 +68,17 @@
                                     </td>
                                 </div>
                             </tr>
+<!--
+                            <tr>
+                                <div class="form-group">
+                                    <td align="center">상품사진</td>
+                                    <td>
 
+                                        <input type="file" id="image" name="image" style="width:200px">
+                                    </td>
+                                </div>
+                            </tr>
+-->
                            
                         </table>
                     </td>

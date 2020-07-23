@@ -104,21 +104,21 @@ def register(request):
     if request.method == "GET":
         return render(request, 'sellers/register.html')
     elif request.method == "POST":
+        category = request.POST.get('category',None)
         name = request.POST.get('name',None)   #딕셔너리형태
         price = request.POST.get('price',None)
         description = request.POST.get('description',None)
         stock = request.POST.get('stock', None) 
-        image =request.POST.get('image',None)
-        detail_image =request.POST.get('detail_image',None)
-        res_data = {} 
+     #   image =request.POST.get('image',None)
+      #  detail_image =request.POST.get('detail_image',None)
 
-        if not (name and price and description and stock and image and detail_image):
-            res_data['error'] = "모든 값을 입력해야 합니다."
-            return render(request, 'sellers/register.html', res_data) 
+        if not name and price and description and stock:
+            print("모든 값을 입력해야 합니다.")
+            return render(request, 'sellers/register.html') 
         else:
-            item = Item(name= name, price=price,description=description,stock=stock, image =image, detail_image = detail_image)
+            item = Item(name= name, category=category,price=price,description=description,stock=stock)
             item.save()
-        return render(request, 'sellers/success.html', res_data) 
+            return render(request, 'sellers/success.html') 
 
 def back(request):
     return render(request, 'sellers/item_summary.html')

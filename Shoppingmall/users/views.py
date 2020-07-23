@@ -9,6 +9,7 @@ from django.contrib.auth.hashers import make_password,check_password
 from django.contrib import messages
 
 def home(request):
+   # top()
 
     request.session.get('user')
 
@@ -106,25 +107,36 @@ def noticedetail(request,pk):
 
 def category(request,category):
 
-    sort = request.GET.get('sort','') #url의 쿼리스트링을 가져온다. 없는 경우 공백을 리턴한다
-    print(sort)
 
-  #  products = Item.objects.filter(category = category)
-    #모든 item을 product_list에 저장
+    #category 테이블에서 해당 카테고리에 관한 값을 받아온다
+    try:
+        cate = Category.objects.get(name = category)
+
+        sort = request.GET.get('sort','') #url의 쿼리스트링을 가져온다. 없는 경우 공백을 리턴한다
+
+    #  products = Item.objects.filter(category = category)
+        #모든 item을 product_list에 저장
+        #cate.id를 통해 foreign key 조회 가능 
+        if sort == 'view':
+            products = Item.objects.filter(category = cate.id).order_by('-view')
+        elif sort == 'low_price':
+            products = Item.objects.filter(category = cate.id).order_by('price') #오름차순
+        elif sort == 'high_price':
+            products = Item.objects.filter(category = cate.id).order_by('-price') #내림차순
+        else:
+            products = Item.objects.filter(category = cate.id).order_by('-upload_date')
+        
+        product_list = {'products' : products}
+
+        return render(request, 'users/category.html',product_list)
+
+    except Category.DoesNotExist:
+        return render(request, 'users/category.html',{'product_list': None})
+
+
+
+
     
-    if sort == 'view':
-        products = Item.objects.filter(category = category).order_by('-view')
-    elif sort == 'low_price':
-        products = Item.objects.filter(category = category).order_by('price') #오름차순
-    elif sort == 'high_price':
-        products = Item.objects.filter(category = category).order_by('-price') #내림차순
-    else:
-        products = Item.objects.filter(category = category).order_by('-upload_date')
-    
-    product_list = {'products' : products}
-
-    return render(request, 'users/category.html',product_list)
-
 
 
 def product(request,product):
