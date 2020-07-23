@@ -1,9 +1,10 @@
 from django.db import models
+from sellers.models import *
 
 # Create your models here.
 
 class User(models.Model): #장고에서 제공하는 models.Model를 상속받아야한다.
-    
+
     userID = models.CharField(max_length=64,verbose_name = '아이디')
     password = models.CharField(max_length=64,verbose_name = '비밀번호')
     username = models.CharField(max_length=64,verbose_name = '사용자명')
@@ -15,4 +16,13 @@ class User(models.Model): #장고에서 제공하는 models.Model를 상속받�
     #admin에서 테이블 이름 설정 
     def __str__(self):
         return self.userID
+
+class Cart(models.Model):
+    
+    user =  models.ForeignKey(User, null=True, on_delete=models.CASCADE,verbose_name="사용자")
+    product = models.ForeignKey(Item, null=True, on_delete=models.CASCADE,verbose_name="상품")
+    
+
+
+
 

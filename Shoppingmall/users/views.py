@@ -12,11 +12,9 @@ def home(request):
    # top()
 
     request.session.get('user')
-
     products = Item.objects.all().order_by('-view')
     #모든 item을 product_list에 저장
     product_list = {'products' : products}
-
     return render(request, 'users/home.html',product_list)
 
 
@@ -139,8 +137,10 @@ def category(request,category):
 
 
 def product(request,product):
-    product = Item.objects.get(name = product)
-    product_info = {'product' : product}
+    thisproduct = Item.objects.get(name = product)
+    print(thisproduct.price)
+
+    product_info = {'product' : thisproduct}
     return render(request, 'users/product.html',product_info)
 '''
     #product_list를 produsct.html에 전달
