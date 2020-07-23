@@ -16,18 +16,11 @@ from django.views.decorators.csrf import csrf_exempt
 
 
 def home(request):
-    request.session.get('user')
-    products = Item.objects.all().order_by('-view')
-    # 모든 item을 product_list에 저장
-    product_list = {'products': products}
-#
-#
-#     seller_id = request.session.get('seller')
-#     print(seller_id)
-#     if seller_id:
-#         seller_info = Seller.objects.get(pk=seller_id)
-# #        return HttpResponse( .userID)
-    return render(request, 'sellers/home.html', product_list)
+    seller_id = request.session.get('seller')
+    if seller_id:
+        seller_info = Seller.objects.get(pk=seller_id)
+#        return HttpResponse( .userID)     
+    return render(request, 'sellers/home.html')
 
 def signup(request):   #회원가입 페이지를 보여주기 위한 함수
     if request.method == "GET":
@@ -69,13 +62,12 @@ def login(request):
 
         if not (login_username and login_password):
             messages.add_message(request, messages.INFO, '아이디와 비밀번호를 모두 입력해주세요.') # 첫번째, 초기지원
-        else : 
+        else: 
             try:
                 seller = Seller.objects.get(sellerID=login_username) 
                 #db에서 꺼내는 명령. Post로 받아온 username으로 , db의 username을 꺼내온다.
                 if check_password(login_password, seller.password):
                     request.session['seller'] = seller.sellerID 
-                    print(seller.sellerID )
                     #세션도 딕셔너리 변수 사용과 똑같이 사용하면 된다.
                     #세션 user라는 key에 방금 로그인한 id를 저장한것.
                     return redirect('/sellers')
@@ -122,8 +114,9 @@ def register(request):
         image =request.POST.get('image',None)
         detail_image =request.POST.get('detail_image',None)
 
+        print(image)
 
-        if not (name and category and price and description and stock ):#and image and detail_image
+        if not (name and category and price and description and stock and image ):#and image and detail_image
             res_data['error'] = "모든 값을 입력해야 합니다."
             print("모든값입력")
             print( name, category,price,description,stock)
@@ -131,7 +124,6 @@ def register(request):
         else:
             item = Item(name= name,category = category, price=price,description=description,stock=stock,image = image) #image =image, detail_image = detail_image
             item.save()
-            print( name, category,price,description,stock)
 
         return render(request, 'sellers/success.html', res_data)
 
