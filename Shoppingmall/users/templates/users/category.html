@@ -1,0 +1,59 @@
+{%extends 'users/product.html'%}
+
+
+{% block content %}
+
+
+<body >
+  <div style="margin: 0 100px 0px 100px;">
+
+    <form>
+      <select name="sort" >
+        <option value="none">===정렬방식===</option>
+        <option class="sort-date" value="?sort=date">신상품</option>
+
+        <option value="korean">한국어</option>
+        <option value="english">영어</option>
+        <option value="chinese">중국어</option>
+        <option value="spanish">스페인어</option>
+      </select>
+    </form>
+
+    <select id="sort-select" onchange="location = this.value;">
+      <option value="none">===정렬방식===</option>
+      <option class="sort-date" value="?sort=date">신상품</option>
+      <option class="sort-view" value="?sort=view">인기상품</option>
+      <option class="sort-low_price" value="?sort=low_price">낮은가격</option>
+      <option class="sort-high_price" value="?sort=high_price">높은가격</option>
+    </select>
+
+  <form method="POST"    enctype="multipart/form-data">
+
+    <!-- 카테고리 : S -->
+    <div align="center">
+      <h3><strong>BEST ITEM</strong><br></h3>
+        </div>
+        <br><br>
+    <div class="row">
+
+      {% for product in products %}
+
+      <div class="col-md-3 text-center">
+        <a href='/product/{{product.name}}' >
+          <img class ="img-responsive img-center" src = "{{ product.image.url }}" />
+        </a>
+        <br>
+
+        <b>{{product.name}}</b><br>
+        {{product.price}}원
+        </div>
+
+      {% endfor %}
+
+<br><br>
+</form>
+  </div>
+</body>
+
+
+{% endblock %}

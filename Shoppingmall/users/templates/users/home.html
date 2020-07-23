@@ -1,11 +1,13 @@
 {%extends 'users/product.html'%}
-
-
 {% block content %}
 
-<body>
-  <form method="POST"    enctype="multipart/form-data">
 
+<body>
+  <div style="margin: 0 100px 0px 100px">
+
+   
+
+  <form method="POST"enctype="multipart/form-data">
     <!-- 카테고리 : S -->
     <div align="center">
       <h3><strong>BEST ITEM</strong><br></h3>
@@ -16,7 +18,7 @@
       {% for product in products %}
 
       <div class="col-md-3 text-center">
-        <a href='/prolist' >
+        <a href='/product/{{product.name}}' >
           <img class ="img-responsive img-center" src = "{{ product.image.url }}" />
         </a>
         <br>
@@ -29,6 +31,8 @@
 
 <br><br>
 </form>
+  </div>
+</div>
 </body>
 
 

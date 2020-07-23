@@ -8,31 +8,15 @@ from django.http import HttpResponse
 from django.contrib.auth.hashers import make_password,check_password 
 from django.contrib import messages
 
-def product(request):
-    products = Item.objects.all()
-    #모든 item을 product_list에 저장
-    
-    product_list = {'products' : products}
-   
-    #product_list를 products라는 변수로 product.html에 전달
-    return render(request, 'users/product.html',product_list)
-
-
 def home(request):
 
     request.session.get('user')
 
-    products = Item.objects.all()
+    products = Item.objects.all().order_by('-view')
     #모든 item을 product_list에 저장
     product_list = {'products' : products}
-    
+
     return render(request, 'users/home.html',product_list)
-
-'''
-    #product_list를 product.html에 전달
-    render(request, 'users/product.html'
-    '''
-
 
 
 def signup(request):
@@ -120,7 +104,36 @@ def noticedetail(request,pk):
     return render(request,'users/notice_detail.html',{'notice':notice})
 
 
+def category(request,category):
+
+    sort = request.GET.get('sort','') #url의 쿼리스트링을 가져온다. 없는 경우 공백을 리턴한다
+    print(sort)
+
+  #  products = Item.objects.filter(category = category)
+    #모든 item을 product_list에 저장
+    
+    if sort == 'view':
+        products = Item.objects.filter(category = category).order_by('-view')
+    elif sort == 'low_price':
+        products = Item.objects.filter(category = category).order_by('price') #오름차순
+    elif sort == 'high_price':
+        products = Item.objects.filter(category = category).order_by('-price') #내림차순
+    else:
+        products = Item.objects.filter(category = category).order_by('-upload_date')
+    
+    product_list = {'products' : products}
+
+    return render(request, 'users/category.html',product_list)
 
 
 
+def product(request,product):
+    product = Item.objects.get(name = product)
+    print(product.price)
 
+    product_info = {'product' : product}
+    return render(request, 'users/product.html',product_info)
+'''
+    #product_list를 produsct.html에 전달
+    render(request, 'users/product.html'
+    '''
