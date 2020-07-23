@@ -13,8 +13,8 @@
     </div>
     <br><br>
     <!--페이지에서 독립적-->
-    <form method="POST" action="{%url 'register'%}" enctype = "multipart/form-data">
-        {% csrf_token %}
+    <form method="POST" action="{%url 'register'%}" enctype = "multipart/form-data">{% csrf_token %}
+
         <div class="text_style">
             <p>
                 <tr>
@@ -40,24 +40,6 @@
                                             {%endfor%}
                                         </select>
                                         <!--<input type ="submit" value ="선택">-->
-                                    </td>
-                                </div>
-                            </tr>
-                            <tr>
-                                <div class="form-group">
-                                    <td align="center">상품사진</td>
-                                    <td>
-                                        <input type = "file" class="form-control" id="image" name="image"
-                                        style="widows: 200px" accept=".png, .jpeg, .jpg">
-                                    </td>
-                                </div>
-                            </tr>
-                            <tr>
-                                <div class="form-group">
-                                    <td align="center">상세사진</td>
-                                    <td>
-                                        <input type = "file" class="form-control" id="detail_image" name="detail_image"
-                                        style="widows: 200px" accept=".png, .jpeg, .jpg" multiple>
                                     </td>
                                 </div>
                             </tr>
@@ -93,6 +75,15 @@
                                 </div>
                             </tr>
 
+                            <tr>
+                                <div class="form-group">
+                                    <td align="center">상품사진</td>
+                                    <td>
+
+                                        <input type="file" id="image" name="image" style="width:200px">
+                                    </td>
+                                </div>
+                            </tr>
                            
                         </table>
                     </td>
