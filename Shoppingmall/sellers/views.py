@@ -114,18 +114,6 @@ def register(request):
         price = request.POST.get('price',None)
         description = request.POST.get('description',None)
         stock = request.POST.get('stock', None) 
-<<<<<<< HEAD
-     #   image =request.POST.get('image',None)
-      #  detail_image =request.POST.get('detail_image',None)
-
-        if not name and price and description and stock:
-            print("모든 값을 입력해야 합니다.")
-            return render(request, 'sellers/register.html') 
-        else:
-            item = Item(name= name, category=category,price=price,description=description,stock=stock)
-            item.save()
-            return render(request, 'sellers/success.html') 
-=======
         image =request.POST.get('image',None)
         detail_image =request.POST.get('detail_image',None)
 
@@ -141,7 +129,6 @@ def register(request):
             print( name, category,price,description,stock)
 
         return render(request, 'sellers/success.html', res_data)
->>>>>>> fe5bef33643e593d00a82b1b430b528f60aaf15e
 
 def back(request):
     return render(request, 'sellers/item_summary.html')
