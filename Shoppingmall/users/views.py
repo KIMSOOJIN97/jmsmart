@@ -12,23 +12,18 @@ def home(request):
    # top()
 
     request.session.get('user')
-    products = Item.objects.all().order_by('-view')
-    allcategory = Category.objects.all()
-    #모든 item을 product_list에 저장
-    list = {'products' : products}
-    list['allcategory'] = allcategory
 
-    return render(request, 'users/home.html',list)
+    products = Item.objects.all().order_by('-view')
+    #모든 item을 product_list에 저장
+    product_list = {'products' : products}
+
+    return render(request, 'users/home.html',product_list)
 
 
 def signup(request):
-    allcategory = Category.objects.all()
-    list = {'allcategory': allcategory}
-    return render(request, 'users/signup.html',list)
+    return render(request, 'users/signup.html')
 
 def users_signup(request):   #회원가입 페이지를 보여주기 위한 함수
-    allcategory = Category.objects.all()
-    list = {'allcategory': allcategory}
     if request.method == "GET":
         return render(request, 'users/users_signup.html')
 
@@ -44,12 +39,12 @@ def users_signup(request):   #회원가입 페이지를 보여주기 위한 함�
 
         if not (ID and username and password and re_password and address and number and e_mail and postcode) :
             messages.add_message(request, messages.INFO, '모든 값을 입력해야 합니다.') # 첫번째, 초기지원
-            return render(request, 'users/signup.html',list) #register를 요청받으면 register.html 로 응답.
+            return render(request, 'users/signup.html') #register를 요청받으면 register.html 로 응답.
 
         if password != re_password :
             #return HttpResponse('비밀번호가 다릅니다.')
             messages.add_message(request, messages.INFO, '비밀번호가 다릅니다.') # 첫번째, 초기지원
-            return render(request, 'users_signup.html',list) #register를 요청받으면 register.html 로 응답.
+            return render(request, 'users_signup.html') #register를 요청받으면 register.html 로 응답.       
 
         else :
             user = User(userID = ID, password=make_password(password),username=username,postcode = postcode, address = address, phone=number,e_mail = e_mail)
@@ -60,11 +55,8 @@ def users_signup(request):   #회원가입 페이지를 보여주기 위한 함�
 
 
 def login(request):
-    allcategory = Category.objects.all()
-    list = {'allcategory': allcategory}
-
     if request.method == "GET" :
-        return render(request, 'users/login.html',list)
+        return render(request, 'users/login.html')
 
     elif request.method == "POST":
         login_username = request.POST.get('ID', None)
@@ -88,7 +80,7 @@ def login(request):
             except User.DoesNotExist:
                 messages.add_message(request, messages.INFO, '가입하지 않은 아이디입니다.') # 첫번째, 초기지원
 
-        return render(request, 'users/login.html',list)
+        return render(request, 'users/login.html')
 
 def logout(request):
     if request.session.get('user'):
@@ -97,36 +89,23 @@ def logout(request):
 
 
 def mypage(request):
-    allcategory = Category.objects.all()
-    list = {'allcategory': allcategory}
     myuser_id = request.session.get('user')
     myuser_info =User.objects.get(userID=myuser_id)
-    list['myuser_info'] =myuser_info
-    return render(request, 'users/mypage.html',list)
+    return render(request, 'users/mypage.html',{'myuser_info':myuser_info})
 
 
 
 
 def notice(request):
-    allcategory = Category.objects.all()
-    list = {'allcategory': allcategory}
     notice_list = Notice.objects.all()
-    list['notice_list']=notice_list
-    return render(request,'users/notice.html',list)
+    return render(request,'users/notice.html',{'notice_list':notice_list})
 
 def noticedetail(request,pk):
-    allcategory = Category.objects.all()
-    list = {'allcategory': allcategory}
-
     notice = Notice.objects.get(id=pk)
-    list['notice']=notice
-
-    return render(request,'users/notice_detail.html',list)
+    return render(request,'users/notice_detail.html',{'notice':notice})
 
 
 def category(request,category):
-    allcategory = Category.objects.all()
-    list = {'allcategory': allcategory}
 
 
     #category 테이블에서 해당 카테고리에 관한 값을 받아온다
@@ -146,13 +125,14 @@ def category(request,category):
             products = Item.objects.filter(category = cate.id).order_by('-price') #내림차순
         else:
             products = Item.objects.filter(category = cate.id).order_by('-upload_date')
-        list['products'] =products
+        
+        product_list = {'products' : products}
 
-        return render(request, 'users/category.html',list)
+        return render(request, 'users/category.html',product_list)
 
     except Category.DoesNotExist:
-        list['products'] = None
-        return render(request, 'users/category.html',list)
+        return render(request, 'users/category.html',{'product_list': None})
+
 
 
 
@@ -160,13 +140,10 @@ def category(request,category):
     
 
 
-def product(request,category,product):
-    allcategory = Category.objects.all()
-    list = {'allcategory': allcategory}
-    thisproduct = Item.objects.get(name = product)
-    print(thisproduct.price)
-    list['product']= thisproduct
-    return render(request, 'users/product.html',list)
+def product(request,product):
+    product = Item.objects.get(name = product)
+    product_info = {'product' : product}
+    return render(request, 'users/product.html',product_info)
 '''
     #product_list를 produsct.html에 전달
     render(request, 'users/product.html'
