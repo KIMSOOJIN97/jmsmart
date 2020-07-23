@@ -4,12 +4,16 @@ import datetime
 from django.shortcuts import render,redirect
 from .models import *
 from django.contrib import auth
+
 from django.http import HttpResponse
 from django.contrib.auth.hashers import make_password,check_password 
-from django.core.files.storage import FileSystemStorage
+
 from django.contrib import messages
+
+
 #crsf_token error 
 from django.views.decorators.csrf import csrf_exempt
+
 
 def home(request):
     allcategory = Category.objects.all()
@@ -26,8 +30,6 @@ def home(request):
 #         seller_info = Seller.objects.get(pk=seller_id)
 # #        return HttpResponse( .userID)
     return render(request, 'sellers/home.html', list)
-
-
 
 def signup(request):   #회원가입 페이지를 보여주기 위한 함수
     allcategory = Category.objects.all()
@@ -46,7 +48,7 @@ def signup(request):   #회원가입 페이지를 보여주기 위한 함수
         e_mail = request.POST.get('e_mail',None)
         corporate_number = request.POST.get('corporate_number',None)
 
-        res_data = {}
+        res_data = {} 
         if not (ID and company_name and password and re_password and address and number and e_mail and postcode and corporate_number) :
             messages.add_message(request, messages.INFO, '모든 값을 입력해야 합니다.') # 첫번째, 초기지원
             return render(request, 'sellers/signup.html', list) #register를 요청받으면 register.html 로 응답.
@@ -68,17 +70,17 @@ def login(request):
         return render(request, 'sellers/login.html',list)
 
     elif request.method == "POST":
-        login_username = request.POST.get('ID', None)
+        login_username = request.POST.get('ID', None)   
         login_password = request.POST.get('password', None)
 
         if not (login_username and login_password):
             messages.add_message(request, messages.INFO, '아이디와 비밀번호를 모두 입력해주세요.') # 첫번째, 초기지원
-        else :
+        else : 
             try:
-                seller = Seller.objects.get(sellerID=login_username)
+                seller = Seller.objects.get(sellerID=login_username) 
                 #db에서 꺼내는 명령. Post로 받아온 username으로 , db의 username을 꺼내온다.
                 if check_password(login_password, seller.password):
-                    request.session['seller'] = seller.sellerID
+                    request.session['seller'] = seller.sellerID 
                     print(seller.sellerID )
                     #세션도 딕셔너리 변수 사용과 똑같이 사용하면 된다.
                     #세션 user라는 key에 방금 로그인한 id를 저장한것.
@@ -91,12 +93,10 @@ def login(request):
 
         return render(request, 'users/login.html',list)
 
-
 def logout(request):
     if request.session.get('seller'):
         del(request.session['seller'])
     return redirect('/sellers')
-
 
 def mypage(request):
     allcategory = Category.objects.all()
@@ -117,81 +117,41 @@ def item(request):
 
 
 @csrf_exempt
-
 def register(request):
+
     allcategory=Category.objects.all()
     res_data = {}
     res_data['allcategory'] = allcategory
-    selectcategory = request.POST.get('selectcategory',None)
+    selectcategory = request.POST.get('selectcategory',"nothing")
     if request.method == "GET":
         return render(request, 'sellers/register.html',res_data)
     elif request.method == "POST":
+        category = request.POST.get('category',None)
         name = request.POST.get('name',None)   #딕셔너리형태
         category = Category.objects.get(name=selectcategory)
         price = request.POST.get('price',None)
         description = request.POST.get('description',None)
-        stock = request.POST.get('stock', None)
-        image = request.FILES['image']
-        detail_image = request.FILES['detail_image']
+        stock = request.POST.get('stock', None) 
+        image =request.POST.get('image',None)
+        detail_image =request.POST.get('detail_image',None)
 
-        fs = FileSystemStorage()
 
-        image_name = fs.save(image.name, image)
-        detail_image_name = fs.save(detail_image.name, detail_image)
-
-        res_data['image_url'] = fs.url(image.name)
-        res_data['detail_image_url'] = fs.url(detail_image.name)
-
-        if not (image and detail_image and name and category and price and description and stock):
-            messages.add_message(request, messages.INFO, '모든 값을 입력해야 합니다.')
+        if not (name and category and price and description and stock ):#and image and detail_image
+            res_data['error'] = "모든 값을 입력해야 합니다."
+            print("모든값입력")
+            print( name, category,price,description,stock)
             return render(request, 'sellers/register.html', res_data) 
         else:
-            item = Item(image=image, detail_image = detail_image, name= name,category = category, price=price,description=description,stock=stock)
+            item = Item(name= name,category = category, price=price,description=description,stock=stock,image = image) #image =image, detail_image = detail_image
             item.save()
+            print( name, category,price,description,stock)
 
         return render(request, 'sellers/success.html', res_data)
 
 def back(request):
     return render(request, 'sellers/item_summary.html')
 
-def product(request, category, product):
 
-    allcategory = Category.objects.all()
-    list = {'allcategory': allcategory}
-    thisproduct = Item.objects.get(name=product)
-    thisproduct.view = thisproduct.view+1
-    thisproduct.save()
-    list['product'] = thisproduct
-    return render(request, 'users/product.html', list)
-
-def category(request, category):
-    allcategory = Category.objects.all()
-    list = {'allcategory': allcategory}
-
-    # category 테이블에서 해당 카테고리에 관한 값을 받아온다
-    try:
-        cate = Category.objects.get(name=category)
-
-        sort = request.GET.get('sort', '')  # url의 쿼리스트링을 가져온다. 없는 경우 공백을 리턴한다
-
-        #  products = Item.objects.filter(category = category)
-        # 모든 item을 product_list에 저장
-        # cate.id를 통해 foreign key 조회 가능
-        if sort == 'view':
-            products = Item.objects.filter(category=cate.id).order_by('-view')
-        elif sort == 'low_price':
-            products = Item.objects.filter(category=cate.id).order_by('price')  # 오름차순
-        elif sort == 'high_price':
-            products = Item.objects.filter(category=cate.id).order_by('-price')  # 내림차순
-        else:
-            products = Item.objects.filter(category=cate.id).order_by('-upload_date')
-        list['products'] = products
-
-        return render(request, 'users/category.html', list)
-
-    except Category.DoesNotExist:
-        list['products'] = None
-        return render(request, 'users/category.html', list)
 
 from django.views import generic
 
@@ -207,15 +167,9 @@ class NoticeListView(generic.ListView):
 
 
 
+
 class NoticeDetailView(generic.DetailView):
     model = Notice
-
-    def get_context_data(self, **kwargs):
-        allcategory = Category.objects.all()
-        notice = super(NoticeDetailView, self).get_context_data(**kwargs)
-        notice['allcategory'] = allcategory
-        return  notice
-
 
 
 
@@ -243,3 +197,4 @@ def notice_addPost(request):
             addPost = Notice(title=title,content=content,author= author)
             addPost.save()
             return redirect('/sellers/notice/',list)
+
