@@ -4,8 +4,7 @@ from . import views
 
 urlpatterns = [
     
-    path('',views.home,name='home'),
-
+    path('',views.item,name='item'),
 
     path('signup',views.signup,name='sellers_signup'),
     path('login',views.login,name='sellers_login'),
@@ -17,5 +16,4 @@ urlpatterns = [
     path('notice/<int:pk>', views.NoticeDetailView.as_view(), name='notice_detail'),
 
     path('mypage/', views.mypage, name='sellermypage'),
-    path('mypage/productlist', views.item, name = 'item')
 ]
