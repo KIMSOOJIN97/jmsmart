@@ -104,8 +104,6 @@ def noticedetail(request,pk):
 
 
 def category(request,category):
-
-
     #category 테이블에서 해당 카테고리에 관한 값을 받아온다
     try:
         cate = Category.objects.get(name = category)
@@ -139,8 +137,13 @@ def category(request,category):
 def product(request,product):
     thisproduct = Item.objects.get(name = product)
     print(thisproduct.price)
-
+    thisproduct.view = thisproduct.view+1
+    thisproduct.save()
     product_info = {'product' : thisproduct}
+
+    
+
+
     return render(request, 'users/product.html',product_info)
 '''
     #product_list를 produsct.html에 전달
