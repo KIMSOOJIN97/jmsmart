@@ -1,107 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+    <!--정적 파일 실행-->
+    {% load static %}
 
-<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link
+      rel="stylesheet"
+      href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"
+    />
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
-<!--정적 파일 실행-->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
 
-{% load static %}
-<link rel="stylesheet" href="{% static 'css/users.css' %}">
+    <link rel="stylesheet" href="{% static 'css/users.css' %}" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"
+    />
 
-<title>폼나냥</title>
+    <script
+      src="{% static 'js/users.js' %}"
+      type="text/javascript"
+      defer
+    ></script>
+    <title>폼나냥</title>
+  </head>
+  <body>
+    <div class="navbar">
+      <div class="navbar_menu">
+        {% if request.session.user %}
+        <li><a href="/">LOGOUT</a></li>
+        <li><a href="/mypage">MYPAGE</a></li>
+        {% else %}
+        <li><a href="/login">LOGIN</a></li>
+        <li><a href="/signup">JOIN</a></li>
+        <li>
+          <a onClick="alert('구매자 로그인이 필요합니다')">MYPAGE</a>
+        </li>
+        {% endif %}
+        <li><a href="/cart">CART</a></li>
 
-<div style="overflow:scroll; width:100vw; height:100vh;">
-
-  <nav class="navbar navbar-expand-md">
-  
-    <div class="collapse navbar-collapse" id="navbarSupportedContent"></div>
-  
-  <div class="text-right">
-  <ul class="nav nav-tabs"> 
-  
-  {% if request.session.user %}
-  <li class="nav-item">
-    <a class="nav-link"  href="/logout"><span style="color:black; font-size:1.25em;">LOGOUT</span>
-        <br> </a>
-  </li>
-  {% else %}
-    <li class="nav-item">
-        <a class="nav-link"  href="/login"><span style="color:black; font-size:1.25em;">LOGIN</span>
-            <br> </a>
-    </li>
-  {% endif %}
-
-    <li class="nav-item">
-      <a class="nav-link"  href="/signup"><span style="color:black; font-size:1.25em;">JOIN</span>
-        <br> </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="/cart"><span style="color:black; font-size:1.25em;">CART</span>
-          <br> </a>
-      </li>
-
-    {% if request.session.user %}
-    <li class="nav-item">
-      <a class="nav-link" href="/mypage"><span style="color:black; font-size:1.25em;">MYPAGE</span>
-        <br> </a>
-    </li>
-    {% else %}
-    <!--로그인안하면안된다는 경고메세지-->
-    <li class="nav-item">
-      <a class="nav-link" onClick="alert('구매자 로그인이 필요합니다')"><span style="color:black; font-size:1.25em;">MYPAGE</span>
-        <br> </a>
-    </li>
-
-    {% endif %}
-
-    <li class="nav-item">
-      <a class="nav-link" href="/notice"><span style="color:black;  font-size:1.25em;">NOTICE</span>
-        <br> </a>
-    </li>
-  </ul>
-  </div>
-  </nav>
-  
-  <br><br>
-  
-
-<br>
-
-
-      
-    <div col-md-3>
-      <div>
-
-      <span class="input-group-btn" > 
-        <a class="nav-link"  href="/"><h1><span style="color:black;position:absolute; left:680;">폼나냥</h1></span></a>
+        <li><a href="/notice">NOTICE</a></li>
+      </div>
+      <!--클릭하면 메인 홈페이지로 가는 것을 방지하기 위해 # 넣어줌-->
+      <a href="#" class="navbar__toggleBtn">
+        <i class="fas fa-bars"></i>
+      </a>
     </div>
-  </div>
 
-</a> 
-<br><br><br><br>
-<div class="">
-<div class="container-fluid">
-    <div class="">
+    <a class="nav-link" href="/" style="color: black; text-align: center;"
+      ><h1>폼나냥</h1></a
+    >
+
+    <br /><br />
+    <div class="container-fluid">
       <ul class="nav nav-tabs">
-        {% for category in allcategory%}
         <li class="nav-item">
-            <a class="nav-link" href="/category/{{category.name}}"><span style="color:black; font-size:1.25em;">{{category.name}}</span>
-              <br> </a>
-          </li>
-        {% endfor %}
+          <a class="nav-link" href="/category/커플룩"
+            ><span style="color: black; font-size: 1.25em;">커플룩</span>
+            <br />
+          </a>
+        </li>
 
+        <li class="nav-item">
+          <a class="nav-link" href="/category/여성옷"
+            ><span style="color: black; font-size: 1.25em;">여성옷</span>
+            <br />
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/category/아우터"
+            ><span style="color: black; font-size: 1.25em;">아우터</span>
+            <br />
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/category/상의"
+            ><span style="color: black; font-size: 1.25em;">상의</span> <br />
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/category/악세서리"
+            ><span style="color: black; font-size: 1.25em;">악세서리</span>
+            <br />
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/category/간식">
+            <span style="color: black; font-size: 1.25em;">간식</span> <br />
+          </a>
+        </li>
       </ul>
     </div>
-  </div>
-</div>
-<br><br>
 
+    <br /><br />
+  </body>
+</html>
 
-{% block content %}
-{% endblock %}
-
-<hr width = "100%" color = "gray" size = "1">
-</div>
+{% block content %} {% endblock %}
