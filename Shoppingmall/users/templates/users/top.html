@@ -13,11 +13,6 @@
     />
 
     <link
-      href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap"
-      rel="stylesheet"
-    />
-
-    <link
       rel="stylesheet"
       href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
     />
@@ -61,27 +56,48 @@
       </a>
     </div>
 
-    <a
-      class="nav-link"
-      href="/"
-      style="
-        font-family: 'Black Han Sans', sans-serif;
-        color: black;
-        text-align: center;
-        font-size: 200px;
-      "
+    <a class="nav-link" href="/" style="color: black; text-align: center;"
       ><h1>폼나냥</h1></a
     >
 
     <br /><br />
     <div class="container-fluid">
       <ul class="nav nav-tabs">
-        {% for category in allcategory%}
         <li class="nav-item">
-            <a class="nav-link" href="/category/{{category.name}}"><span style="color:black; font-size:1.25em;">{{category.name}}</span>
-              <br> </a>
-          </li>
-        {% endfor %}
+          <a class="nav-link" href="/category/커플룩"
+            ><span style="color: black; font-size: 1.25em;">커플룩</span>
+            <br />
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="/category/여성옷"
+            ><span style="color: black; font-size: 1.25em;">여성옷</span>
+            <br />
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/category/아우터"
+            ><span style="color: black; font-size: 1.25em;">아우터</span>
+            <br />
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/category/상의"
+            ><span style="color: black; font-size: 1.25em;">상의</span> <br />
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/category/악세서리"
+            ><span style="color: black; font-size: 1.25em;">악세서리</span>
+            <br />
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/category/간식">
+            <span style="color: black; font-size: 1.25em;">간식</span> <br />
+          </a>
+        </li>
       </ul>
     </div>
 
