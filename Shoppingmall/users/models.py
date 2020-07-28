@@ -17,11 +17,7 @@ class User(models.Model): #장고에서 제공하는 models.Model를 상속받�
     def __str__(self):
         return self.userID
 
-class Cart(models.Model):
-    
-    user =  models.ForeignKey(User, null=True, on_delete=models.CASCADE,verbose_name="사용자")
-    product = models.ForeignKey(Item, null=True, on_delete=models.CASCADE,verbose_name="상품")
-    
+
 
 
 
