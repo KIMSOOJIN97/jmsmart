@@ -10,7 +10,7 @@
         {% for product in products %}
 
         <div class="col-md-3 text-center">
-          <a href="/product/{{product.name}}">
+          <a href='/category/{{product.category}}/{{product.name}}'>
             <img
               class="img-responsive img-center"
               src="{{ product.image.url }}"
