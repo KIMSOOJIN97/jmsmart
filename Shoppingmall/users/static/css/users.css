@@ -124,12 +124,11 @@ body {
 a {
   text-decoration: none;
   color: black;
-  align-items: right;
 }
 
 .navbar {
   display: flex;
-  align-items: right;
+  margin-left: auto;
   padding: 8px 12px;
 }
 
@@ -137,11 +136,12 @@ a {
   display: flex;
   list-style: none;
   padding-right: 0px;
+  margin-left: auto;
 }
 
 .navbar_menu li {
-  padding: 8px 12px;
-  text-decoration: none;
+  padding: 8px 8px;
+  font-size: 1.25em;
 }
 
 .navbar_menu li:hover {
