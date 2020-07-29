@@ -39,10 +39,10 @@ class Item(models.Model):
     def __str__(self):
         return self.name
     
-    @property
-    def update_counter(self):
-        self.view = self.view+1
-        self.save()
+    # @property
+    # def update_counter(self):
+    #     self.view = self.view+1
+    #     self.save()
 
     class Meta:
         ordering = ['seller']
