@@ -154,10 +154,13 @@ def register(request):
 def back(request):
     return render(request, 'sellers/item_summary.html')
 
-def product(request,product):
-    items = Item.objects.get(name=product)
-    context = {'items':items} #context에 모든 후보에 대한 정보를 저장
-    return render(request, 'sellers/detail.html', context)# context로 html에 모든 후보에 대한 정보를 전달
+def product(request, category, product):
+
+    allcategory = Category.objects.all()
+    list = {'allcategory': allcategory}
+    thisproduct = Item.objects.get(name=product)
+    list['product'] = thisproduct
+    return render(request, 'users/product.html', list)
 
 def category(request, category):
     allcategory = Category.objects.all()
