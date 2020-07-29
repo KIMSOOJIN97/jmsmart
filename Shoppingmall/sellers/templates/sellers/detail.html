@@ -3,14 +3,14 @@
 <div class="product_list">
   <div class="col-md-6">
     <img class="img-responsive img-center" src="{{ product.image.url }}" />
-    <nav style="text-align: right;">
-      <h2>{{product.view}}</h2>
-    </nav>
-  
+    <!-- <nav style="text-align: right;">
+      <h2>{{product_info.view}}</h2>
+    </nav> -->
+  </div>
   <nav style="text-align: center;">
-    <h2>{{product.name}}</h2>
+    <h2>{{product_info.name}}</h2>
   </nav>
-  {{ product.update_counter}}
+  {{ product_info.update_counter}}
   <div class="col-md-6">
     <div style="padding: 0 50px 0 0;"><h4>{{product.name}}</h4></div>
     <br />
