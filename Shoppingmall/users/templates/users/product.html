@@ -4,7 +4,9 @@
   <div class="col-md-6">
     <img class="img-responsive img-center" src="{{ product.image.url }}" />
   </div>
-  <h2>{{product_info.name}}</h2>
+  <nav style="text-align: center;">
+    <h2>{{product_info.name}}</h2>
+  </nav>
   {{ product_info.update_counter}}
   <div class="col-md-6">
     <div style="padding: 0 50px 0 0;"><h4>{{product.name}}</h4></div>
@@ -37,7 +39,7 @@
       type="button"
       value="구매하기"
       onclick="location.href='users/signup' "
-      class="main-btn"
+      class="main-btn btn-dark"
       style="width: 30%; height: 50px; font-size: 150%;"
     />
 
@@ -46,11 +48,11 @@
       type="button"
       value="구매하기"
       onclick="location.href='/login' "
-      class="main-btn"
+      class="main-btn btn-dark"
       style="width: 30%; height: 50px; font-size: 150%;"
     />
-
     {% endif %}
+    
     <input
       type="button"
       value="장바구니"
