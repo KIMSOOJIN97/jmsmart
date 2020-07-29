@@ -154,7 +154,39 @@ def register(request):
 def back(request):
     return render(request, 'sellers/item_summary.html')
 
+def product(request,product):
+    items = Item.objects.get(name=product)
+    context = {'items':items} #context에 모든 후보에 대한 정보를 저장
+    return render(request, 'sellers/detail.html', context)# context로 html에 모든 후보에 대한 정보를 전달
 
+def category(request, category):
+    allcategory = Category.objects.all()
+    list = {'allcategory': allcategory}
+
+    # category 테이블에서 해당 카테고리에 관한 값을 받아온다
+    try:
+        cate = Category.objects.get(name=category)
+
+        sort = request.GET.get('sort', '')  # url의 쿼리스트링을 가져온다. 없는 경우 공백을 리턴한다
+
+        #  products = Item.objects.filter(category = category)
+        # 모든 item을 product_list에 저장
+        # cate.id를 통해 foreign key 조회 가능
+        if sort == 'view':
+            products = Item.objects.filter(category=cate.id).order_by('-view')
+        elif sort == 'low_price':
+            products = Item.objects.filter(category=cate.id).order_by('price')  # 오름차순
+        elif sort == 'high_price':
+            products = Item.objects.filter(category=cate.id).order_by('-price')  # 내림차순
+        else:
+            products = Item.objects.filter(category=cate.id).order_by('-upload_date')
+        list['products'] = products
+
+        return render(request, 'users/category.html', list)
+
+    except Category.DoesNotExist:
+        list['products'] = None
+        return render(request, 'users/category.html', list)
 
 from django.views import generic
 
