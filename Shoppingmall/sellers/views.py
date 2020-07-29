@@ -159,8 +159,6 @@ def product(request, category, product):
     allcategory = Category.objects.all()
     list = {'allcategory': allcategory}
     thisproduct = Item.objects.get(name=product)
-    thisproduct.view = thisproduct.view+1
-    thisproduct.save()
     list['product'] = thisproduct
     return render(request, 'users/product.html', list)
 
