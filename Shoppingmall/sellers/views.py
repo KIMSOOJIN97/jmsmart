@@ -15,17 +15,28 @@ from django.contrib import messages
 from django.views.decorators.csrf import csrf_exempt
 
 def home(request):
+    allcategory = Category.objects.all()
+    list = {'allcategory': allcategory}
     request.session.get('user')
     products = Item.objects.all().order_by('-view')
     # 모든 item을 product_list에 저장
-    product_list = {'products': products}
-    return render(request, 'sellers/home.html', product_list)
+    list['products']= products
+#
+#
+#     seller_id = request.session.get('seller')
+#     print(seller_id)
+#     if seller_id:
+#         seller_info = Seller.objects.get(pk=seller_id)
+# #        return HttpResponse( .userID)
+    return render(request, 'sellers/home.html', list)
 
 
 
 def signup(request):   #회원가입 페이지를 보여주기 위한 함수
+    allcategory = Category.objects.all()
+    list = {'allcategory': allcategory}
     if request.method == "GET":
-        return render(request, 'sellers/signup.html')
+        return render(request, 'sellers/signup.html',list)
 
     elif request.method == "POST":
         ID = request.POST.get('ID',None)   #딕셔너리형태
@@ -38,14 +49,14 @@ def signup(request):   #회원가입 페이지를 보여주기 위한 함수
         e_mail = request.POST.get('e_mail',None)
         corporate_number = request.POST.get('corporate_number',None)
 
-        res_data = {} 
+        res_data = {}
         if not (ID and company_name and password and re_password and address and number and e_mail and postcode and corporate_number) :
             messages.add_message(request, messages.INFO, '모든 값을 입력해야 합니다.') # 첫번째, 초기지원
-            return render(request, 'sellers/signup.html', res_data) #register를 요청받으면 register.html 로 응답.
+            return render(request, 'sellers/signup.html', list) #register를 요청받으면 register.html 로 응답.
 
         if password != re_password :
             messages.add_message(request, messages.INFO, '비밀번호가 다릅니다.') # 첫번째, 초기지원
-            return render(request, 'sellers/signup.html', res_data) #register를 요청받으면 register.html 로 응답.
+            return render(request, 'sellers/signup.html', list) #register를 요청받으면 register.html 로 응답.
         else :
             seller = Seller(sellerID = ID, password=make_password(password),company_name=company_name,postcode = postcode, address = address, phone=number,e_mail = e_mail,corporate_number= corporate_number )
             seller.save()
@@ -53,22 +64,25 @@ def signup(request):   #회원가입 페이지를 보여주기 위한 함수
 
 
 def login(request):
+    allcategory = Category.objects.all()
+    list = {'allcategory': allcategory}
     response_data = {}
     if request.method == "GET" :
-        return render(request, 'sellers/login.html')
+        return render(request, 'sellers/login.html',list)
 
     elif request.method == "POST":
-        login_username = request.POST.get('ID', None)   
+        login_username = request.POST.get('ID', None)
         login_password = request.POST.get('password', None)
 
         if not (login_username and login_password):
             messages.add_message(request, messages.INFO, '아이디와 비밀번호를 모두 입력해주세요.') # 첫번째, 초기지원
-        else: 
+        else :
             try:
-                seller = Seller.objects.get(sellerID=login_username) 
+                seller = Seller.objects.get(sellerID=login_username)
                 #db에서 꺼내는 명령. Post로 받아온 username으로 , db의 username을 꺼내온다.
                 if check_password(login_password, seller.password):
-                    request.session['seller'] = seller.sellerID 
+                    request.session['seller'] = seller.sellerID
+                    print(seller.sellerID )
                     #세션도 딕셔너리 변수 사용과 똑같이 사용하면 된다.
                     #세션 user라는 key에 방금 로그인한 id를 저장한것.
                     return redirect('/sellers')
@@ -78,24 +92,31 @@ def login(request):
             except Seller.DoesNotExist:
                 messages.add_message(request, messages.INFO, '가입하지 않은 아이디입니다.') # 첫번째, 초기지원
 
-        return render(request, 'users/login.html',response_data)
+        return render(request, 'users/login.html',list)
+
 
 def logout(request):
     if request.session.get('seller'):
         del(request.session['seller'])
     return redirect('/sellers')
 
+
 def mypage(request):
-    item(request)
+    allcategory = Category.objects.all()
+    list = {'allcategory': allcategory}
     myseller_id = request.session.get('seller')
     myseller_info =Seller.objects.get(sellerID=myseller_id)
-    return render(request, 'sellers/mypage.html',{'myseller_info':myseller_info})
+    list['myseller_info']=myseller_info
+    return render(request, 'sellers/mypage.html',list)
 
 
 def item(request):
+    allcategory = Category.objects.all()
+    list = {'allcategory': allcategory}
+
     items = Item.objects.all()
-    context = {'items':items} #context에 모든 후보에 대한 정보를 저장
-    return render(request, 'sellers/item_summary.html', context)# context로 html에 모든 후보에 대한 정보를 전달
+    list['items']=items #context에 모든 후보에 대한 정보를 저장
+    return render(request, 'sellers/item_summary.html', list)# context로 html에 모든 후보에 대한 정보를 전달
 
 
 @csrf_exempt
@@ -137,13 +158,19 @@ def back(request):
 from django.views import generic
 
 class NoticeListView(generic.ListView):
+
     model = Notice
     paginate_by = 10
     def get_context_data(self, **kwargs):
+        allcategory = Category.objects.all()
         a =self.request.session.get('seller')
         notice_list = Notice.objects.all()
-        return {"sellerid": a, "notice_list":notice_list}
+        return {"sellerid": a, "notice_list":notice_list,'allcategory': allcategory}
 
+
+
+class NoticeDetailView(generic.DetailView):
+    model = Notice
 
 
 
@@ -153,9 +180,12 @@ class NoticeDetailView(generic.DetailView):
 
 
 def notice_addPost(request):
+    allcategory = Category.objects.all()
+    list = {'allcategory': allcategory}
     myseller_id = request.session.get('seller')
+    list["myseller_id" ]=myseller_id
     if request.method == "GET":
-        return render(request, 'sellers/notice_addPost.html',{"myseller_id" :myseller_id})
+        return render(request, 'sellers/notice_addPost.html',list)
 
     elif request.method == "POST":
         author = Seller.objects.get(sellerID = myseller_id)
@@ -172,5 +202,4 @@ def notice_addPost(request):
             # author = "ddd",
             addPost = Notice(title=title,content=content,author= author)
             addPost.save()
-            return redirect('/sellers/notice/',{"myseller_id" :myseller_id})
-
+            return redirect('/sellers/notice/',list)
