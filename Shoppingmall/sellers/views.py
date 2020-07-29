@@ -83,6 +83,7 @@ def logout(request):
     return redirect('/sellers')
 
 def mypage(request):
+    item(request)
     myseller_id = request.session.get('seller')
     myseller_info =Seller.objects.get(sellerID=myseller_id)
     return render(request, 'sellers/mypage.html',{'myseller_info':myseller_info})
