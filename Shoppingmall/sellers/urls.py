@@ -11,6 +11,7 @@ urlpatterns = [
     path('login',views.login,name='sellers_login'),
     path('logout',views.logout,name='sellers_logout'),
     path('register/',views.register,name='register'),
+    path('category/<str:category>/<str:product>',views.product,name='product'),
 
     path('notice/',views.NoticeListView.as_view(), name='notice'),
     path('notice/addPost', views.notice_addPost, name='notice_addPost'),
