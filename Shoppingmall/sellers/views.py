@@ -172,10 +172,12 @@ class NoticeListView(generic.ListView):
 class NoticeDetailView(generic.DetailView):
     model = Notice
 
+    def get_context_data(self, **kwargs):
+        allcategory = Category.objects.all()
+        notice = super(NoticeDetailView, self).get_context_data(**kwargs)
+        notice['allcategory'] = allcategory
+        return  notice
 
-
-class NoticeDetailView(generic.DetailView):
-    model = Notice
 
 
 
