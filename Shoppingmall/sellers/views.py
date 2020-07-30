@@ -5,10 +5,10 @@ from django.shortcuts import render,redirect
 from .models import *
 from django.contrib import auth
 from django.http import HttpResponse
-from django.contrib.auth.hashers import make_password,check_password 
+from django.contrib.auth.hashers import make_password,check_password
 from django.core.files.storage import FileSystemStorage
 from django.contrib import messages
-#crsf_token error 
+#crsf_token error
 from django.views.decorators.csrf import csrf_exempt
 
 def home(request):
@@ -144,7 +144,7 @@ def register(request):
 
         if not (image and detail_image and name and category and price and description and stock):
             messages.add_message(request, messages.INFO, '모든 값을 입력해야 합니다.')
-            return render(request, 'sellers/register.html', res_data) 
+            return render(request, 'sellers/register.html', res_data)
         else:
             item = Item(image=image, detail_image = detail_image, name= name,category = category, price=price,description=description,stock=stock)
             item.save()
@@ -154,10 +154,13 @@ def register(request):
 def back(request):
     return render(request, 'sellers/item_summary.html')
 
-def product(request,product):
-    items = Item.objects.get(name=product)
-    context = {'items':items} #context에 모든 후보에 대한 정보를 저장
-    return render(request, 'sellers/detail.html', context)# context로 html에 모든 후보에 대한 정보를 전달
+def product(request, category, product):
+
+    allcategory = Category.objects.all()
+    list = {'allcategory': allcategory}
+    thisproduct = Item.objects.get(name=product)
+    list['product'] = thisproduct
+    return render(request, 'users/product.html', list)
 
 def category(request, category):
     allcategory = Category.objects.all()
