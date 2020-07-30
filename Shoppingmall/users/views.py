@@ -157,7 +157,7 @@ def category(request, category):
 
 
 def product(request, category, product):
-
+    
     allcategory = Category.objects.all()
     list = {'allcategory': allcategory}
     thisproduct = Item.objects.get(name=product)
