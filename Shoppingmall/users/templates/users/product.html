@@ -6,67 +6,62 @@
     <nav style="text-align: right;">
       <h2>{{product.view}}</h2>
     </nav>
-  
-  <nav style="text-align: center;">
-    <h2>{{product.name}}</h2>
-  </nav>
-  {{ product.update_counter}}
-  <div class="col-md-6">
-    <div style="padding: 0 50px 0 0;"><h4>{{product.name}}</h4></div>
-    <br />
-    <table class="type04">
-      <tr>
-        <th scope="row">판매가</th>
-        <td>{{product.price}}원</td>
-      </tr>
-      <tr>
-        <th scope="row">수량</th>
-        <td>
-          <input
-            class="input"
-            type="number"
-            id="product_number"
-            name="product_number"
-            placeholder="수량"
-          />
-        </td>
-      </tr>
-      <tr>
-        {% if product.stock == 0 %}
-        <p><strong>재고 상태:</strong>재고 없음</p>
+    <form method="POST">
+      <nav style="text-align: center;">
+        <h2>{{product.name}}</h2>
+      </nav>
+      <div class="col-md-6">
+        <div style="padding: 0 50px 0 0;"><h4>{{product.name}}</h4></div>
+        <br />
+        <table class="type04">
+          <tr>
+            <th scope="row">판매가</th>
+            <td>{{product.price}}원</td>
+          </tr>
+          <tr>
+            <th scope="row">수량</th>
+            <td>
+              <input
+                class="input"
+                type="number"
+                id="quantity"
+                name="quantity"
+                placeholder="수량"
+              />
+            </td>
+          </tr>
+          <tr>
+            {% if product.stock == 0 %}
+            <p><strong>재고 상태:</strong>재고 없음</p>
+            {% endif %}
+          </tr>
+        </table>
+        {% if request.session.user %}
+        <a href="/order_form/{{product.name}}">
+          구매하기
+        </a>
+        {% else %}
+        <input
+          type="button"
+          value="구매하기"
+          onclick="location.href='/login' "
+          class="main-btn btn-dark"
+          style="width: 30%; height: 50px; font-size: 150%;"
+        />
         {% endif %}
-      </tr>
-    </table>
-    {% if request.session.user %}
-    <input
-      type="button"
-      value="구매하기"
-      onclick="location.href='users/signup' "
-      class="main-btn btn-dark"
-      style="width: 30%; height: 50px; font-size: 150%;"
-    />
 
-    {% else %}
-    <input
-      type="button"
-      value="구매하기"
-      onclick="location.href='/login' "
-      class="main-btn btn-dark"
-      style="width: 30%; height: 50px; font-size: 150%;"
-    />
-    {% endif %}
-    
-    <input
-      type="button"
-      value="장바구니"
-      onclick="location.href='/login' "
-      class="main-btn"
-      style="width: 30%; height: 50px; font-size: 150%;"
-    />
+        <input
+          type="button"
+          value="장바구니"
+          class="main-btn"
+          style="width: 30%; height: 50px; font-size: 150%;"
+        />
+      </div>
+    </form>
+
+    <br /><br />
   </div>
+  <img class="img-responsive img-center" src="{{ product.detail_image.url }}" />
 
-  <br /><br />
+  {% endblock %}
 </div>
-<img class="img-responsive img-center" src="{{ product.detail_image.url }}" />
-
-{% endblock %}

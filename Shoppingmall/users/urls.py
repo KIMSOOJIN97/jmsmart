@@ -2,6 +2,9 @@
 from django.urls import path
 from . import views
 
+# name : views의 해당 함수를 html 파일에서 name으로 호출할 수 있음 
+
+
 urlpatterns = [
 
     path('',views.home,name='home'),
@@ -16,4 +19,10 @@ urlpatterns = [
     path('notice/<int:pk>', views.noticedetail, name='usernotice_detail'),
     
     path('mypage/', views.mypage, name='usermypage'),
+
+    path('order_form/<str:product>', views.order_form, name='order_form'),
+
+    path('purchase/', views.purchase, name='purchase'),
+
+
 ]

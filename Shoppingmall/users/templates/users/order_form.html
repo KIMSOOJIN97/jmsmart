@@ -1,0 +1,61 @@
+{%extends 'users/top.html'%} {% block content %}
+<style>
+  .container div {
+    text-align: center;
+  }
+
+  table {
+    width: 80%;
+    border: 1px solid #444444;
+    border-collapse: collapse;
+  }
+  th {
+    font-size: 13px;
+  }
+  td {
+    border: 1px solid #444444;
+    font-size: 13px;
+    padding: 10px;
+  }
+</style>
+
+<body>
+  <div>
+    <table width="1000" height="200" align="center" border="1">
+      <thead>
+        <tr align="center">
+          <p><th colspan="7">주문내역</th></p>
+        </tr>
+        <tr align="center">
+          <th><i class="far fa-check-square"></i></th>
+          <!-- 체크 -->
+          <th>이미지</th>
+          <th>상품정보</th>
+          <th>가격</th>
+          <th>수량</th>
+          <th>배송비</th>
+          <th>합계</th>
+        </tr>
+      </thead>
+
+      <tr align="center">
+        <td><input type="checkbox" name="product" value="yyy" checked /></td>
+        <td>
+          <img
+            class="img-responsive img-center"
+            width="100px"
+            height="100px"
+            src="{{ product.image.url }}"
+          />
+        </td>
+        <td>{{product.name}}</td>
+        <td>{{product.price}}원</td>
+        <td>{{quantity}}</td>
+        <td>2,500원</td>
+        <td>합계</td>
+      </tr>
+    </table>
+  </div>
+</body>
+
+{% endblock %}

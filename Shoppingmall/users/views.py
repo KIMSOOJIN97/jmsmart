@@ -157,15 +157,46 @@ def category(request, category):
 
 
 def product(request, category, product):
+
     allcategory = Category.objects.all()
     list = {'allcategory': allcategory}
     thisproduct = Item.objects.get(name=product)
-    print(thisproduct.price)
+    thisproduct.view = thisproduct.view+1
+    thisproduct.save()
     list['product'] = thisproduct
     return render(request, 'users/product.html', list)
 
+def order_form(request,product):
 
-'''
-    #product_list를 produsct.html에 전달
-    render(request, 'users/product.html'
-    '''
+    allcategory = Category.objects.all()
+    list = {'allcategory': allcategory}
+    
+    myuser_id = request.session.get('user')
+    myuser_info = User.objects.get(userID=myuser_id)
+    list['myuser_info'] = myuser_info
+
+
+    product = Item.objects.get(name = product)
+
+    list['product'] = product
+
+    if request.method == "POST":
+        quantity = request.POST.get('quantity', None)
+        list['quantity'] = quantity
+
+
+    
+    return render(request, 'users/order_form.html',list)
+
+
+def purchase(request):
+    allcategory = Category.objects.all()
+    list = {'allcategory': allcategory}
+    
+
+    #return render(request, 'users/order_form.html', list)
+
+
+def cart_or_buy(request, pk):
+    product = Item.objects.get(pk=pk)
+    print(product)
