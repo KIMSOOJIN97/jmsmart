@@ -38,11 +38,6 @@ class Item(models.Model):
     def __str__(self):
         return self.name
     
-    # @property
-    # def update_counter(self):
-    #     self.view = self.view+1
-    #     self.save()
-
 #공지사항 database
 class Notice(models.Model):
     author = models.ForeignKey(Seller,on_delete=models.CASCADE)

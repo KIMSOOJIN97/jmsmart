@@ -9,24 +9,45 @@
     border: 1px solid #444444;
     border-collapse: collapse;
   }
+
   th {
     font-size: 13px;
+    background-color: #eeeeee;
   }
+
   td {
     border: 1px solid #444444;
     font-size: 13px;
     padding: 10px;
   }
+
+  .fix {
+    width: 150px;
+    background-color: #eeeeee;
+    font-weight: bold;
+  }
+
+  input {
+    height: 22px;
+    margin: 3px 0px 3px 0px;
+    border: 1px solid #d4d8d9;
+    line-height: 22px;
+  }
+  
+  input::placeholder {
+  color: black;
+}
+
 </style>
 
 <body>
   <div>
     <table width="1000" height="200" align="center" border="1">
       <thead>
-        <tr align="center">
+        <tr align="center" height="40">
           <p><th colspan="7">주문내역</th></p>
         </tr>
-        <tr align="center">
+        <tr height="40" align="center">
           <th><i class="far fa-check-square"></i></th>
           <!-- 체크 -->
           <th>이미지</th>
@@ -39,7 +60,7 @@
       </thead>
 
       <tr align="center">
-        <td><input type="checkbox" name="product" value="yyy" checked /></td>
+        <td><input type="checkbox" name="product" checked /></td>
         <td>
           <img
             class="img-responsive img-center"
@@ -50,12 +71,153 @@
         </td>
         <td>{{product.name}}</td>
         <td>{{product.price}}원</td>
-        <td>{{quantity}}</td>
-        <td>2,500원</td>
+<td>
+        <script>
+          function show() {
+              document.write(quantity);
+          }
+          </script>
+        </td>
+      <td>2,500원</td>
         <td>합계</td>
+      </tr>
+
+      <tr align="right">
+
+        <td clospan="7" class ="fix"></td>
+      </tr>
+    </table>
+  </div>
+
+  <br /><br /><br>
+
+  <div>
+    <table width="500px" height="200" align="center" border="1">
+      <thead>
+        <tr align="center" height="40">
+          <p><th colspan="7">주문자정보</th></p>
+        </tr>
+      </thead>
+
+      <tr>
+        <td class="fix">주문하시는 분</td>
+        <td>
+          <input
+            type="text"
+            id="name"
+            style="width: 200px;"
+            placeholder="{{user.username}}"
+          />
+        </td>
+      </tr>
+      <tr>
+        <td class="fix">휴대전화</td>
+        <td>
+          <input
+            type="text"
+            id="phone_number"
+            style="width: 200px;"
+            placeholder="{{user.phone}}"
+          />
+        </td>
+      </tr>
+
+      <tr>
+        <td class="fix">배송주소</td>
+        <td width="*" style="padding:10px 10px" align="left" >
+          <input
+            type="text"
+            id="postcode"
+            name="postcode"
+            readonly="readonly"
+            style="width: 100px; height: 30px;"
+            maxlength="20"
+            placeholder="{{user.postcode}}"
+          />
+          <input
+            type="button"
+            onclick="execDaumPostcode()"
+            value="우편번호 찾기"
+            style="width : 100px"
+          /><br>
+          <input
+            type="text"
+            id="address1"
+            name="address1"
+            readonly="readonly"
+            style="width: 400px; height: 30px;"
+            maxlength="20"
+            placeholder="{{user.address}}"
+          /> 
+        
+          <input
+            type="text"
+            id="address2"
+            name="address2"
+            style="width: 400px; height: 30px;"
+            maxlength="20"
+            placeholder="{{user.detail_address}}"
+          />
+        </td>
+      </tr>
+
+      <tr>
+        <td class="fix" padding: 5px 6px>이메일</td>
+          <td><input type="text" id="e_mail" style="width: 200px; height: 30px;" placeholder="{{user.e_mail}}"
+          />
+        </td>
+      </tr>
+
+      <tr>
+        <td class="fix" padding: 5px 6px>배송메세지</td>
+        <td>
+          <input type="text" id="message" style="width: 500px; height: 50px;" />
+        </td>
       </tr>
     </table>
   </div>
 </body>
+
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+<script>
+  function execDaumPostcode() {
+    new daum.Postcode({
+      oncomplete: function (data) {
+        // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+        // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+        // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+        var fullAddr = ""; // 최종 주소 변수
+        var extraAddr = ""; // 조합형 주소 변수
+        // 사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+        if (data.userSelectedType === "R") {
+          // 사용자가 도로명 주소를 선택했을 경우
+          fullAddr = data.roadAddress;
+        } else {
+          // 사용자가 지번 주소를 선택했을 경우(J)
+          fullAddr = data.jibunAddress;
+        }
+        // 사용자가 선택한 주소가 도로명 타입일때 조합한다.
+        if (data.userSelectedType === "R") {
+          //법정동명이 있을 경우 추가한다.
+          if (data.bname !== "") {
+            extraAddr += data.bname;
+          }
+          // 건물명이 있을 경우 추가한다.
+          if (data.buildingName !== "") {
+            extraAddr +=
+              extraAddr !== "" ? ", " + data.buildingName : data.buildingName;
+          }
+          // 조합형주소의 유무에 따라 양쪽에 괄호를 추가하여 최종 주소를 만든다.
+          fullAddr += extraAddr !== "" ? " (" + extraAddr + ")" : "";
+        }
+        // 우편번호와 주소 정보를 해당 필드에 넣는다.
+        document.getElementById("postcode").value = data.zonecode; //5자리 새우편번호 사용
+        document.getElementById("address1").value = fullAddr;
+        // 커서를 상세주소 필드로 이동한다.
+        document.getElementById("address2").focus();
+      },
+    }).open();
+  }
+</script>
 
 {% endblock %}

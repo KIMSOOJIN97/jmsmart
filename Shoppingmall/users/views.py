@@ -40,7 +40,8 @@ def users_signup(request):  # 회원가입 페이지를 보여주기 위한 함�
         re_password = request.POST.get('re_password', None)
         username = request.POST.get('username', None)  # 딕셔너리형태
         postcode = request.POST.get('postcode', None)
-        address = request.POST.get('address1', None) + request.POST.get('address2', None)
+        address = request.POST.get('address1', None) 
+        detail_address = request.POST.get('address2', None)
         number = request.POST.get('number', None)
         e_mail = request.POST.get('e_mail', None)
 
@@ -55,7 +56,7 @@ def users_signup(request):  # 회원가입 페이지를 보여주기 위한 함�
 
         else:
             user = User(userID=ID, password=make_password(password), username=username, postcode=postcode,
-                        address=address, phone=number, e_mail=e_mail)
+                        address=address,detail_address=detail_address, phone=number, e_mail=e_mail)
             user.save()
             return redirect('/')
 
@@ -161,7 +162,6 @@ def product(request, category, product):
     allcategory = Category.objects.all()
     list = {'allcategory': allcategory}
     thisproduct = Item.objects.get(name=product)
-    print(thisproduct.price)
     thisproduct.view = thisproduct.view + 1
     thisproduct.save()
     list['product'] = thisproduct
@@ -173,8 +173,8 @@ def order_form(request,product):
     list = {'allcategory': allcategory}
     
     myuser_id = request.session.get('user')
-    myuser_info = User.objects.get(userID=myuser_id)
-    list['myuser_info'] = myuser_info
+    user = User.objects.get(userID=myuser_id)
+    list['user'] = user
 
 
     product = Item.objects.get(name = product)
@@ -183,10 +183,9 @@ def order_form(request,product):
 
     if request.method == "POST":
         quantity = request.POST.get('quantity', None)
-        list['quantity'] = quantity
+        print(quantity)
+        list['quantity'] = quantity 
 
-
-    
     return render(request, 'users/order_form.html',list)
 
 
