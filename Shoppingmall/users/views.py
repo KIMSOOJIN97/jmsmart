@@ -10,8 +10,6 @@ from django.contrib import messages
 
 
 def home(request):
-    # top()
-
     request.session.get('user')
     products = Item.objects.all().order_by('-view')
     allcategory = Category.objects.all()
@@ -167,8 +165,7 @@ def product(request, category, product):
     list['product'] = thisproduct
     return render(request, 'users/product.html', list)
 
-def order_form(request,product):
-
+def order_form(request,product,quantity):
     allcategory = Category.objects.all()
     list = {'allcategory': allcategory}
     
@@ -181,20 +178,26 @@ def order_form(request,product):
 
     list['product'] = product
 
-    if request.method == "POST":
-        quantity = request.POST.get('quantity', None)
-        print(quantity)
-        list['quantity'] = quantity 
+    print(quantity)
+    list['quantity'] = quantity
 
     return render(request, 'users/order_form.html',list)
 
 
 def purchase(request):
+    if request.method == "POST":
+        ID = request.POST.get('phone_number', None)  # 딕셔너리형태
+        print(ID)
+
+
     allcategory = Category.objects.all()
     list = {'allcategory': allcategory}
     
+    myuser_id = request.session.get('user')
+    user = User.objects.get(userID=myuser_id)
+    list['user'] = user 
 
-    #return render(request, 'users/order_form.html', list)
+    return render(request, 'users/purchase.html', list)
 
 
 def cart_or_buy(request, pk):

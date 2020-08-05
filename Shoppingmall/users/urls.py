@@ -20,7 +20,7 @@ urlpatterns = [
     
     path('mypage/', views.mypage, name='usermypage'),
 
-    path('order_form/<str:product>', views.order_form, name='order_form'),
+    path('order_form/<str:product>/<str:quantity>', views.order_form, name='order_form'),
 
     path('purchase/', views.purchase, name='purchase'),
 
