@@ -24,6 +24,7 @@
       <div class="tab-content">
         <div class="container tab-pane active" id="user">
             <form method="POST" action="{%url 'login'%}">
+                {% csrf_token %}
                 <div class="text_style">
                     <p>
                         <tr>
