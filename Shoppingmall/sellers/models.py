@@ -2,8 +2,6 @@ from django.db import models
 from django.conf import settings
 from django.utils import timezone
 from django.urls import reverse
-from imagekit.models import ProcessedImageField
-from imagekit.processors import ResizeToFill
 
 class Seller(models.Model): #장고에서 제공하는 models.Model를 상속받아야한다.
     
