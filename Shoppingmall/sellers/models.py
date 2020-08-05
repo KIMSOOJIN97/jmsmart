@@ -2,8 +2,6 @@ from django.db import models
 from django.conf import settings
 from django.utils import timezone
 from django.urls import reverse
-# from imagekit.models import ProcessedImageField
-# from imagekit.processors import ResizeToFill
 
 class Seller(models.Model): #장고에서 제공하는 models.Model를 상속받아야한다.
     
@@ -34,9 +32,13 @@ class Item(models.Model):
     upload_date = models.DateTimeField(default=timezone.now,verbose_name="등록날짜")
     category = models.ForeignKey(Category, null=True, on_delete=models.CASCADE,verbose_name="카테고리")
     view = models.IntegerField(verbose_name = "조회수", null = True, default = 0)
+    seller = models.ForeignKey(Seller,on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        ordering = ['seller']
     
 #공지사항 database
 class Notice(models.Model):
@@ -61,5 +63,3 @@ class Notice(models.Model):
 
     def get_absolute_url2(self):
         return reverse('usernotice_detail', args=[str(self.id)])
-
-        

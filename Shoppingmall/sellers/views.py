@@ -1,10 +1,7 @@
-import datetime
-
 # Create your views here.
 from django.shortcuts import render,redirect
 from .models import *
-from django.contrib import auth
-from django.http import HttpResponse
+
 from django.contrib.auth.hashers import make_password,check_password
 from django.core.files.storage import FileSystemStorage
 from django.contrib import messages
@@ -110,8 +107,10 @@ def mypage(request):
 def item(request):
     allcategory = Category.objects.all()
     list = {'allcategory': allcategory}
-
-    items = Item.objects.all()
+    myseller_id = request.session.get('seller')
+    seller = Seller.objects.get(sellerID = myseller_id)
+    #objects.get은 한개만 가지고옴( 한개 쿼리가 아니면 오류가 뜸!, but objects.filter은 여러개를 가져올 수 있음)
+    items = Item.objects.filter(seller = seller)
     list['items']=items #context에 모든 후보에 대한 정보를 저장
     return render(request, 'sellers/item_summary.html', list)# context로 html에 모든 후보에 대한 정보를 전달
 
@@ -119,9 +118,13 @@ def item(request):
 @csrf_exempt
 
 def register(request):
+    myseller_id = request.session.get('seller')
+    seller = Seller.objects.get(sellerID=myseller_id)
+
     allcategory=Category.objects.all()
     res_data = {}
     res_data['allcategory'] = allcategory
+    res_data["myseller_id" ]=seller
     selectcategory = request.POST.get('selectcategory',None)
     if request.method == "GET":
         return render(request, 'sellers/register.html',res_data)
@@ -133,6 +136,7 @@ def register(request):
         stock = request.POST.get('stock', None)
         image = request.FILES['image']
         detail_image = request.FILES['detail_image']
+        sellerid = Seller.objects.get(sellerID = myseller_id)
 
         fs = FileSystemStorage()
 
@@ -146,7 +150,7 @@ def register(request):
             messages.add_message(request, messages.INFO, '모든 값을 입력해야 합니다.')
             return render(request, 'sellers/register.html', res_data)
         else:
-            item = Item(image=image, detail_image = detail_image, name= name,category = category, price=price,description=description,stock=stock)
+            item = Item(image=image, detail_image = detail_image, name= name,category = category, price=price,description=description,stock=stock, seller=sellerid)
             item.save()
 
         return render(request, 'sellers/success.html', res_data)
@@ -159,7 +163,8 @@ def product(request, category, product):
     allcategory = Category.objects.all()
     list = {'allcategory': allcategory}
     thisproduct = Item.objects.get(name=product)
-    list['product'] = thisproduct
+    list["product"] = thisproduct
+
     return render(request, 'users/product.html', list)
 
 def category(request, category):
@@ -225,7 +230,7 @@ def notice_addPost(request):
     if request.method == "GET":
         return render(request, 'sellers/notice_addPost.html',list)
 
-    elif request.method == "POST":
+    elif requesellerIst.method == "POST":
         author = Seller.objects.get(sellerID = myseller_id)
         title = request.POST.get('TITLE',None)
         content =request.POST.get('CONTENTS',None)

@@ -6,7 +6,7 @@
     <nav style="text-align: right;">
       <h2>{{product.view}}</h2>
     </nav>
-    <form action="{% url 'purchase' %}" method="GET">
+    <form action="order_form.html">
       <nav style="text-align: center;">
         <h2>{{product.name}}</h2>
       </nav>
@@ -22,13 +22,11 @@
             <th scope="row">수량</th>
             <td>
               <input
-                class="submit"
+                class="input"
                 type="number"
                 id="quantity"
                 name="quantity"
                 placeholder="수량"
-                cart="False"
-                value="1"
               />
             </td>
           </tr>
@@ -39,36 +37,39 @@
           </tr>
         </table>
         {% if request.session.user %}
-        <a href="/purchase">
+        <a href="/order_form/{{product.name}}">
           구매하기
         </a>
-        <button type="button" class="cart" id="cart"  onclick="addcart()" ><p style="width: 30%; height: 50px; font-size: 150%;">장바구니</p></button>
+        <!--<button type="button" class="addcart" ><p style="width: 30%; height: 50px; font-size: 150%;">장바구니</p></button>-->
         <!--onclick="addcart()" cart="False"-->
         <script src="http://code.jquery.com/jquery-3.4.1.min.js"></script>
         <script type="text/javascript">
-          function addcart(){
+          functions addcart(){
             count = document.querySelector('input[name="quantity"]');
-            $('.quantity').attr("cart","True");
+            $('.addcart')attr("cart","True");
+            buttoninfo =document.qureySelector('button[class="addcart"]');
             $.ajax({
-                url: '{%url 'userproduct' category  product2  %}',
-                data: { 'item_count' : count.value, 'cart':"True"},
+                url: '{%url 'product'%}',
+                data: { 'item_count' : count.value, 'cart':buttoninfo.cart},
                 success: function (data){
+                    console.log(data['confirm']);
                     if (data['confirm'] =="ok"){
-                      $('.cart').attr("cart","False");
                       var UP;
                       UP =confirm("장바구니에 추가되었습니다. 장바구니로 가시겠습니까?");
+                      id_overlap_input.focus();
                       if(UP){
                         location.href="/cart";
                       }
                       else{
                         return;
                       }
-                     }
+
+
                 }
             })
           }
-        </script>
 
+        </script>
         {% else %}
         <input
           type="button"
@@ -77,45 +78,17 @@
           class="main-btn btn-dark"
           style="width: 30%; height: 50px; font-size: 150%;"
         />
+
+        {% endif %}
         <input
           type="button"
-          value="장바구니2"
-          class="main-btn"
+          value="장바구니"
           onclick="location.href='/login' "
+          class="main-btn"
           style="width: 30%; height: 50px; font-size: 150%;"
         />
-        {% endif %}
-
-
       </div>
     </form>
-
-    <input
-      class="submit"
-      type="number"
-      id="input"
-      name="quantity"
-      placeholder="수량"
-    />
-
-    <textarea id="output"></textarea>
-    <button onclick="input()">구매하기</button>
-    <button onclick="output()">출력하기</button>
-
-    <!-- 아래부터 자바스크립트 -->
-    <script type="text/javascript">
-      var temp;
-
-      function input() {
-        var input = document.getElementById("input").value;
-        temp = input;
-        window.location.href = "/order_form/{{product.name}}/" + temp;
-      }
-
-      function output() {
-        document.getElementById("output").value = temp;
-      }
-    </script>
 
     <br /><br />
   </div>
