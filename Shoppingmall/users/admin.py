@@ -5,3 +5,12 @@ from .models import *  #같은 경로의 models.py에서 User라는 클래스를
 #admin DB에 데이터 등록
 admin.site.register(User)
 
+@admin.register(Cart)
+class CartAdmin(admin.ModelAdmin):
+    list_display = ('user', 'item','item_count')
+    list_filter = ('user',)
+admin.site.register(Like)
+admin.site.register(Buy)
+
+
+
