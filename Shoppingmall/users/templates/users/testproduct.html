@@ -27,8 +27,6 @@
                 id="quantity"
                 name="quantity"
                 placeholder="수량"
-                cart="False"
-                value="1"
               />
             </td>
           </tr>
@@ -42,33 +40,36 @@
         <a href="/order_form/{{product.name}}">
           구매하기
         </a>
-        <button type="button" class="cart" id="cart"  onclick="addcart()" ><p style="width: 30%; height: 50px; font-size: 150%;">장바구니</p></button>
+        <!--<button type="button" class="addcart" ><p style="width: 30%; height: 50px; font-size: 150%;">장바구니</p></button>-->
         <!--onclick="addcart()" cart="False"-->
         <script src="http://code.jquery.com/jquery-3.4.1.min.js"></script>
         <script type="text/javascript">
-          function addcart(){
+          functions addcart(){
             count = document.querySelector('input[name="quantity"]');
-            $('.quantity').attr("cart","True");
+            $('.addcart')attr("cart","True");
+            buttoninfo =document.qureySelector('button[class="addcart"]');
             $.ajax({
-                url: '{%url 'userproduct' category  product2  %}',
-                data: { 'item_count' : count.value, 'cart':"True"},
+                url: '{%url 'product'%}',
+                data: { 'item_count' : count.value, 'cart':buttoninfo.cart},
                 success: function (data){
+                    console.log(data['confirm']);
                     if (data['confirm'] =="ok"){
-                      $('.cart').attr("cart","False");
                       var UP;
                       UP =confirm("장바구니에 추가되었습니다. 장바구니로 가시겠습니까?");
+                      id_overlap_input.focus();
                       if(UP){
                         location.href="/cart";
                       }
                       else{
                         return;
                       }
-                     }
+
+
                 }
             })
           }
-        </script>
 
+        </script>
         {% else %}
         <input
           type="button"
@@ -77,16 +78,15 @@
           class="main-btn btn-dark"
           style="width: 30%; height: 50px; font-size: 150%;"
         />
+
+        {% endif %}
         <input
           type="button"
-          value="장바구니2"
-          class="main-btn"
+          value="장바구니"
           onclick="location.href='/login' "
+          class="main-btn"
           style="width: 30%; height: 50px; font-size: 150%;"
         />
-        {% endif %}
-
-
       </div>
     </form>
 

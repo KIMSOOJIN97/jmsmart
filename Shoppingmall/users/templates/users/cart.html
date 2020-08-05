@@ -1,0 +1,55 @@
+{% extends "sellers/top.html" %}
+
+{% block content %}
+  <main>
+    <div class="container-fluid">
+    <div class="table-responsive text-nowrap">
+    <h1>장바구니</h1>
+    <br><br>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">상품사진</th>
+            <th scope="col">상품명</th>
+            <th scope="col">카테고리</th>
+            <th scope="col">가격</th>
+            <th scope="col">상품 수</th>
+            <th scope="col">상품금액</th>
+            <th scope="col">배송비</th>
+            <th scope="col">주문금액</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for cartitem in cart %}
+        <tr>
+            <td><a href = "{{ cartitem.item.image.url }}"><img class ="img-responsive img-center" src = "{{ cartitem.item.image.url }}" width="100" height="100"/></td>
+            <td><a href = '/category/{{item.category}}/{{item.name}}'>
+                {{ cartitem.item.name }}</a></td>
+            <td>{{ cartitem.item.category }}</td>
+            <td>{{ cartitem.item.price }}</td>
+            <td>{{ cartitem.item_count }}</td>
+            <td>상품가격 X 수량 --> 기능넣을것</td>
+            <td>배송비2500</td>
+            <td>주문금액</td>
+
+        </tr>
+            {% if cartitem is none %}
+        <tr>
+            <td colspan='5'>Your Cartlist is empty</td>
+        </tr>
+            {% endif %}
+        {% endfor %}
+        <tr>
+            <td colspan="10">
+            <a class='btn btn-primary float-right' href='#'>구매하기</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    </div>
+
+    </div>
+  </main>
+
+{% endblock content %}

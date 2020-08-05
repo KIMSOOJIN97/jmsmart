@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from users.models import *
 from sellers.models import *
-
+from django.http import HttpResponse, JsonResponse
 from django.contrib import auth
 
 from django.http import HttpResponse
@@ -158,13 +158,69 @@ def category(request, category):
 
 
 def product(request, category, product):
-    
+    print('hi')
+    print(product)
+    print(category)
     allcategory = Category.objects.all()
     list = {'allcategory': allcategory}
     thisproduct = Item.objects.get(name=product)
     thisproduct.view = thisproduct.view + 1
     thisproduct.save()
     list['product'] = thisproduct
+    print('list:',list)
+    # list['product3'] = thisproduct
+    list['product2'] = product
+    list['category'] = category
+    if request.method == "GET":
+        cart = request.GET.get('cart')
+        print(cart)
+        if (cart):
+            print('장바구니추가GET')
+            myuser_id = request.session.get('user')
+
+            item_count = request.GET.get('item_count')
+            item = thisproduct
+            user = User.objects.get(userID=myuser_id)
+
+            addcart = Cart(user=user, item=item, item_count=item_count)
+            addcart.save()
+            info={}
+            info['confirm']="ok"
+            return JsonResponse(info)
+        else:
+            print('그냥 GET')
+            print('list:', list)
+            return render(request, 'users/product.html', list)
+
+    return render(request, 'users/product.html', list)
+
+def product2(request, category, product):
+    allcategory = Category.objects.all()
+    list = {'allcategory': allcategory}
+    thisproduct = Item.objects.get(name=product)
+    thisproduct.view = thisproduct.view + 1
+    thisproduct.save()
+    list['product'] = thisproduct
+    # if request.method == "GET": #장바구니를 클릭했을 때
+    #     cart= request.GET.get('cart')
+    #     if(cart):
+    #         print('장바구니추가GET')
+    #         myuser_id = request.session.get('user')
+    #
+    #         item_count = request.POST.get('quantity', 1)
+    #         item = thisproduct
+    #         user = User.objects.get(userID=myuser_id)
+    #
+    #         addcart =Cart(user=user, item=item, item_count=item_count)
+    #         addcart.save()
+    #         return JsonResponse(list)
+    #     else:
+    #         print('그냥 GET')
+    #         print('list:',list)
+    #         return render(request, 'users/product.html', list)
+    #
+    # else:
+
     return render(request, 'users/product.html', list)
 
 def order_form(request,product):
@@ -200,3 +256,13 @@ def purchase(request):
 def cart_or_buy(request, pk):
     product = Item.objects.get(pk=pk)
     print(product)
+
+def cart(request):
+    allcategory = Category.objects.all()
+    list = {'allcategory': allcategory}
+    userid=request.session.get('user')
+    user=User.objects.get(userID=userid)
+    cartitem = Cart.objects.filter(user=user)
+    list['cart'] = cartitem
+
+    return render(request, "users/cart.html",list)

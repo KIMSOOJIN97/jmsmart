@@ -44,14 +44,18 @@
         {% if request.session.user %}
         <li><a href="/logout">LOGOUT</a></li>
         <li><a href="/mypage">MYPAGE</a></li>
+        <li><a href="/cart">CART</a></li>
         {% else %}
         <li><a href="/login">LOGIN</a></li>
         <li><a href="/signup">JOIN</a></li>
         <li>
           <a onClick="alert('구매자 로그인이 필요합니다')">MYPAGE</a>
         </li>
+        <li>
+          <a onClick="alert('구매자 로그인이 필요합니다')">CART</a>
+        </li>
+
         {% endif %}
-        <li><a href="/cart">CART</a></li>
 
         <li><a href="/notice">NOTICE</a></li>
       </div>
