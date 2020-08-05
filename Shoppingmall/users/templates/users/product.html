@@ -6,7 +6,7 @@
     <nav style="text-align: right;">
       <h2>{{product.view}}</h2>
     </nav>
-    <form action="order_form.html">
+    <form action="{% url 'purchase' %}" method="GET">
       <nav style="text-align: center;">
         <h2>{{product.name}}</h2>
       </nav>
@@ -22,7 +22,7 @@
             <th scope="row">수량</th>
             <td>
               <input
-                class="input"
+                class="submit"
                 type="number"
                 id="quantity"
                 name="quantity"
@@ -39,7 +39,7 @@
           </tr>
         </table>
         {% if request.session.user %}
-        <a href="/order_form/{{product.name}}">
+        <a href="/purchase">
           구매하기
         </a>
         <button type="button" class="cart" id="cart"  onclick="addcart()" ><p style="width: 30%; height: 50px; font-size: 150%;">장바구니</p></button>
@@ -89,6 +89,33 @@
 
       </div>
     </form>
+
+    <input
+      class="submit"
+      type="number"
+      id="input"
+      name="quantity"
+      placeholder="수량"
+    />
+
+    <textarea id="output"></textarea>
+    <button onclick="input()">구매하기</button>
+    <button onclick="output()">출력하기</button>
+
+    <!-- 아래부터 자바스크립트 -->
+    <script type="text/javascript">
+      var temp;
+
+      function input() {
+        var input = document.getElementById("input").value;
+        temp = input;
+        window.location.href = "/order_form/{{product.name}}/" + temp;
+      }
+
+      function output() {
+        document.getElementById("output").value = temp;
+      }
+    </script>
 
     <br /><br />
   </div>
