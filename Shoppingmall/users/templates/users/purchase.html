@@ -108,7 +108,7 @@
         <tr>
           <td width="110"><img src="{% static 'imgs/ico_right.gif' %}" width="11" height="11" align="absmiddle"> 상품명</td> 
 		      <!--상품명 50Byte(한글 25자) 입니다. ' " ` 는 사용하실수 없습니다. 따옴표,쌍따옴표,백쿼테이션 -->
-          <td width="290"><input type='text' name='sndGoodname' value='당근10kg' size='30'></td>
+          <td width="310"><input type='text' name='sndGoodname' value="{{buy.item}}" size='30'></td>
         </tr>
         <tr bgcolor="#E3E3E3">
           <td height="1" colspan="2"></td>
@@ -116,7 +116,7 @@
         <tr>
           <td width="110"><img src="{% static 'imgs/ico_right.gif' %}"  width="11" height="11" align="absmiddle"> 금액</td> 
 		  <!--금액은 ,없이 입력 -->
-          <td width="290"><input type='text' name='sndAmount' value='1004' size='15' maxlength='9'></td>
+          <td width="290"><input type='text' name='sndAmount' value="{{buy.price}}" size='15' maxlength='9'></td>
         </tr>
         <tr bgcolor="#E3E3E3">
           <td height="1" colspan="2"></td>

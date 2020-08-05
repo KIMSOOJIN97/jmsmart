@@ -20,9 +20,9 @@ urlpatterns = [
     path('notice/', views.notice, name='usernotice'),
     path('notice/<int:pk>', views.noticedetail, name='usernotice_detail'),
 
-    path('order_form/<str:product>', views.order_form, name='order_form'),
     path('purchase/', views.purchase, name='purchase'),
-    path('cart/',views.cart, name='cart'),
+    path('cart/',views.cart, name='cart'), 
 
+    path('order_form/<str:product>/<str:quantity>', views.order_form, name='order_form'),
 
 ]
