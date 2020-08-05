@@ -32,7 +32,7 @@ def users_signup(request):  # 회원가입 페이지를 보여주기 위한 함�
     allcategory = Category.objects.all()
     list = {'allcategory': allcategory}
     if request.method == "GET":
-        return render(request, 'users/users_signup.html')
+        return render(request, 'users/users_signup.html',list)
 
     elif request.method == "POST":
         ID = request.POST.get('ID', None)  # 딕셔너리형태
