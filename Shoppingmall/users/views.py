@@ -156,24 +156,21 @@ def category(request, category):
 
 
 def product(request, category, product):
-    print('hi')
-    print(product)
-    print(category)
+
     allcategory = Category.objects.all()
     list = {'allcategory': allcategory}
     thisproduct = Item.objects.get(name=product)
     thisproduct.view = thisproduct.view + 1
     thisproduct.save()
     list['product'] = thisproduct
-    print('list:',list)
+
     # list['product3'] = thisproduct
     list['product2'] = product
     list['category'] = category
+
     if request.method == "GET":
         cart = request.GET.get('cart')
-        print(cart)
         if (cart):
-            print('장바구니추가GET')
             myuser_id = request.session.get('user')
 
             item_count = request.GET.get('item_count')
@@ -186,8 +183,6 @@ def product(request, category, product):
             info['confirm']="ok"
             return JsonResponse(info)
         else:
-            print('그냥 GET')
-            print('list:', list)
             return render(request, 'users/product.html', list)
 
     return render(request, 'users/product.html', list)
@@ -231,20 +226,23 @@ def order_form(request,product,quantity):
 
 
     product = Item.objects.get(name = product)
+    total = product.price * int(quantity)
+    print(total)
 
     list['product'] = product
 
     print(quantity)
     list['quantity'] = quantity
 
+
+    buy = Buy(user =user , item = product, item_count = quantity, postcode = user.postcode , address = user.address , detail_address = user.detail_address, phone = user.phone, price = total)
+    buy.save()
+
+
     return render(request, 'users/order_form.html',list)
 
 
 def purchase(request):
-    if request.method == "POST":
-        ID = request.POST.get('phone_number', None)  # 딕셔너리형태
-        print(ID)
-
 
     allcategory = Category.objects.all()
     list = {'allcategory': allcategory}
@@ -252,13 +250,15 @@ def purchase(request):
     myuser_id = request.session.get('user')
     user = User.objects.get(userID=myuser_id)
     list['user'] = user 
+    
+
+    buy = Buy.objects.get(user=user)
+    print(buy.item)
+    list['buy']= buy
+
 
     return render(request, 'users/purchase.html', list)
 
-
-def cart_or_buy(request, pk):
-    product = Item.objects.get(pk=pk)
-    print(product)
 
 def cart(request):
     allcategory = Category.objects.all()

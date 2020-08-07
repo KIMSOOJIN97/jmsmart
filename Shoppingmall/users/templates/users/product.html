@@ -3,104 +3,86 @@
 <div class="product_list">
   <div class="col-md-6">
     <img class="img-responsive img-center" src="{{ product.image.url }}" />
-    <nav style="text-align: right;">
-      <h2>{{product.view}}</h2>
-    </nav>
-    <form action="{% url 'purchase' %}" method="GET">
-      <nav style="text-align: center;">
-        <h2>{{product.name}}</h2>
-      </nav>
-      <div class="col-md-6">
-        <div style="padding: 0 50px 0 0;"><h4>{{product.name}}</h4></div>
-        <br />
-        <table class="type04">
-          <tr>
-            <th scope="row">판매가</th>
-            <td>{{product.price}}원</td>
-          </tr>
-          <tr>
-            <th scope="row">수량</th>
-            <td>
-              <input
-                class="submit"
-                type="number"
-                id="quantity"
-                name="quantity"
-                placeholder="수량"
-                cart="False"
-                value="1"
-              />
-            </td>
-          </tr>
-          <tr>
-            {% if product.stock == 0 %}
-            <p><strong>재고 상태:</strong>재고 없음</p>
-            {% endif %}
-          </tr>
-        </table>
-        {% if request.session.user %}
-        <a href="/purchase">
-          구매하기
-        </a>
-        <button type="button" class="cart" id="cart"  onclick="addcart()" ><p style="width: 30%; height: 50px; font-size: 150%;">장바구니</p></button>
-        <!--onclick="addcart()" cart="False"-->
-        <script src="http://code.jquery.com/jquery-3.4.1.min.js"></script>
-        <script type="text/javascript">
-          function addcart(){
-            count = document.querySelector('input[name="quantity"]');
-            $('.quantity').attr("cart","True");
-            $.ajax({
-                url: '{%url 'userproduct' category  product2  %}',
-                data: { 'item_count' : count.value, 'cart':"True"},
-                success: function (data){
-                    if (data['confirm'] =="ok"){
-                      $('.cart').attr("cart","False");
-                      var UP;
-                      UP =confirm("장바구니에 추가되었습니다. 장바구니로 가시겠습니까?");
-                      if(UP){
-                        location.href="/cart";
-                      }
-                      else{
-                        return;
-                      }
-                     }
-                }
-            })
-          }
-        </script>
+  </div>
+  <br>
+    <div class="col-md-6">
+      <div style="padding: 0 50px 0 0;"><h4>{{product.name}}</h4></div>
+      <br />
+      <table class="type04">
+        <tr>
+          <th scope="row">판매가</th>
+          <td>{{product.price}}원</td>
+        </tr>
+        <tr>
+          <th scope="row">수량</th>
+          <td>
+            <input
+              class="submit"
+              type="number"
+              id="input"
+              name="quantity"
+              placeholder="수량"
+            />
+          </td>
+        </tr>
+        <tr>
+          {% if product.stock == 0 %}
+          <p><strong>재고 상태:</strong>재고 없음</p>
+          {% endif %}
+        </tr>
+      </table>
+      {% if request.session.user %}
 
-        {% else %}
-        <input
-          type="button"
-          value="구매하기"
-          onclick="location.href='/login' "
-          class="main-btn btn-dark"
-          style="width: 30%; height: 50px; font-size: 150%;"
-        />
-        <input
-          type="button"
-          value="장바구니2"
-          class="main-btn"
-          onclick="location.href='/login' "
-          style="width: 30%; height: 50px; font-size: 150%;"
-        />
-        {% endif %}
+      <button type="button" class="cart" id="cart" onclick="input()">
+        <a style="width: 30%; height: 50px; font-size: 150%;">구매하기</a>
+      </button>
 
+      <button type="button" class="cart" id="cart" onclick="addcart()">
+        <a style="width: 30%; height: 50px; font-size: 150%;">장바구니</a>
+      </button>
+      <!--onclick="addcart()" cart="False"-->
+      <script src="http://code.jquery.com/jquery-3.4.1.min.js"></script>
+      <script type="text/javascript">
+        function addcart(){
+          count = document.querySelector('input[name="quantity"]');
+          $('.quantity').attr("cart","True");
+          $.ajax({
+              url: '{%url 'userproduct' category  product2  %}',
+              data: { 'item_count' : count.value, 'cart':"True"},
+              success: function (data){
+                  if (data['confirm'] =="ok"){
+                    $('.cart').attr("cart","False");
+                    var UP;
+                    UP =confirm("장바구니에 추가되었습니다. 장바구니로 가시겠습니까?");
+                    if(UP){
+                      location.href="/cart";
+                    }
+                    else{
+                      return;
+                    }
+                   }
+              }
+          })
+        }
+      </script>
 
-      </div>
-    </form>
-
-    <input
-      class="submit"
-      type="number"
-      id="input"
-      name="quantity"
-      placeholder="수량"
-    />
-
-    <textarea id="output"></textarea>
-    <button onclick="input()">구매하기</button>
-    <button onclick="output()">출력하기</button>
+      {% else %}
+      <input
+        type="button"
+        value="구매하기"
+        onclick="location.href='/login' "
+        class="main-btn btn-dark"
+        style="width: 30%; height: 50px; font-size: 150%;"
+      />
+      <input
+        type="button"
+        value="장바구니2"
+        class="main-btn"
+        onclick="location.href='/login' "
+        style="width: 30%; height: 50px; font-size: 150%;"
+      />
+      {% endif %}
+    </div>
 
     <!-- 아래부터 자바스크립트 -->
     <script type="text/javascript">
