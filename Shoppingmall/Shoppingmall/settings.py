@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 
+IAMPORT_KEY = '7980103886102855'
+IAMPORT_SECRET = 'sVmM0OPKMFPXIaPxPXA2L6Aqcfvc0y9tuvfuj5e6L43teS14QB7BHH1UWw7X5grzMH35Micxmg1B93GZ'
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -24,12 +27,12 @@ SECRET_KEY = '*)-k&$by7rnua#1g3vsuie58(+x!$#y5-si*w7#-yf_&=+nk00'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = False
-#원래는
+# 원래는
 DEBUG = True
 
 ALLOWED_HOSTS = [
     ".ap-northeast-2.compute.amazonaws.com",
-	".shoppuppydoc.io",
+    ".shoppuppydoc.io",
     "localhost",
     "127.0.0.1",
 ]
@@ -69,7 +72,7 @@ TEMPLATES = [
         ],
         'APP_DIRS': True,
         'OPTIONS': {
-            'context_processors': [   
+            'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
