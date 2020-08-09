@@ -47,6 +47,8 @@ INSTALLED_APPS = [
     'users',
     'sellers',
     # 'hitcount',
+    'ckeditor',
+    'ckeditor_uploader',
 ]
 
 MIDDLEWARE = [
@@ -135,3 +137,55 @@ LOGIN_REDIRECT_URL = '/'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+CKEDITOR_UPLOAD_PATH = 'uploads/'
+CKEDITOR_IMAGE_BACKEND = "pillow"
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'skin': 'moono',
+        # 'skin': 'office2013',
+        'toolbar_Basic': [
+            ['Source', '-', 'Bold', 'Italic']
+        ],
+        'toolbar_YourCustomToolbarConfig': [
+            {'name': 'basicstyles',
+             'items': ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat']},
+
+            {'name': 'paragraph',
+             'items': ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-','Language']},
+
+            {'name': 'links', 
+             'items': ['Link', 'Unlink']},
+
+            {'name': 'insert',
+             'items': ['Image','Youtube', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'Iframe']},
+            '/',
+            {'name': 'styles',
+             'items': ['Styles', 'Format', 'Font', 'FontSize']},
+            {'name':
+             'colors', 'items': ['TextColor', 'BGColor']},
+            {'name':
+             'tools', 'items': ['Maximize', 'ShowBlocks']},
+            {'name': 'about', 'items': ['About']},
+            '/',  # put this to force next toolbar on new line
+        ],
+        'toolbar': 'YourCustomToolbarConfig', 
+        'tabSpaces': 4,
+        'extraPlugins': ','.join([
+            'uploadimage',
+            'div',
+            'autolink',
+            'autoembed',
+            'embedsemantic',
+            'autogrow',
+            'widget',
+            'lineutils',
+            'clipboard',
+            'dialog',
+            'dialogui',
+            'elementspath',
+            'youtube',
+        ]),
+    }
+}

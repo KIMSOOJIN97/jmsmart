@@ -6,8 +6,11 @@ admin.site.register(Seller)
 admin.site.register(Item)
 admin.site.register(Category)
 
+
 @admin.register(Notice)
 class NoticeAdmin(admin.ModelAdmin):
     list_display = ('id', 'title','pub_date')  #,'author'
     list_filter = ('pub_date',)
     search_fields =  ('title', 'content')
+class ItemAdmin(admin.ModelAdmin):
+    list_display = ('name', 'price',)

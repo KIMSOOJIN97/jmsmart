@@ -14,7 +14,6 @@ urlpatterns = [
     path('logout',views.logout,name='logout'),
     path('mypage/', views.mypage, name='usermypage'),
 
-
     path('category/<str:category>',views.category,name='category'),
     path('category/<str:category>/<str:product>',views.product,name='userproduct'),
     path('notice/', views.notice, name='usernotice'),
