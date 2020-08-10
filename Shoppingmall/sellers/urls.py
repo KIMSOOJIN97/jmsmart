@@ -18,6 +18,8 @@ urlpatterns = [
     path('register/',views.itemRegister,name='register'),
 
     path('register/<str:category>/<str:product>/detail',views.detail,name='detail'),
+    path('register/<str:category>/<str:product>/detail/delete',views.delete, name='delete'),
+    path('register/<str:category>/<str:product>/detail/edit',views.edit, name='edit'),
 
     path('category/<str:category>/<str:product>',views.product,name='product'),
 
@@ -31,5 +33,4 @@ urlpatterns = [
     path('mypage/productlist', views.item, name = 'item'),
     path('ckeditor/', include('ckeditor_uploader.urls')),
 ]
-urlpatterns += \
-    static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

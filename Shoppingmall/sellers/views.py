@@ -117,69 +117,25 @@ def item(request):
 
 
 @csrf_exempt
-
-def register(request):
-    myseller_id = request.session.get('seller')
-    seller = Seller.objects.get(sellerID=myseller_id)
-
-    allcategory=Category.objects.all()
-    res_data = {}
-    res_data['allcategory'] = allcategory
-    res_data["myseller_id" ]=seller
-    selectcategory = request.POST.get('selectcategory',None)
-    if request.method == "GET":
-        return render(request, 'sellers/register.html',res_data)
-    elif request.method == "POST":
-        name = request.POST.get('name',None)   #딕셔너리형태
-        category = Category.objects.get(name=selectcategory)
-        price = request.POST.get('price',None)
-        description = request.POST.get('description',None)
-        stock = request.POST.get('stock', None)
-        image = request.FILES['image']
-        detail_image = request.FILES['detail_image']
-        sellerid = Seller.objects.get(sellerID = myseller_id)
-
-        fs = FileSystemStorage()
-
-        image_name = fs.save(image.name, image)
-        detail_image_name = fs.save(detail_image.name, detail_image)
-
-        res_data['image_url'] = fs.url(image.name)
-        res_data['detail_image_url'] = fs.url(detail_image.name)
-
-        if not (image and detail_image and name and category and price and description and stock):
-            messages.add_message(request, messages.INFO, '모든 값을 입력해야 합니다.')
-            return render(request, 'sellers/register.html', res_data)
-        else:
-            item = Item(image=image, detail_image = detail_image, name= name,category = category, price=price,description=description,stock=stock, seller=sellerid)
-            item.save()
-
-        return render(request, 'sellers/success.html', res_data)
-
     
 def itemRegister(request):
-
     if request.method == 'POST':
         form = RegisterForm(request.POST, request.FILES)
         print(form.errors)
         if form.is_valid():
             print("@@@")
             post = form.save(commit=False)
-            #post.upload_date = timezone.now()
+            post.upload_date = timezone.now()
             post.save() # 저장하기
 
             return render(request,'sellers/success.html')
  
     # 빈 페이지 띄워주는 기능 -> GET
     else :
-        form = ItemRegister()
+        form = RegisterForm()
         return render(request, 'sellers/register.html', {'form':form})
 
-def back(request):
-    return render(request, 'sellers/item_summary.html')
-
 def product(request, category, product):
-
     allcategory = Category.objects.all()
     list = {'allcategory': allcategory}
     thisproduct = Item.objects.get(name=product)
@@ -227,6 +183,49 @@ def detail(request, category, product):
         raise Http404('해당 게시물을 찾을 수 없습니다.')
 
     return render(request, 'sellers/detail.html', list)
+
+def delete(request,category,product):
+    try:
+        allcategory = Category.objects.all()
+        list = {'allcategory': allcategory}
+        thisproduct = Item.objects.get(name=product)
+        list["product"] = thisproduct
+        thisproduct.delete()
+
+    except Item.DoesNotExist:
+        raise Http404('해당 게시물을 찾을 수 없습니다.')
+
+    return render(request,'sellers/success.html')
+
+def edit(request,category,product):
+
+    allcategory = Category.objects.all()
+    item = Item.objects.get(name=product)
+
+    if request.method == 'POST':
+        form = RegisterForm(request.POST, instance = item)
+        if form.is_valid():
+            print("@@@",form.cleaned_data)
+            item.name = form.cleaned_data['name']
+            item.price = form.cleaned_data['price']
+            item.description = form.cleaned_data['description']
+            item.stock = form.cleaned_data['stock']
+            item.image = form.cleaned_data['image']
+            item.category = form.cleaned_data['category']
+            item.save()
+
+            return render(request,'sellers/success.html')
+ 
+    # 빈 페이지 띄워주는 기능 -> GET
+    else :
+        form = RegisterForm(instance = item)
+        context={
+            'form':form,
+            'writing':True,
+            'now':'edit',
+        }
+        return render(request, 'sellers/edit.html', context)
+
 
 from django.views import generic
 

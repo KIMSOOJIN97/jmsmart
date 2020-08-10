@@ -141,6 +141,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 CKEDITOR_UPLOAD_PATH = 'uploads/'
 CKEDITOR_IMAGE_BACKEND = "pillow"
 
+AWS_QUERYSTRING_AUTH = False
+CKEDITOR_RESTRICT_BY_USER = False
+
 CKEDITOR_CONFIGS = {
     'default': {
         'skin': 'moono',

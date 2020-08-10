@@ -28,15 +28,23 @@
 </article>-->
 
 <div class="conatiner">
-    <h1> {{product.name}} </h1>
-    <p> {{product.category}} </p>
-    <p> {{product.image}} </p>
-    <p> {{product.price}} </p>
-    <p>{{product.description|safe}}</p>
-    <p> {{product.stock}} </p>
+    <p><h1> 상품 이름</h1> 
+    {{product.name}}</p>
+    <p><h1>상품 분류</h1> {{product.category}} </p>
+    <p><h1>대표 사진</h1> <img src = "{{product.image.url}}"> </p>
+    <p><h1>상품 가격</h1> {{product.price}} </p>
+    <p><h1>상품 설명</h1> {{product.description|safe}}</p>
+    <p><h1>상품 수량</h1> {{product.stock}} </p>
     <br><br>
 </div>
  
-<a href="{%url 'success'%}">HOME</a>
- 
+<div align="center">
+  <button type="button" class="btn btn-dark"><a href="{% url 'edit' product.category product.name %}"><p style="font-size:1.5em">수정</p></button>
+
+  <button type="button" class="btn btn-light" onclick="location.href='/sellers/mypage/productlist' "><p style="font-size:1.5em">돌아가기</p></button>
+
+  <button type="button" class="btn btn-primary"><a href="{% url 'delete' product.category product.name %}"><p style="font-size:1.5em">삭제</p></button>
+  </div>
+</div>
+
 {% endblock %}

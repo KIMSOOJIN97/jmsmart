@@ -162,22 +162,9 @@
 </div>
 
 <div class = "container">
-    <form method ="POST" action="">
+    <form method ="POST" action="" enctype="multipart/form-data" >
     {% csrf_token %}
     {{form.media}}
-    <!--상품명 {{form.name}}
-    <br><br>
-    판매자 {{form.seller}}
-    <br><br>
-    카테고리 {{form.category}}
-    <br><br>
-    상품사진 {{form.image}}
-    <br><br>
-    상품가격 {{form.price}}
-    <br><br>
-    상품 설명 {{form.description}}
-    <br><br>
-    재고 {{form.stock}}-->
     {{form.as_p}}
                 
     <br><br>
