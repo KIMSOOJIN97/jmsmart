@@ -226,13 +226,12 @@ def product2(request, category, product):
 
     return render(request, 'users/product.html', list)
 
-
-def order_form(request, product, quantity):
+#장바구니에서 -->구매 : 사용자의 카트목록 중 선택된 것만 불러오기
+def order_form(request, userid):
     allcategory = Category.objects.all()
     list = {'allcategory': allcategory}
 
-    myuser_id = request.session.get('user')
-    user = User.objects.get(userID=myuser_id)
+    user = User.objects.get(userID=userid)
     list['user'] = user
 
     product = Item.objects.get(name=product)
@@ -248,6 +247,7 @@ def order_form(request, product, quantity):
 
     return render(request, 'users/order_form.html', list)
 
+#상세상품페이지 --> 구매하기 : 해당상품만 구매
 def only_order_form(request,category, product, quantity):
     allcategory = Category.objects.all()
     list = {'allcategory': allcategory}
@@ -282,10 +282,10 @@ def purchase(request):
     return render(request, 'users/purchase.html', list)
 
 
-def cart(request):
+def cart(request,userid):
     allcategory = Category.objects.all()
     list = {'allcategory': allcategory}
-    userid = request.session.get('user')
+
     user = User.objects.get(userID=userid)
     cartitem = Cart.objects.filter(user=user)
     list['cart'] = cartitem

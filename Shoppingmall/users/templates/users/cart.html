@@ -6,7 +6,20 @@
     <div class="table-responsive text-nowrap">
     <h1>장바구니</h1>
     <br><br>
-    <table class="table">
+    <section id ="cart_list">
+        <tr>
+        <td colspan="10">
+            <div class="allCheck">
+                <input type="checkbox" name="allCheck" id ="allCheck" /><label for="allCheck">모두 선택</label>
+            </div>
+
+            <div class ="delBtn">
+                <button type="button" class="selectDelete_btn">선택 삭제제</button>
+           </div>
+
+        </td>
+    </tr>
+        <table class="table">
         <thead>
         <tr>
             <th><i class="far fa-check-square"></i></th>
@@ -42,33 +55,36 @@
         </tr>
             {% endif %}
         {% endfor %}
-        <tr>
-            <td colspan="10">
-                <button type="button" class="btn btn-primary float-right" id="cart" onclick="input()">
-                    <a style="width: 30%; height: 50px; font-size: 150%;">구매하기</a>
-                </button>
 
-                <script type="text/javascript">
-                  var temp;
-
-                  function input() {
-                    var input = document.getElementById("input").value;
-                    temp = input;
-                    window.location.href = "/order_form/{{product.name}}/" + temp;
-                  }
-
-                  function output() {
-                    document.getElementById("output").value = temp;
-                  }
-                </script>
-                <button type="button" class="btn btn-primary " id="cart_delete" >
-                    <a style="width: 30%; height: 50px; font-size: 150%;">삭제하기</a>
-                </button>
-
-            </td>
-        </tr>
         </tbody>
     </table>
+        <tr>
+        <td colspan="10">
+            <button type="button" class="btn btn-primary float-right" id="cart" onclick="input()">
+                <a style="width: 30%; height: 50px; font-size: 150%;">구매하기</a>
+            </button>
+
+            <script type="text/javascript">
+              var temp;
+
+              function input() {
+                var input = document.getElementById("input").value;
+                temp = input;
+                window.location.href = "/order_form/{{product.name}}/" + temp;
+              }
+
+              function output() {
+                document.getElementById("output").value = temp;
+              }
+            </script>
+            <button type="button" class="btn btn-primary " id="cart_delete" >
+                <a style="width: 30%; height: 50px; font-size: 150%;">삭제하기</a>
+            </button>
+
+        </td>
+    </tr>
+    </section>
+
 
     </div>
 
