@@ -21,7 +21,7 @@
               type="number"
               id="input"
               name="quantity"
-              placeholder="1"
+              value="1"
             />
           </td>
         </tr>
@@ -33,7 +33,7 @@
       </table>
       {% if request.session.user %}
 
-      <button type="button" class="cart" id="cart" onclick="input()">
+      <button type="button" class="order" id="order" onclick="input()">
         <a style="width: 30%; height: 50px; font-size: 150%;">구매하기</a>
       </button>
 
@@ -47,7 +47,7 @@
           count = document.querySelector('input[name="quantity"]');
           $('.quantity').attr("cart","True");
           $.ajax({
-              url: '{%url 'userproduct' category  product2  %}',
+              url: '{%url 'userproduct' category  product  %}',
               data: { 'item_count' : count.value, 'cart':"True"},
               success: function (data){
                   if (data['confirm'] =="ok"){
@@ -89,9 +89,9 @@
       var temp;
 
       function input() {
-        var input = document.getElementById("input").value;
+        var input = document.querySelector('input[name="quantity"]').value;
         temp = input;
-        window.location.href = "/order_form/{{product.name}}/" + temp;
+        window.location.href = "/category/{{product.category}}/{{product.name}}/order_form/"+ temp;
       }
 
       function output() {

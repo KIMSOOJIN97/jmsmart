@@ -197,7 +197,6 @@ def product(request, category, product):
 
     return render(request, 'users/product.html', list)
 
-
 def product2(request, category, product):
     allcategory = Category.objects.all()
     list = {'allcategory': allcategory}
@@ -249,6 +248,26 @@ def order_form(request, product, quantity):
 
     return render(request, 'users/order_form.html', list)
 
+def only_order_form(request,category, product, quantity):
+    allcategory = Category.objects.all()
+    list = {'allcategory': allcategory}
+
+    myuser_id = request.session.get('user')
+    user = User.objects.get(userID=myuser_id)
+    list['user'] = user
+
+    product = Item.objects.get(name=product)
+    print(quantity)
+    total = product.price * int(quantity)
+
+    list['product'] = product
+    list['quantity'] = quantity
+
+    buy = Buy(user=user, item=product, item_count=quantity, postcode=user.postcode,
+              address=user.address, detail_address=user.detail_address, phone=user.phone, price=total)
+    buy.save()
+
+    return render(request, 'users/only_order_form.html', list)
 
 def purchase(request):
 
