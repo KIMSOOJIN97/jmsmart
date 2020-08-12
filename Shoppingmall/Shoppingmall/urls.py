@@ -17,11 +17,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('users.urls')),
     path('sellers/', include('sellers.urls')),
-
-
-]
-
-
     path('ckeditor/upload/', uploader_views.upload, name='ckeditor_upload'),
     path('ckeditor/browse/', never_cache(uploader_views.browse), name='ckeditor_browse'),
 ]
