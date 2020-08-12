@@ -9,6 +9,7 @@
     <table class="table">
         <thead>
         <tr>
+            <th><i class="far fa-check-square"></i></th>
             <th scope="col">상품사진</th>
             <th scope="col">상품명</th>
             <th scope="col">카테고리</th>
@@ -22,6 +23,8 @@
         <tbody>
         {% for cartitem in cart %}
         <tr>
+            <td><input type="checkbox" name="product" checked /></td>
+          <!-- 체크 -->
             <td><a href = "{{ cartitem.item.image.url }}"><img class ="img-responsive img-center" src = "{{ cartitem.item.image.url }}" width="100" height="100"/></td>
             <td><a href = '/category/{{item.category}}/{{item.name}}'>
                 {{ cartitem.item.name }}</a></td>
@@ -41,7 +44,27 @@
         {% endfor %}
         <tr>
             <td colspan="10">
-            <a class='btn btn-primary float-right' href='#'>구매하기</a>
+                <button type="button" class="btn btn-primary float-right" id="cart" onclick="input()">
+                    <a style="width: 30%; height: 50px; font-size: 150%;">구매하기</a>
+                </button>
+
+                <script type="text/javascript">
+                  var temp;
+
+                  function input() {
+                    var input = document.getElementById("input").value;
+                    temp = input;
+                    window.location.href = "/order_form/{{product.name}}/" + temp;
+                  }
+
+                  function output() {
+                    document.getElementById("output").value = temp;
+                  }
+                </script>
+                <button type="button" class="btn btn-primary " id="cart_delete" >
+                    <a style="width: 30%; height: 50px; font-size: 150%;">삭제하기</a>
+                </button>
+
             </td>
         </tr>
         </tbody>

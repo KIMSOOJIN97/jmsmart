@@ -261,7 +261,7 @@ def notice_addPost(request):
     if request.method == "GET":
         return render(request, 'sellers/notice_addPost.html',list)
 
-    elif requesellerIst.method == "POST":
+    elif request.method == "POST":
         author = Seller.objects.get(sellerID = myseller_id)
         title = request.POST.get('TITLE',None)
         content =request.POST.get('CONTENTS',None)
