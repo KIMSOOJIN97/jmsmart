@@ -22,6 +22,7 @@ urlpatterns = [
     path('notice/<int:pk>', views.noticedetail, name='usernotice_detail'),
 
     path('cart/<str:userid>', views.cart, name='cart'),
+    path('cart/<str:userid>/delete', views.cart_delete, name='cart_delete'),
     path('purchase/', views.purchase, name='purchase'),
 
 

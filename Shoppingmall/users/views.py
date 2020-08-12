@@ -197,34 +197,6 @@ def product(request, category, product):
 
     return render(request, 'users/product.html', list)
 
-def product2(request, category, product):
-    allcategory = Category.objects.all()
-    list = {'allcategory': allcategory}
-    thisproduct = Item.objects.get(name=product)
-    thisproduct.view = thisproduct.view + 1
-    thisproduct.save()
-    list['product'] = thisproduct
-    # if request.method == "GET": #장바구니를 클릭했을 때
-    #     cart= request.GET.get('cart')
-    #     if(cart):
-    #         print('장바구니추가GET')
-    #         myuser_id = request.session.get('user')
-    #
-    #         item_count = request.POST.get('quantity', 1)
-    #         item = thisproduct
-    #         user = User.objects.get(userID=myuser_id)
-    #
-    #         addcart =Cart(user=user, item=item, item_count=item_count)
-    #         addcart.save()
-    #         return JsonResponse(list)
-    #     else:
-    #         print('그냥 GET')
-    #         print('list:',list)
-    #         return render(request, 'users/product.html', list)
-    #
-    # else:
-
-    return render(request, 'users/product.html', list)
 
 #장바구니에서 -->구매 : 사용자의 카트목록 중 선택된 것만 불러오기
 def order_form(request, userid):
@@ -291,3 +263,24 @@ def cart(request,userid):
     list['cart'] = cartitem
 
     return render(request, "users/cart.html", list)
+
+from django.views.decorators.csrf import csrf_exempt
+
+@csrf_exempt
+def cart_delete(request,userid):
+    print('cart_delete')
+    checkArr = request.POST.get('ch_box')
+    print(checkArr)
+    checklist=checkArr.split(',')
+    print(checklist)
+    print('hihi')
+    print(len(checklist))
+    for i in checklist:
+        Iteminfo=Cart.objects.get(id=int(i))
+        Iteminfo.delete()
+        print('delete ok')
+    info = {}
+    info['confirm'] = "ok"
+    return JsonResponse(info)
+    # return render(request, "users/cart.html", list)
+
