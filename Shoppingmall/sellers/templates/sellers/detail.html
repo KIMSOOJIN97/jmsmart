@@ -1,72 +1,50 @@
-{%extends 'users/top.html'%} {% block content %}
+{%extends 'sellers/top.html'%}
+{% block content %}
 
-<div class="product_list">
-  <div class="col-md-6">
-    <img class="img-responsive img-center" src="{{ product.image.url }}" />
-    <!-- <nav style="text-align: right;">
-      <h2>{{product_info.view}}</h2>
-    </nav> -->
+<!--<article class="container">
+  <div class="right-box">
+    등록날짜 : {{product.upload_date|date:'Y-m-d H:i'}}
   </div>
-  <nav style="text-align: center;">
-    <h2>{{product_info.name}}</h2>
-  </nav>
-  {{ product_info.update_counter}}
-  <div class="col-md-6">
-    <div style="padding: 0 50px 0 0;"><h4>{{product.name}}</h4></div>
-    <br />
-    <table class="type04">
-      <tr>
-        <th scope="row">판매가</th>
-        <td>{{product.price}}원</td>
-      </tr>
-      <tr>
-        <th scope="row">수량</th>
-        <td>
-          <input
-            class="input"
-            type="number"
-            id="product_number"
-            name="product_number"
-            placeholder="수량"
-          />
-        </td>
-      </tr>
-      <tr>
-        {% if product.stock == 0 %}
-        <p><strong>재고 상태:</strong>재고 없음</p>
-        {% endif %}
-      </tr>
-    </table>
-    {% if request.session.user %}
-    <input
-      type="button"
-      value="구매하기"
-      onclick="location.href='users/signup' "
-      class="main-btn btn-dark"
-      style="width: 30%; height: 50px; font-size: 150%;"
-    />
-
-    {% else %}
-    <input
-      type="button"
-      value="구매하기"
-      onclick="location.href='/login' "
-      class="main-btn btn-dark"
-      style="width: 30%; height: 50px; font-size: 150%;"
-    />
-    {% endif %}
-    
-    <input
-      type="button"
-      value="장바구니"
-      onclick="location.href='/login' "
-      class="main-btn"
-      style="width: 30%; height: 50px; font-size: 150%;"
-    />
+  <br>
+  <div class="right-box">
+    조회수 : {{product.view}}
   </div>
 
-  <br /><br />
+  <div class = "row mt-5">
+    <div class = "col-12">
+        <div class = "card" style = "width:100%">
+            <div class = "card-body">
+                <h5>상품 이름 {{product.name}}</h5>
+            </div>
+            <ul class = "list-group list-group-flush">
+                <li class = "list-group-item">상품 가격 : {{ product.price}} 원</li>
+                <li class = "list-group-item">남은 수량 : {{ product.stock}}</li>
+                <li class = "list-group-item">등록 날짜 : {{ product.upload_date|date:'Y-m-d H:i'}}</li>
+                <li class = "list-group-item">{{ product.description|safe }} </li>
+            </ul>
+        </div>
+    </div>
 </div>
-<img class="img-responsive img-center" src="{{ product.detail_image.url }}" />
+</article>-->
+
+<div class="conatiner">
+    <p><h1> 상품 이름</h1> 
+    {{product.name}}</p>
+    <p><h1>상품 분류</h1> {{product.category}} </p>
+    <p><h1>대표 사진</h1> <img src = "{{product.image.url}}"> </p>
+    <p><h1>상품 가격</h1> {{product.price}} </p>
+    <p><h1>상품 설명</h1> {{product.description|safe}}</p>
+    <p><h1>상품 수량</h1> {{product.stock}} </p>
+    <br><br>
+</div>
+ 
+<div align="center">
+  <button type="button" class="btn btn-dark"><a href="{% url 'edit' product.category product.name %}"><p style="font-size:1.5em">수정</p></button>
+
+  <button type="button" class="btn btn-light" onclick="location.href='/sellers/mypage/productlist' "><p style="font-size:1.5em">돌아가기</p></button>
+
+  <button type="button" class="btn btn-primary"><a href="{% url 'delete' product.category product.name %}"><p style="font-size:1.5em">삭제</p></button>
+  </div>
+</div>
 
 {% endblock %}
