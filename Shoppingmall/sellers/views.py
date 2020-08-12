@@ -1,13 +1,15 @@
 # Create your views here.
-from django.shortcuts import render,redirect
+from django.views import generic
+from django.shortcuts import render, redirect
 from .models import *
 from django.http import Http404
-from django.contrib.auth.hashers import make_password,check_password
+from django.contrib.auth.hashers import make_password, check_password
 from django.core.files.storage import FileSystemStorage
 from django.contrib import messages
-#crsf_token error
+# crsf_token error
 from django.views.decorators.csrf import csrf_exempt
 from .forms import *
+
 
 def home(request):
     allcategory = Category.objects.all()
@@ -15,7 +17,7 @@ def home(request):
     request.session.get('user')
     products = Item.objects.all().order_by('-view')
     # 모든 item을 product_list에 저장
-    list['products']= products
+    list['products'] = products
 #
 #
 #     seller_id = request.session.get('seller')
@@ -26,34 +28,39 @@ def home(request):
     return render(request, 'sellers/home.html', list)
 
 
-
-def signup(request):   #회원가입 페이지를 보여주기 위한 함수
+def signup(request):  # 회원가입 페이지를 보여주기 위한 함수
     allcategory = Category.objects.all()
     list = {'allcategory': allcategory}
     if request.method == "GET":
-        return render(request, 'sellers/signup.html',list)
+        return render(request, 'sellers/signup.html', list)
 
     elif request.method == "POST":
-        ID = request.POST.get('ID',None)   #딕셔너리형태
-        password = request.POST.get('password',None)
-        re_password = request.POST.get('re_password',None)
-        company_name = request.POST.get('companyname', None)   #딕셔너리형태
+        ID = request.POST.get('ID', None)  # 딕셔너리형태
+        password = request.POST.get('password', None)
+        re_password = request.POST.get('re_password', None)
+        company_name = request.POST.get('companyname', None)  # 딕셔너리형태
         postcode = request.POST.get('postcode', None)
-        address = request.POST.get('address1', None)+request.POST.get('address2', None)
-        number = request.POST.get('number',None)
-        e_mail = request.POST.get('e_mail',None)
-        corporate_number = request.POST.get('corporate_number',None)
+        address = request.POST.get('address1', None) + \
+            request.POST.get('address2', None)
+        number = request.POST.get('number', None)
+        e_mail = request.POST.get('e_mail', None)
+        corporate_number = request.POST.get('corporate_number', None)
 
         res_data = {}
-        if not (ID and company_name and password and re_password and address and number and e_mail and postcode and corporate_number) :
-            messages.add_message(request, messages.INFO, '모든 값을 입력해야 합니다.') # 첫번째, 초기지원
-            return render(request, 'sellers/signup.html', list) #register를 요청받으면 register.html 로 응답.
+        if not (ID and company_name and password and re_password and address and number and e_mail and postcode and corporate_number):
+            messages.add_message(request, messages.INFO,
+                                 '모든 값을 입력해야 합니다.')  # 첫번째, 초기지원
+            # register를 요청받으면 register.html 로 응답.
+            return render(request, 'sellers/signup.html', list)
 
-        if password != re_password :
-            messages.add_message(request, messages.INFO, '비밀번호가 다릅니다.') # 첫번째, 초기지원
-            return render(request, 'sellers/signup.html', list) #register를 요청받으면 register.html 로 응답.
-        else :
-            seller = Seller(sellerID = ID, password=make_password(password),company_name=company_name,postcode = postcode, address = address, phone=number,e_mail = e_mail,corporate_number= corporate_number )
+        if password != re_password:
+            messages.add_message(request, messages.INFO,
+                                 '비밀번호가 다릅니다.')  # 첫번째, 초기지원
+            # register를 요청받으면 register.html 로 응답.
+            return render(request, 'sellers/signup.html', list)
+        else:
+            seller = Seller(sellerID=ID, password=make_password(password), company_name=company_name,
+                            postcode=postcode, address=address, phone=number, e_mail=e_mail, corporate_number=corporate_number)
             seller.save()
             return redirect('/')
 
@@ -62,32 +69,35 @@ def login(request):
     allcategory = Category.objects.all()
     list = {'allcategory': allcategory}
     response_data = {}
-    if request.method == "GET" :
-        return render(request, 'sellers/login.html',list)
+    if request.method == "GET":
+        return render(request, 'sellers/login.html', list)
 
     elif request.method == "POST":
         login_username = request.POST.get('ID', None)
         login_password = request.POST.get('password', None)
 
         if not (login_username and login_password):
-            messages.add_message(request, messages.INFO, '아이디와 비밀번호를 모두 입력해주세요.') # 첫번째, 초기지원
-        else :
+            messages.add_message(request, messages.INFO,
+                                 '아이디와 비밀번호를 모두 입력해주세요.')  # 첫번째, 초기지원
+        else:
             try:
                 seller = Seller.objects.get(sellerID=login_username)
-                #db에서 꺼내는 명령. Post로 받아온 username으로 , db의 username을 꺼내온다.
+                # db에서 꺼내는 명령. Post로 받아온 username으로 , db의 username을 꺼내온다.
                 if check_password(login_password, seller.password):
                     request.session['seller'] = seller.sellerID
-                    print(seller.sellerID )
-                    #세션도 딕셔너리 변수 사용과 똑같이 사용하면 된다.
-                    #세션 user라는 key에 방금 로그인한 id를 저장한것.
+                    print(seller.sellerID)
+                    # 세션도 딕셔너리 변수 사용과 똑같이 사용하면 된다.
+                    # 세션 user라는 key에 방금 로그인한 id를 저장한것.
                     return redirect('/sellers')
                 else:
-                    messages.add_message(request, messages.INFO, '비밀번호가 틀렸습니다.') # 첫번째, 초기지원
+                    messages.add_message(
+                        request, messages.INFO, '비밀번호가 틀렸습니다.')  # 첫번째, 초기지원
 
             except Seller.DoesNotExist:
-                messages.add_message(request, messages.INFO, '가입하지 않은 아이디입니다.') # 첫번째, 초기지원
+                messages.add_message(request, messages.INFO,
+                                     '가입하지 않은 아이디입니다.')  # 첫번째, 초기지원
 
-        return render(request, 'users/login.html',list)
+        return render(request, 'users/login.html', list)
 
 
 def logout(request):
@@ -100,24 +110,24 @@ def mypage(request):
     allcategory = Category.objects.all()
     list = {'allcategory': allcategory}
     myseller_id = request.session.get('seller')
-    myseller_info =Seller.objects.get(sellerID=myseller_id)
-    list['myseller_info']=myseller_info
-    return render(request, 'sellers/mypage.html',list)
+    myseller_info = Seller.objects.get(sellerID=myseller_id)
+    list['myseller_info'] = myseller_info
+    return render(request, 'sellers/mypage.html', list)
 
 
 def item(request):
     allcategory = Category.objects.all()
     list = {'allcategory': allcategory}
     myseller_id = request.session.get('seller')
-    seller = Seller.objects.get(sellerID = myseller_id)
-    #objects.get은 한개만 가지고옴( 한개 쿼리가 아니면 오류가 뜸!, but objects.filter은 여러개를 가져올 수 있음)
-    items = Item.objects.filter(seller = seller)
-    list['items']=items #context에 모든 후보에 대한 정보를 저장
-    return render(request, 'sellers/item_summary.html', list)# context로 html에 모든 후보에 대한 정보를 전달
+    seller = Seller.objects.get(sellerID=myseller_id)
+    # objects.get은 한개만 가지고옴( 한개 쿼리가 아니면 오류가 뜸!, but objects.filter은 여러개를 가져올 수 있음)
+    items = Item.objects.filter(seller=seller)
+    list['items'] = items  # context에 모든 후보에 대한 정보를 저장
+    # context로 html에 모든 후보에 대한 정보를 전달
+    return render(request, 'sellers/item_summary.html', list)
 
 
 @csrf_exempt
-    
 def itemRegister(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST, request.FILES)
@@ -126,14 +136,15 @@ def itemRegister(request):
             print("@@@")
             post = form.save(commit=False)
             post.upload_date = timezone.now()
-            post.save() # 저장하기
+            post.save()  # 저장하기
 
-            return render(request,'sellers/success.html')
- 
+            return render(request, 'sellers/success.html')
+
     # 빈 페이지 띄워주는 기능 -> GET
-    else :
+    else:
         form = RegisterForm()
-        return render(request, 'sellers/register.html', {'form':form})
+        return render(request, 'sellers/register.html', {'form': form})
+
 
 def product(request, category, product):
     allcategory = Category.objects.all()
@@ -142,6 +153,7 @@ def product(request, category, product):
     list["product"] = thisproduct
 
     return render(request, 'users/product.html', list)
+
 
 def category(request, category):
     allcategory = Category.objects.all()
@@ -159,11 +171,14 @@ def category(request, category):
         if sort == 'view':
             products = Item.objects.filter(category=cate.id).order_by('-view')
         elif sort == 'low_price':
-            products = Item.objects.filter(category=cate.id).order_by('price')  # 오름차순
+            products = Item.objects.filter(
+                category=cate.id).order_by('price')  # 오름차순
         elif sort == 'high_price':
-            products = Item.objects.filter(category=cate.id).order_by('-price')  # 내림차순
+            products = Item.objects.filter(
+                category=cate.id).order_by('-price')  # 내림차순
         else:
-            products = Item.objects.filter(category=cate.id).order_by('-upload_date')
+            products = Item.objects.filter(
+                category=cate.id).order_by('-upload_date')
         list['products'] = products
 
         return render(request, 'users/category.html', list)
@@ -184,7 +199,8 @@ def detail(request, category, product):
 
     return render(request, 'sellers/detail.html', list)
 
-def delete(request,category,product):
+
+def delete(request, category, product):
     try:
         allcategory = Category.objects.all()
         list = {'allcategory': allcategory}
@@ -195,17 +211,18 @@ def delete(request,category,product):
     except Item.DoesNotExist:
         raise Http404('해당 게시물을 찾을 수 없습니다.')
 
-    return render(request,'sellers/success.html')
+    return render(request, 'sellers/success.html')
 
-def edit(request,category,product):
+
+def edit(request, category, product):
 
     allcategory = Category.objects.all()
     item = Item.objects.get(name=product)
 
     if request.method == 'POST':
-        form = RegisterForm(request.POST, instance = item)
+        form = RegisterForm(request.POST, instance=item)
         if form.is_valid():
-            print("@@@",form.cleaned_data)
+            print("@@@", form.cleaned_data)
             item.name = form.cleaned_data['name']
             item.price = form.cleaned_data['price']
             item.description = form.cleaned_data['description']
@@ -214,31 +231,29 @@ def edit(request,category,product):
             item.category = form.cleaned_data['category']
             item.save()
 
-            return render(request,'sellers/success.html')
- 
+            return render(request, 'sellers/success.html')
+
     # 빈 페이지 띄워주는 기능 -> GET
-    else :
-        form = RegisterForm(instance = item)
-        context={
-            'form':form,
-            'writing':True,
-            'now':'edit',
+    else:
+        form = RegisterForm(instance=item)
+        context = {
+            'form': form,
+            'writing': True,
+            'now': 'edit',
         }
         return render(request, 'sellers/edit.html', context)
 
-
-from django.views import generic
 
 class NoticeListView(generic.ListView):
 
     model = Notice
     paginate_by = 10
+
     def get_context_data(self, **kwargs):
         allcategory = Category.objects.all()
-        a =self.request.session.get('seller')
+        a = self.request.session.get('seller')
         notice_list = Notice.objects.all()
-        return {"sellerid": a, "notice_list":notice_list,'allcategory': allcategory}
-
+        return {"sellerid": a, "notice_list": notice_list, 'allcategory': allcategory}
 
 
 class NoticeDetailView(generic.DetailView):
@@ -248,32 +263,29 @@ class NoticeDetailView(generic.DetailView):
         allcategory = Category.objects.all()
         notice = super(NoticeDetailView, self).get_context_data(**kwargs)
         notice['allcategory'] = allcategory
-        return  notice
-
-
+        return notice
 
 
 def notice_addPost(request):
     allcategory = Category.objects.all()
     list = {'allcategory': allcategory}
     myseller_id = request.session.get('seller')
-    list["myseller_id" ]=myseller_id
+    list["myseller_id"] = myseller_id
     if request.method == "GET":
-        return render(request, 'sellers/notice_addPost.html',list)
+        return render(request, 'sellers/notice_addPost.html', list)
 
     elif request.method == "POST":
-        author = Seller.objects.get(sellerID = myseller_id)
-        title = request.POST.get('TITLE',None)
-        content =request.POST.get('CONTENTS',None)
-
+        author = Seller.objects.get(sellerID=myseller_id)
+        title = request.POST.get('TITLE', None)
+        content = request.POST.get('CONTENTS', None)
 
         res_data = {}
-        if not (title and content) :
+        if not (title and content):
             res_data['error'] = "모든 값을 입력해야 합니다."
             # return render(request, 'sellers/notice_addPost.html', res_data) #register를 요청받으면 register.html 로 응답.
 
-        else :
+        else:
             # author = "ddd",
-            addPost = Notice(title=title,content=content,author= author)
+            addPost = Notice(title=title, content=content, author=author)
             addPost.save()
-            return redirect('/sellers/notice/',list)
+            return redirect('/sellers/notice/', list)
