@@ -22,13 +22,14 @@ urlpatterns = [
     path('notice/', views.notice, name='usernotice'),
     path('notice/<int:pk>', views.noticedetail, name='usernotice_detail'),
 
-    path('cart/', views.cart, name='cart'),
-    path('purchase/list/', views.purchase, name='purchase'),
+    path('cart/<str:userid>', views.cart, name='cart'),
+    path('cart/<str:userid>/delete', views.cart_delete, name='cart_delete'),
+    path('purchase/', views.purchase, name='purchase'),
 
 
     path('category/<str:category>/<str:product>/order_form/<str:quantity>',
          views.only_order_form, name='only_order_form'),  # 상품상세에서 바로 구매하기 -->그상품만 결제
-    path('order_form/<str:product>/<str:quantity>', views.order_form,
-         name='order_form'),  # 장바구니에서 구매하기로넘어가기 (cartlist조회를 해서 선택한것들 구매)
+    # 장바구니에서 구매하기로넘어가기 (cartlist조회를 해서 선택한것들 구매)
+    path('order_form/<str:userid>', views.order_form, name='order_form'),
 
 ]

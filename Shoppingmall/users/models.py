@@ -21,7 +21,7 @@ class User(models.Model): #장고에서 제공하는 models.Model를 상속받�
 
 class Cart(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
-    item = models.ForeignKey(Item,on_delete=models.CASCADE)
+    item = models.ForeignKey(Item, on_delete=models.CASCADE)
     item_count = models.CharField(max_length=64, verbose_name="상품수")
     #
     # # admin에서 테이블 이름 설정
@@ -39,7 +39,7 @@ class Like(models.Model):
 class Buy(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
-    item_count = models.IntegerField( verbose_name="상품수")
+    item_count = models.CharField( max_length=64,verbose_name="상품수")
     buy_date=models.DateTimeField(default=timezone.now,verbose_name="구매날짜")
     postcode=models.CharField(max_length=64,verbose_name = '우편번호')
     address = models.CharField(max_length=64,verbose_name = '주소')

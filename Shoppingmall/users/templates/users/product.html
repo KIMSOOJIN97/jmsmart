@@ -55,7 +55,7 @@
                     var UP;
                     UP =confirm("장바구니에 추가되었습니다. 장바구니로 가시겠습니까?");
                     if(UP){
-                      location.href="/cart";
+                      location.href="/cart/{{request.session.user}}";
                     }
                     else{
                       return;

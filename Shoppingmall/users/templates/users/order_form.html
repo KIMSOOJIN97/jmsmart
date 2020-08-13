@@ -62,7 +62,7 @@
           <th>합계</th>
         </tr>
       </thead>
-
+      {% for product in orderlist %}
       <tr align="center">
         <td><input type="checkbox" name="product" checked /></td>
         <td>
@@ -70,15 +70,16 @@
             class="img-responsive img-center"
             width="100px"
             height="100px"
-            src="{{ product.image.url }}"
+            src="{{ product.cartitem.image.url }}"
           />
         </td>
-        <td id="product">{{product.name}}</td>
-        <td id="price">{{product.price}}</td>
-        <td id="quantity">{{quantity}}</td>
-        <td>2,500원</td>
-        <td style="font-weight: 900; font-size : 15px" id="total"></td>
+        <td id="product">{{product.cartitem.name}}</td>
+        <td id="price">{{product.cartitem.price}}</td>
+        <td id="quantity">{{product.quantity}}</td>
+        <td id ="delibary">2,500원</td>
+        <td style="font-weight: 900; font-size : 15px" id="total">{{product.total}}</td>
       </tr>
+      {% endfor %}
    
     </table>
   </div>

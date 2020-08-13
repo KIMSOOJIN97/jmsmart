@@ -7,10 +7,16 @@ admin.site.register(User)
 
 @admin.register(Cart)
 class CartAdmin(admin.ModelAdmin):
-    list_display = ('user', 'item','item_count')
+    list_display = ('id','user', 'item','item_count')
     list_filter = ('user',)
+
 admin.site.register(Like)
-admin.site.register(Buy)
+
+@admin.register(Buy)
+class Buy(admin.ModelAdmin):
+    list_display = ('user','item','item_count','price','buy_date','address','phone','price')
+    list_filter = ('user','item')
+
 
 
 
