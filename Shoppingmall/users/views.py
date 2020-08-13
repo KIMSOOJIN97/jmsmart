@@ -197,6 +197,7 @@ def product(request, category, product):
 
     return render(request, 'users/product.html', list)
 
+
 def product2(request, category, product):
     allcategory = Category.objects.all()
     list = {'allcategory': allcategory}
@@ -248,7 +249,8 @@ def order_form(request, product, quantity):
 
     return render(request, 'users/order_form.html', list)
 
-def only_order_form(request,category, product, quantity):
+
+def only_order_form(request, category, product, quantity):
     allcategory = Category.objects.all()
     list = {'allcategory': allcategory}
 
@@ -269,19 +271,15 @@ def only_order_form(request,category, product, quantity):
 
     return render(request, 'users/only_order_form.html', list)
 
-def purchase(request):
 
-    username = request.GET.get('name', None)  # 딕셔너리형태
+def purchase(request):
+    username = request.POST.get('order_name', None)  # 딕셔너리형태
+
     print(username)
     allcategory = Category.objects.all()
     list = {'allcategory': allcategory}
 
-    myuser_id = request.session.get('user')
-    user = User.objects.get(userID=myuser_id)
-    list['user'] = user
-
-    order = Buy.objects.get()
-    return render(request, 'users/purchase.html', list)
+    return render(request, 'users/purchase_list.html', list)
 
 
 def cart(request):
