@@ -11,4 +11,7 @@ admin.site.register(Category)
 class NoticeAdmin(admin.ModelAdmin):
     list_display = ('id', 'title', 'pub_date')  # ,'author'
     list_filter = ('pub_date',)
-    search_fields = ('title', 'content')
+    search_fields =  ('title', 'content')
+class ItemAdmin(admin.ModelAdmin):
+    list_display = ('name', 'price',)
+

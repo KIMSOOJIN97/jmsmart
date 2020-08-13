@@ -97,21 +97,20 @@
       <tr>
         <td class="fix">주문하시는 분</td>
         <td id="buyer_name">
-          <!--<input
+          <input
             type="text"
-            id="name"
+            id="order_name"
             style="width: 200px;"
             placeholder="{{user.username}}"
-          />-->
-          {{user.username}}
+          />
         </td>
       </tr>
       <tr>
         <td class="fix">휴대전화</td>
         <td>
           <input
-            type="hidden"
-            id="buyer_tel"
+            type="text"
+            id="order_tel"
             style="width: 200px;"
             value="{{user.phone}}"
           />
@@ -123,7 +122,7 @@
         <td width="*" style="padding:10px 10px" align="left" >
           <input
             type="text"
-            id="postcode"
+            id="order_post"
             name="postcode"
             readonly="readonly"
             style="width: 100px; height: 30px;"
@@ -159,15 +158,8 @@
 
       <tr>
         <td class="fix" padding: 5px 6px>이메일</td>
-          <td><input type="text" id="e_mail" style="width: 200px; height: 30px;" placeholder="{{user.e_mail}}"
+          <td><input type="text" id="order_mail" style="width: 200px; height: 30px;" placeholder="{{user.e_mail}}"
           />
-        </td>
-      </tr>
-
-      <tr>
-        <td class="fix" padding: 5px 6px>배송메세지</td>
-        <td>
-          <input type="text" id="message" style="width: 500px; height: 50px;" />
         </td>
       </tr>
     </table>
@@ -175,22 +167,17 @@
 
   <br><br><br><br>
   <div>
-    <table width="500px" height="200" align="center" border="1">
-      <thead>
-        <tr align="center" height="40">
-          <p><th colspan="7">배송지 정보</th></p>
-        </tr>
-      </thead>
 
-      <tr>
-        <td class="fix">배송지 정보</td>
-        <td style="font-size: 12px">
-          <label><input TYPE='radio' name='same' value='same'  /> 주문자 정보와 동일 </label><br>
-          <label><input TYPE='radio' name='new' value='new' /> 새로운 배송지 </label>
-        </td>
+
+    <table width="500px" height="200" align="center" border="1">
+
+    <thead>
+      <tr align="center" height="40">
+        <p><th colspan="7">배송지 정보</th></p>
       </tr>
+    </thead>
       <tr>
-        <td class="fix">주문하시는 분</td>
+        <td class="fix">받으시는 분</td>
         <td>
           <input
             type="text"
@@ -212,39 +199,17 @@
 
       <tr>
         <td class="fix">주소</td>
-        <td width="*" style="padding:10px 10px" align="left" >
-          <input
-            type="text"
-            id="postcode"
-            name="postcode"
-            readonly="readonly"
-            style="width: 100px; height: 30px;"
-            maxlength="20"
-          />
-          <input
-            type="button"
-            onclick="execDaumPostcode()"
-            value="우편번호 찾기"
-            style="width : 100px"
-          /><br>
-          <input
-            type="text"
-            id="address1"
-            name="address1"
-            readonly="readonly"
-            style="width: 400px; height: 30px;"
-            maxlength="20"
-          /> 
-        
-          <input
-            type="text"
-            id="address2"
-            name="address2"
-            style="width: 400px; height: 30px;"
-            maxlength="20"
-          />
+
+        <td width="*" padding="20px" align="left">
+            <input type="text" id="postcode" name="postcode" placeholder="우편번호"
+                readonly="readonly" style="width:100px; height:30px; " maxlength="20" />
+            <input type="button" onclick="execDaumPostcode()" value="우편번호 찾기"><br>
+            <input type="text" id="address1" name="address1" readonly="readonly"
+                placeholder="주소" style="width:400px;  height:30px;" maxlength="20" />
+            <input type="text" id="address2" name="address2" placeholder="상세주소"
+                style="width:400px;  height:30px;" maxlength="20" />
         </td>
-      </tr>
+    </tr>
 
       <tr>
         <td class="fix" padding: 5px 6px>이메일</td>
@@ -260,10 +225,19 @@
         </td>
       </tr>
     </table>
+    <br><br><br>
 
-    <div class="charge-type">
-      
-      <div class="billing-radio">
+
+    <table width="1000" height="200" align="center" border="1">
+      <thead>
+        <tr align="center" height="40">
+          <p><th colspan="7">결제수단</th></p>
+        </tr>
+      </thead>
+
+      <tr align="center">
+        <td colspan="6" width="50" height="100">      
+          <div class="billing-radio">
           <label class="control control--radio">
               <input type="radio" name="type" value="card" />
               신용카드
@@ -280,13 +254,18 @@
               <input type="radio" name="type" value="vbank"/>
               가상계좌 입금
           </label>
-      </div>
-    </div>
+          </div>
+        </td>
+        <td style="font-weight: 900; font-size : 15px" id="total"><br>
+        <input type="button" onclick="test()" value="결제하기" />
+      </td>
+      </tr>
+   
+    </table>
+  </div>
+<br><br><br>
 
-    <input type="hidden"  id="username" name="username" value="{{user.userID}}" >
-    <input type="button" onclick="test()" value="결제하기" />
-      <h1 id="totalPrice"></h1>
-    <button type="sumessagebmit" class="btn btn-dark"><p style="font-size:1.5em">회원가입</p></button>
+<a style="font-weight: 900; font-size : 15px" id="total"><br>
 
   </div>     
 </form>
@@ -294,47 +273,44 @@
 
 </body>
 
+
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script>
-  function execDaumPostcode() {
-    new daum.Postcode({
-      oncomplete: function (data) {
-        // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-        // 각 주소의 노출 규칙에 따라 주소를 조합한다.
-        // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-        var fullAddr = ""; // 최종 주소 변수
-        var extraAddr = ""; // 조합형 주소 변수
-        // 사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-        if (data.userSelectedType === "R") {
-          // 사용자가 도로명 주소를 선택했을 경우
-          fullAddr = data.roadAddress;
-        } else {
-          // 사용자가 지번 주소를 선택했을 경우(J)
-          fullAddr = data.jibunAddress;
-        }
-        // 사용자가 선택한 주소가 도로명 타입일때 조합한다.
-        if (data.userSelectedType === "R") {
-          //법정동명이 있을 경우 추가한다.
-          if (data.bname !== "") {
-            extraAddr += data.bname;
-          }
-          // 건물명이 있을 경우 추가한다.
-          if (data.buildingName !== "") {
-            extraAddr +=
-              extraAddr !== "" ? ", " + data.buildingName : data.buildingName;
-          }
-          // 조합형주소의 유무에 따라 양쪽에 괄호를 추가하여 최종 주소를 만든다.
-          fullAddr += extraAddr !== "" ? " (" + extraAddr + ")" : "";
-        }
-        // 우편번호와 주소 정보를 해당 필드에 넣는다.
-        document.getElementById("postcode").value = data.zonecode; //5자리 새우편번호 사용
-        document.getElementById("address1").value = fullAddr;
-        // 커서를 상세주소 필드로 이동한다.
-        document.getElementById("address2").focus();
-      },
-    }).open();
-  }
-
+    function execDaumPostcode() {
+        new daum.Postcode({
+            oncomplete: function (data) {
+                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var fullAddr = ''; // 최종 주소 변수
+                var extraAddr = ''; // 조합형 주소 변수
+                // 사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                    fullAddr = data.roadAddress;
+                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                    fullAddr = data.jibunAddress;
+                }
+                // 사용자가 선택한 주소가 도로명 타입일때 조합한다.
+                if (data.userSelectedType === 'R') {
+                    //법정동명이 있을 경우 추가한다.
+                    if (data.bname !== '') {
+                        extraAddr += data.bname;
+                    }
+                    // 건물명이 있을 경우 추가한다.
+                    if (data.buildingName !== '') {
+                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                    }
+                    // 조합형주소의 유무에 따라 양쪽에 괄호를 추가하여 최종 주소를 만든다.
+                    fullAddr += (extraAddr !== '' ? ' (' + extraAddr + ')' : '');
+                }
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                document.getElementById('postcode').value = data.zonecode; //5자리 새우편번호 사용
+                document.getElementById('address1').value = fullAddr;
+                // 커서를 상세주소 필드로 이동한다.
+                document.getElementById('address2').focus();
+            }
+        }).open();
+    }
 
 //값 계산 
   function numberWithCommas(x) {
@@ -347,16 +323,24 @@
   var product = document.getElementById("product").innerHTML;
   var quantity = document.getElementById("quantity").innerHTML ;
   var total = numberWithCommas( Number(price)*Number(quantity) + 2500) ;
+  document.getElementById('total').innerHTML = total;
 
-  var username = document.getElementById("name").innerHTML ;
-  var phone_number = document.getElementById("phone_number").innerHTML ;
-  var postcode =  document.getElementById("postcode").innerHTML ;
+  var username = document.getElementById("order_name").innerHTML ;
+  var phone_number = document.getElementById("order_tel").innerHTML ;
+  var postcode =  document.getElementById("order_post").innerHTML ;
   var address = document.getElementById("address1").innerHTML + document.getElementById("address2").innerHTML;
-  var email = document.getElementById('e_mail').innerHTML;
+  var email = document.getElementById('order_mail').innerHTML;
   var type = $('.charge-type input:checked').val();
 
 
   function test() {
+
+  var username = document.getElementById("order_name").innerHTML ;
+  var phone_number = document.getElementById("order_tel").innerHTML ;
+  var postcode =  document.getElementById("order_post").innerHTML ;
+  var address = document.getElementById("address1").innerHTML + document.getElementById("address2").innerHTML;
+  var email = document.getElementById('order_mail').innerHTML;
+  var type = $('.charge-type input:checked').val();
 
   console.log(total);
   IMP.init("imp61600709");
@@ -382,11 +366,14 @@
         msg += "상점 거래ID : " + rsp.merchant_uid;
         msg += "결제 금액 : " + rsp.paid_amount;
         msg += "카드 승인번호 : " + rsp.apply_num;
+        alert(msg);
+
+        window.location.href = "/purchase/list/";
       } else {
         var msg = "결제에 실패하였습니다.";
         msg += "에러내용 : " + rsp.error_msg;
+        alert(msg);
       }
-      alert(msg);
     }
   );
 }

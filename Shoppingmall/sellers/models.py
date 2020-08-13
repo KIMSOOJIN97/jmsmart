@@ -2,6 +2,9 @@ from django.db import models
 from django.conf import settings
 from django.utils import timezone
 from django.urls import reverse
+from ckeditor_uploader.fields import RichTextUploadingField
+from imagekit.models import ProcessedImageField
+from imagekit.processors import ResizeToFill
 
 class Seller(models.Model): #장고에서 제공하는 models.Model를 상속받아야한다.
     
@@ -23,12 +26,11 @@ class Category(models.Model):
         return self.name
 
 class Item(models.Model):
-    name = models.CharField(max_length = 32, verbose_name="상품명")
-    price = models.IntegerField(verbose_name = "상품가격",default=0)
-    description = models.TextField(verbose_name="상품설명")
+    name = models.CharField(max_length = 32, verbose_name="상품제목")
+    price = models.CharField(verbose_name = "상품가격",default=0,max_length = 32)
+    description = RichTextUploadingField(blank=True,null=True,verbose_name="상품설명")
     stock = models.IntegerField(verbose_name="재고",default=1)
-    image = models.ImageField(verbose_name="상품사진",null = True)
-    detail_image = models.ImageField(verbose_name="상품상세사진",null = True)
+    image = models.ImageField(verbose_name="대표사진",null = True,upload_to="")
     upload_date = models.DateTimeField(default=timezone.now,verbose_name="등록날짜")
     category = models.ForeignKey(Category, null=True, on_delete=models.CASCADE,verbose_name="카테고리")
     view = models.IntegerField(verbose_name = "조회수", null = True, default = 0)

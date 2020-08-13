@@ -311,6 +311,8 @@ def only_order_form(request,category, product, quantity):
 
 def purchase(request):
 
+    username = request.GET.get('name', None)  # 딕셔너리형태
+    print(username)
     allcategory = Category.objects.all()
     list = {'allcategory': allcategory}
 
