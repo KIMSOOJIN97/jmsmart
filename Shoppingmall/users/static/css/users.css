@@ -181,9 +181,9 @@ a {
     display: flex;
   }
 }
-  .left-box {
-    float: left;
-  }
-  .right-box {
-    float: right;
-  }
+.left-box {
+  float: left;
+}
+.right-box {
+  float: right;
+}

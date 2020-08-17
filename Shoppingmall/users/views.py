@@ -235,6 +235,7 @@ def order_form(request, userid):
     orderlist = []
     if request.method == "POST":
         print('getgetpost')
+
         checkArr = request.GET.get('ch_box')
         print(checkArr)
         if (checkArr):  # check된게있으면
@@ -315,6 +316,7 @@ def only_order_form(request, category, product, quantity):
 
 
 def purchase(request):
+    ID = request.GET.get('username')
 
     allcategory = Category.objects.all()
     list = {'allcategory': allcategory}
@@ -323,5 +325,4 @@ def purchase(request):
     user = User.objects.get(userID=myuser_id)
     list['user'] = user
 
-    order = Buy.objects.get()
-    return render(request, 'users/purchase.html', list)
+    return render(request, 'users/purchase_list.html', list)
