@@ -41,7 +41,6 @@
 </style>
 
 <body>
-<form method="POST" action="{%url 'purchase'%}" > 
 
   <div>
     {% csrf_token %}
@@ -131,6 +130,7 @@
         <td class="fix">받으시는 분</td>
         <td>
           <input
+          class="submit"
             type="text"
             id="order_name"
             name="order_name"
@@ -204,7 +204,7 @@
           </div>
         </td>
         <td style="font-weight: 900; font-size : 15px" id="total"><br>
-          <button type="button" class="btn btn-dark" onclick="test()" ><p style="font-size:1.5em">결제하기</p></button>
+        <button type="button" class="btn btn-dark" onclick="test()"><p style="font-size:1.5em">결제하기</p></button>
 
 <!--          <input type="button" onclick="test()" value="결제하기" />
     -->  </td>
@@ -216,7 +216,7 @@
 
 
   </div>     
-</form>
+
 
 
 </body>
@@ -273,7 +273,6 @@
   var total = numberWithCommas( Number(price)*Number(quantity) + 2500) ;
   document.getElementById('total').innerHTML = total;
 
-  var username = document.getElementById("order_name").innerHTML ;
   var phone_number = document.getElementById("order_tel").innerHTML ;
   var postcode =  document.getElementById("order_post").innerHTML ;
   var address = document.getElementById("address1").innerHTML + document.getElementById("address2").innerHTML;
@@ -315,7 +314,7 @@
         msg += "결제 금액 : " + rsp.paid_amount;
         msg += "카드 승인번호 : " + rsp.apply_num;
         alert(msg);
-        window.location.href = "/purchase/list/";
+        ajax_test();
 
       } else {
         var msg = "결제에 실패하였습니다.";
@@ -324,6 +323,26 @@
       }
     }
   );
+
+
+
+
+        
+}
+
+function ajax_test(){
+
+  var user = document.getElementById("order_name").innerHTML ;
+  alert(user);
+
+  $.ajax({
+    
+      url: '{%url 'purchase' %}',
+      data: { 'username' : user.value},
+      success : function(data){
+        location.href = "/purchase/list/";
+      }
+    });
 }
 </script>
 

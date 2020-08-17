@@ -74,27 +74,35 @@
         text-align: center;
         font-size: 200px;
       "
-      ><h1>폼나냥</h1></a>
+      ><h1>폼나냥</h1></a
+    >
     <br /><br />
     <div class="container-fluid">
       <ul class="nav nav-tabs">
         {% for category in allcategory%}
         <li class="nav-item">
-            <a class="nav-link" href="/category/{{category.name}}"><span style="color:black; font-size:1.25em;">{{category.name}}</span>
-              <br> </a>
-          </li>
+          <a class="nav-link" href="/category/{{category.name}}"
+            ><span style="color: black; font-size: 1.25em;"
+              >{{category.name}}</span
+            >
+            <br />
+          </a>
+        </li>
         {% endfor %}
       </ul>
     </div>
 
     <br /><br />
     {% block content %} {% endblock %}
-
-
   </body>
-<hr style="width:100%">
-    <center>
-      회사명 : 폼나냥
-    </center>
+  <hr style="width: 100%;" />
+  <div style="padding: 0 100px; font-size: 13px;">
+    <a> 제이엠스마트 주식회사</a><br />
+    <a> 대표 : 문 일 용</a><br />
+    <a> 주소 : 서울시 강남구 봉은사로 448 지웰 2층</a><br />
+    <a> 사업자 등록번호 : 120-87-83572(사업자정보확인)</a><br />
+    <a> 통신판매업신고번호 : 2016-서울강남-02425호</a><br />
+    <a> 전화 : 02-6925-1718</a><br />
+    <a> 이메일 : eric.mooon@jmsmart.co.kr</a><br />
+  </div>
 </html>
-

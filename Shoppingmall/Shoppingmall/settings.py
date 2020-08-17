@@ -159,13 +159,13 @@ CKEDITOR_CONFIGS = {
              'items': ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat']},
 
             {'name': 'paragraph',
-             'items': ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-','Language']},
+             'items': ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'Language']},
 
-            {'name': 'links', 
+            {'name': 'links',
              'items': ['Link', 'Unlink']},
 
             {'name': 'insert',
-             'items': ['Image','Youtube', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'Iframe']},
+             'items': ['Image', 'Youtube', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'Iframe']},
             '/',
             {'name': 'styles',
              'items': ['Styles', 'Format', 'Font', 'FontSize']},
@@ -176,7 +176,7 @@ CKEDITOR_CONFIGS = {
             {'name': 'about', 'items': ['About']},
             '/',  # put this to force next toolbar on new line
         ],
-        'toolbar': 'YourCustomToolbarConfig', 
+        'toolbar': 'YourCustomToolbarConfig',
         'tabSpaces': 4,
         'extraPlugins': ','.join([
             'uploadimage',
