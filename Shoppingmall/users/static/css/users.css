@@ -14,7 +14,7 @@
 .top_menu {
   color: #353535;
   font-family: "Nanum Gothic", cursive;
-  font-size: large;
+  font-size: 15px;
   font-weight: 550;
 }
 
@@ -90,7 +90,7 @@ table.type04 {
 table.type04 th {
   width: 150px;
   padding: 10px;
-  font-size: 14px;
+  font-size: 18px;
   font-weight: bold;
   vertical-align: top;
   border-bottom: 1px solid #ccc;
@@ -99,7 +99,7 @@ table.type04 th {
 table.type04 td {
   width: 350px;
   padding: 10px;
-  font-size: 14px;
+  font-size: 18px;
   vertical-align: top;
   border-bottom: 1px solid #ccc;
 }
@@ -111,11 +111,13 @@ table.type04 td {
   align-content: space-around;
   align-items: center;
   justify-content: flex-start;
+  font-size: 1.5em;
 }
 
 body {
   margin: 0;
   font-family: "Source Sans Pro";
+  
 }
 a {
   text-decoration: none;
@@ -181,6 +183,7 @@ a {
     display: flex;
   }
 }
+
   .left-box {
     float: left;
   }

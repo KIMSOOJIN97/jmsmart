@@ -40,7 +40,7 @@
 
 </style>
 
-
+<body>
 <form method="POST" action="{%url 'purchase'%}">
 
   <div>
@@ -189,11 +189,7 @@
       <tr>
         <td class="fix">휴대전화</td>
         <td>
-          <input
-            type="text"
-            id="phone_number"
-            style="width: 200px;"
-          />
+          <input type="text" class="form-control" id="phone_number" name="phone_number" style="width: 200px;">
         </td>
       </tr>
 
@@ -226,7 +222,6 @@
       </tr>
     </table>
     <br><br><br>
-
 
     <table width="1000" height="200" align="center" border="1">
       <thead>
@@ -352,7 +347,7 @@
       pay_method: type,
       merchant_uid: "merchant_" + new Date().getTime(),
       name: product,
-      amount: Number(price)*Number(quantity) + 100, //판매 가격
+      amount: Number(price)*Number(quantity) + 2500, //판매 가격
       buyer_email: email,
       buyer_name: username,
       buyer_tel: phone_number,

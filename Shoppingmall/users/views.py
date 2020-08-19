@@ -195,7 +195,8 @@ def product(request, category, product):
 
     return render(request, 'users/product.html', list)
 
-def cart(request,userid):
+
+def cart(request, userid):
     allcategory = Category.objects.all()
     list = {'allcategory': allcategory}
 
@@ -207,20 +208,22 @@ def cart(request,userid):
 
 
 @csrf_exempt
-def cart_delete(request,userid):
+def cart_delete(request, userid):
     print('cart_delete')
     checkArr = request.POST.get('ch_box')
-    checklist=checkArr.split(',')
+    checklist = checkArr.split(',')
     print(len(checklist))
     for i in checklist:
-        cartitem=Cart.objects.get(id=int(i))
+        cartitem = Cart.objects.get(id=int(i))
         cartitem.delete()
         print('delete ok')
     info = {}
     info['confirm'] = "ok"
     return JsonResponse(info)
     # return render(request, "users/cart.html", list)
-#장바구니에서 -->구매 : 사용자의 카트목록 중 선택된 것만 불러오기
+# 장바구니에서 -->구매 : 사용자의 카트목록 중 선택된 것만 불러오기
+
+
 @csrf_exempt
 def order_form(request, userid):
     print('order form')
@@ -229,23 +232,25 @@ def order_form(request, userid):
 
     user = User.objects.get(userID=userid)
     list['user'] = user
-    orderlist=[]
+    orderlist = []
     if request.method == "POST":
         print('getgetpost')
+
         checkArr = request.GET.get('ch_box')
         print(checkArr)
-        if (checkArr):#check된게있으면
-            a=checkArr
-            if ( ',' in checkArr):
+        if (checkArr):  # check된게있으면
+            a = checkArr
+            if (',' in checkArr):
                 checklist = checkArr.split(',')
-                a=checklist
+                a = checklist
             print(len(checklist))
             for i in a:
                 cartitem = Cart.objects.get(id=i)
                 total = int(cartitem.item_count)*cartitem.item.price
-                orderlist += {('cartitem', cartitem.item),('quantity',cartitem.item_count),('total',total)}
+                orderlist += {('cartitem', cartitem.item),
+                              ('quantity', cartitem.item_count), ('total', total)}
             print('a')
-            list['orderlist']=orderlist
+            list['orderlist'] = orderlist
             print('a')
 
             list['confirm'] = "ok"
@@ -258,16 +263,14 @@ def order_form(request, userid):
             # return render(request, 'users/order_form.html', list)
 
             # return JsonResponse(list)
-        else:#None이면
+        else:  # None이면
             print('else문 None일때')
             return render(request, 'users/order_form.html', list)
 
-
-    elif request.method=="GET":
+    elif request.method == "GET":
         print('get')
         checkArr = request.POST.get('ch_box')
         print(checkArr)
-
 
         # #사실버튼누르면으로 바꿔야함..
         # buy = Buy(user=user, item=cartitem.item, item_count=cartitem.item_count, postcode=user.postcode,
@@ -287,8 +290,10 @@ def order_form(request, userid):
 
         return render(request, 'users/order_form.html', list)
 
-#상세상품페이지 --> 구매하기 : 해당상품만 구매
-def only_order_form(request,category, product, quantity):
+# 상세상품페이지 --> 구매하기 : 해당상품만 구매
+
+
+def only_order_form(request, category, product, quantity):
     allcategory = Category.objects.all()
     list = {'allcategory': allcategory}
 
@@ -309,10 +314,10 @@ def only_order_form(request,category, product, quantity):
 
     return render(request, 'users/only_order_form.html', list)
 
-def purchase(request):
 
-    username = request.GET.get('name', None)  # 딕셔너리형태
-    print(username)
+def purchase(request):
+    ID = request.GET.get('username')
+
     allcategory = Category.objects.all()
     list = {'allcategory': allcategory}
 
@@ -320,9 +325,4 @@ def purchase(request):
     user = User.objects.get(userID=myuser_id)
     list['user'] = user
 
-    order = Buy.objects.get()
-    return render(request, 'users/purchase.html', list)
-
-
-
-
+    return render(request, 'users/purchase_list.html', list)

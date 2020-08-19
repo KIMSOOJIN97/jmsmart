@@ -1,0 +1,195 @@
+{%extends 'users/top.html'%} {% block content %}
+<style>
+  .container div {
+    text-align: center;
+  }
+
+  table {
+    width: 80%;
+    border: 1px solid #444444;
+    border-collapse: collapse;
+  }
+
+  th {
+    font-size: 13px;
+    background-color: #eeeeee;
+  }
+
+  td {
+    border: 1px solid #444444;
+    font-size: 13px;
+    padding: 10px;
+  }
+
+  .fix {
+    width: 150px;
+    background-color: #eeeeee;
+    font-weight: bold;
+  }
+
+  input {
+    height: 22px;
+    margin: 3px 0px 3px 0px;
+    border: 1px solid #d4d8d9;
+    line-height: 22px;
+  }
+  
+  input::placeholder {
+  color: black;
+}
+
+</style>
+
+<div>
+  {% csrf_token %}
+
+  <table width="1000" height="200" align="center" border="1">
+    <thead>
+      <tr align="center" height="40">
+        <p><th colspan="7">주문내역</th></p>
+      </tr>
+      <tr height="40" align="center">
+        <th><i class="far fa-check-square"></i></th>
+        <!-- 체크 -->
+        <th>이미지</th>
+        <th>상품정보</th>
+        <th>가격</th>
+        <th>수량</th>
+        <th>배송비</th>
+        <th>합계</th>
+      </tr>
+    </thead>
+
+    <tr align="center">
+      <td><input type="checkbox" name="product" checked /></td>
+      <td>
+        <img
+          class="img-responsive img-center"
+          width="100px"
+          height="100px"
+          src="{{ product.image.url }}"
+        />
+      </td>
+      <td id="product">{{product.name}}</td>
+      <td id="price">{{product.price}}</td>
+      <td id="quantity">{{quantity}}</td>
+      <td>2,500원</td>
+      <td style="font-weight: 900; font-size : 15px" id="total"></td>
+    </tr>
+ 
+  </table>
+</div>
+
+<br /><br /><br>
+
+
+<div class="product_list">
+
+    <div class="col-md-6">
+      <table width="500px" height="200" align="center" border="1">
+        <thead>
+          <tr align="center" height="40">
+            <p><th colspan="7">주문자 정보</th></p>
+          </tr>
+        </thead>
+
+
+      <tr>
+        <td class="fix">주문하시는 분</td>
+        <td id="buyer_name">
+          {{user.username}}
+
+        </td>
+      </tr>
+  
+        <tr>
+          <th scope="row">주문자 정보</th>
+          <td>
+            <input
+              class="submit"
+              type="number"
+              id="input"
+              name="quantity"
+              value="1"
+            />
+          </td>
+        </tr>
+
+      </table>
+
+      <button type="button" class="order" id="order" onclick="test()">
+        <a style="width: 30%; height: 50px; font-size: 150%;">결제하기</a>
+      </button>
+
+
+      <!--onclick="addcart()" cart="False"-->
+      <script src="http://code.jquery.com/jquery-3.4.1.min.js"></script>
+      <script type="text/javascript">
+
+
+
+        function addcart(){
+          count = document.querySelector('input[name="quantity"]');
+          $('.quantity').attr("cart","True");
+          $.ajax({
+              url: '{%url 'userproduct' category  product  %}',
+              data: { 'item_count' : count.value, 'cart':"True"},
+              success: function (data){
+                  if (data['confirm'] =="ok"){
+                    $('.cart').attr("cart","False");
+                    var UP;
+                    UP =confirm("장바구니에 추가되었습니다. 장바구니로 가시겠습니까?");
+                    if(UP){
+                      location.href="/cart/{{request.session.user}}";
+                    }
+                    else{
+                      return;
+                    }
+                   }
+              }
+          })
+        }
+      </script>
+
+      {% else %}
+      <input
+        type="button"
+        value="구매하기"
+        onclick="location.href='/login' "
+        class="main-btn btn-dark"
+        style="width: 30%; height: 50px; font-size: 150%;"
+      />
+      <input
+        type="button"
+        value="장바구니"
+        class="main-btn"
+        onclick="location.href='/login' "
+        style="width: 30%; height: 50px; font-size: 150%;"
+      />
+      {% endif %}
+    </div>
+
+    <!-- 아래부터 자바스크립트 -->
+    <script type="text/javascript">
+      var temp;
+
+      function input() {
+        var input = document.querySelector('input[name="quantity"]').value;
+        temp = input;
+        window.location.href = "/category/{{product.category}}/{{product.name}}/order_form/"+ temp;
+      }
+
+      function output() {
+        document.getElementById("output").value = temp;
+      }
+    </script>
+
+    <br /><br />
+  </div>
+  <center>
+      <img class="img-responsive img-center" src="{{ product.detail_image.url }}" />
+
+  </center>
+
+  {% endblock %}
+</div>
