@@ -68,9 +68,9 @@
         font-family: 'Black Han Sans', sans-serif;
         color: black;
         text-align: center;
-        font-size: 200px;
+        font-size: 30px;
       "
-      ><h1>폼나냥</h1></a
+      >폼나냥</a
     >
 
     <br /><br />
@@ -78,14 +78,18 @@
       <ul class="nav nav-tabs">
         {% for category in allcategory%}
         <li class="nav-item">
-            <a class="nav-link" href="/category/{{category.name}}"><span style="color:black; font-size:1.25em;">{{category.name}}</span>
-              <br> </a>
-          </li>
+          <a class="nav-link" href="/category/{{category.name}}"
+            ><span style="color: black; font-size: 1.25em;"
+              >{{category.name}}</span
+            >
+            <br />
+          </a>
+        </li>
         {% endfor %}
       </ul>
     </div>
 
-        <br /><br />
+    <br /><br />
     {% block content %} {% endblock %}
   </body>
 
