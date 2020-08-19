@@ -183,9 +183,33 @@ a {
     display: flex;
   }
 }
-.left-box {
-  float: left;
-}
-.right-box {
-  float: right;
-}
+
+  .left-box {
+    float: left;
+  }
+  .right-box {
+    float: right;
+  }
+  .parent {
+    width: 100px;
+  }
+  
+  .container {
+    display: block;
+    width: 100%;
+    height: auto;
+    position: relative;
+    overflow: hidden;
+    padding: 34.37% 0 0 0; /* 34.37% = 100 / (w / h) = 100 / (640 / 220) */
+  }
+  
+  .container img {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
