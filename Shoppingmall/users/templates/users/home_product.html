@@ -1,5 +1,5 @@
 <body>
-  <div style="margin: 0 100px 0px 100px;">
+  <div style="margin: 0 70px 0px 70px;">
     <form method="POST" enctype="multipart/form-data">
       <!-- 카테고리 : S -->
       <div align="center">
@@ -9,18 +9,16 @@
       <div class="product_list" style="font-size: 1.25em;">
         {% for product in products %}
 
-        
-        <div class="col-md-3 text-center">
+        <div class="text-center" style="margin: 15px 15px 15px 15px;">
           <a href="/category/{{product.category}}/{{product.name}}">
-
-            <img
-              src="{{ product.image.url }}" width="300" height="300"
-            />
+            <img src="{{ product.image.url }}" width="290" height="300" />
           </a>
           <br />
 
-          <span style="font-size: 3em;">{{product.name}}<br/>
-          {{product.price}}원</span>
+          <span style="font-size: 1.25em;"
+            >{{product.name}}<br />
+            {{product.price}}원</span
+          >
         </div>
 
         {% endfor %}
