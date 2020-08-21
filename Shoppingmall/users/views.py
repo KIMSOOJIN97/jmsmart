@@ -5,6 +5,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.hashers import make_password, check_password
 from django.contrib import messages
+from django.utils import timezone
 
 
 def home(request):
@@ -195,7 +196,7 @@ def product(request, category, product):
 
     return render(request, 'users/product.html', list)
 
-
+#개인 장바구니
 def cart(request, userid):
     allcategory = Category.objects.all()
     list = {'allcategory': allcategory}
@@ -205,7 +206,6 @@ def cart(request, userid):
     list['cart'] = cartitem
 
     return render(request, "users/cart.html", list)
-
 
 @csrf_exempt
 def cart_delete(request, userid):
@@ -221,9 +221,57 @@ def cart_delete(request, userid):
     info['confirm'] = "ok"
     return JsonResponse(info)
     # return render(request, "users/cart.html", list)
+
+#개인 주문/배송현황
+def ordering(request,userid):
+    allcategory = Category.objects.all()
+    list = {'allcategory': allcategory}
+
+    user = User.objects.get(userID=userid)
+    ordering = Buy.objects.filter(user=user,orderstate='주문완료' )
+    list['ordering']=ordering
+    #!!!!!!!!!!!!!!!!!!!!!!!!!배송완료가아닐때로 고쳐야함. orderstate=!'배송완료'
+
+
+
+    return render(request, 'users/ordering.html', list)
+
+
+#개인 구매목록
+def buylist(request,userid):
+    allcategory = Category.objects.all()
+    list = {'allcategory': allcategory}
+
+    user = User.objects.get(userID=userid)
+    buy = Buy.objects.filter(user=user)
+    list['buylist'] = buy
+    # 나중에 구매한꺼번에 한것대로 꼭 묶어서보여주기!!
+    # buydatelist=buy.objects.values_list('buy_date')
+    # buydatelist[0].strftime('%Y-%m-%d %H')
+    # print(buydatelist)
+    # set(buydatelist)
+    # print(buydatelist)
+
+    return render(request, 'users/buylist.html', list)
+
+@csrf_exempt
+def buylist_delete(request, userid):
+    print('buylist_delete')
+    checkArr = request.POST.get('ch_box')
+    print(checkArr)
+    checklist = checkArr.split(',')
+    print(len(checklist))
+    for i in checklist:
+        buyitem = Buy.objects.get(id=int(i))
+        buyitem.delete()
+        print('delete ok')
+    info = {}
+    info['confirm'] = "ok"
+    return JsonResponse(info)
+
+
+
 # 장바구니에서 -->구매 : 사용자의 카트목록 중 선택된 것만 불러오기
-
-
 @csrf_exempt
 def order_form(request, userid):
     print('order form')
@@ -232,45 +280,60 @@ def order_form(request, userid):
 
     user = User.objects.get(userID=userid)
     list['user'] = user
-    orderlist = []
-    if request.method == "POST":
-        print('getgetpost')
-
+    if request.method == "GET":
+        print('get')
         checkArr = request.GET.get('ch_box')
         print(checkArr)
-        if (checkArr):  # check된게있으면
-            a = checkArr
-            if (',' in checkArr):
+        if (checkArr):#check된게있으면
+            if ( ',' in checkArr): #다중선택이라면
                 checklist = checkArr.split(',')
-                a = checklist
-            print(len(checklist))
-            for i in a:
-                cartitem = Cart.objects.get(id=i)
-                total = int(cartitem.item_count)*cartitem.item.price
-                orderlist += {('cartitem', cartitem.item),
-                              ('quantity', cartitem.item_count), ('total', total)}
-            print('a')
-            list['orderlist'] = orderlist
-            print('a')
+                checklen=len(checklist)
+                for i in range( checklen):
+                    #?????????????????????다중선택하면왜안되지????????? OverflowError뜸 , 장바구니에 여러개잇으면???
+                    print('hihi')
+                    print(i)
+                    cartitem = Cart.objects.get(id=int(checklist[i]))
+                    print(checklist[i])
+                    print('c')
+                    total = int(cartitem.item_count)*int(cartitem.item.price)
+                    print('b')
+                    buy = Buy(user=user, item=cartitem.item, item_count=cartitem.item_count, postcode=user.postcode,
+                              address='0', detail_address='0', phone='0', price=total)
+                    print('a')
+                    buy.save()
+                    cartitem.delete()
+            else: #단일 선택이 됬다면
+                cartitem = Cart.objects.get(id=int(checkArr))
+                total = int(cartitem.item_count)*int(cartitem.item.price)
+                buy = Buy(user=user, item=cartitem.item, item_count=cartitem.item_count, postcode=user.postcode,
+                          address=user.address, detail_address=user.detail_address, phone=user.phone, price=total)
+                buy.save()
+                checklen=1
+                cartitem.delete()
 
-            list['confirm'] = "ok"
-            path = '/order_form/'
-            path += userid
-            print('ok')
-            print(path)
-            print('path')
-            return redirect(path, list)
-            # return render(request, 'users/order_form.html', list)
+            info={}
+            info['confirm'] = "ok"
+            request.session['checklen'] = checklen
 
-            # return JsonResponse(list)
-        else:  # None이면
+            return JsonResponse(info)
+
+        else:#None이면
             print('else문 None일때')
+            checklen=request.session.get('checklen')
+            buy = Buy.objects.filter(user=user)
+            buylist = buy[:checklen]
+            list['buylist']=buylist
+            print(buylist)
+
+            del(request.session['checklen'] )
             return render(request, 'users/order_form.html', list)
 
-    elif request.method == "GET":
-        print('get')
+
+    elif request.method=="POST":
+        print('post')
         checkArr = request.POST.get('ch_box')
         print(checkArr)
+
 
         # #사실버튼누르면으로 바꿔야함..
         # buy = Buy(user=user, item=cartitem.item, item_count=cartitem.item_count, postcode=user.postcode,
@@ -291,8 +354,6 @@ def order_form(request, userid):
         return render(request, 'users/order_form.html', list)
 
 # 상세상품페이지 --> 구매하기 : 해당상품만 구매
-
-
 def only_order_form(request, category, product, quantity):
     allcategory = Category.objects.all()
     list = {'allcategory': allcategory}
@@ -314,7 +375,7 @@ def only_order_form(request, category, product, quantity):
 
     return render(request, 'users/only_order_form.html', list)
 
-
+# 실제결제하기
 def purchase(request):
     ID = request.GET.get('username')
 
@@ -326,3 +387,4 @@ def purchase(request):
     list['user'] = user
 
     return render(request, 'users/purchase_list.html', list)
+

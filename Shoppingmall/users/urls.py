@@ -22,12 +22,22 @@ urlpatterns = [
     path('notice/', views.notice, name='usernotice'),
     path('notice/<int:pk>', views.noticedetail, name='usernotice_detail'),
 
+    #개인장바구니(top상단카테고리이CART)
     path('cart/<str:userid>', views.cart, name='cart'),
     path('cart/<str:userid>/delete', views.cart_delete, name='cart_delete'),
+    #개인주문/배송현황(mypage에서)
+    path('ordering/<str:userid>', views.ordering, name='ordering'),
+    #개인구매목록
+    path('buylist/<str:userid>', views.buylist, name='buylist'),
+    path('buylist/<str:userid>/delete', views.buylist_delete, name='buylist_delete'),
+
+
+
+
+    #실제결제하기
     path('purchase/list/', views.purchase, name='purchase'),
 
-
-
+    #구매하기
     path('category/<str:category>/<str:product>/order_form/<str:quantity>',
          views.only_order_form, name='only_order_form'),  # 상품상세에서 바로 구매하기 -->그상품만 결제
     # 장바구니에서 구매하기로넘어가기 (cartlist조회를 해서 선택한것들 구매)

@@ -14,7 +14,7 @@ admin.site.register(Like)
 
 @admin.register(Buy)
 class Buy(admin.ModelAdmin):
-    list_display = ('user','item','item_count','price','buy_date','address','phone','price')
+    list_display = ('id','user','item','item_count','price','buy_date','address','phone','price')
     list_filter = ('user','item')
 
 

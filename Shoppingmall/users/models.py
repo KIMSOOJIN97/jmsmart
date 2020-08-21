@@ -46,4 +46,6 @@ class Buy(models.Model):
     detail_address = models.CharField(max_length=64, verbose_name='상세주소')
     phone = models.CharField(max_length=64, verbose_name='전화번호')
     price = models.IntegerField(verbose_name = "주문가격")
+    orderstate=models.CharField(max_length=64,default="주문완료")
+    # delibary
 

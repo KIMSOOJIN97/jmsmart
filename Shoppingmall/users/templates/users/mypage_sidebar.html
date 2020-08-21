@@ -55,10 +55,12 @@
   <div id="content">
    <div id="tab-container">
       <ul>
-         <li class="selected"><a href="">사용자정보</a></li>
-         <li><a href="/">구매목록</a></li>
-         <li><a href="/">찜 목록</a></li>
-         <li><a href="/">장바구니</a></li>
+         <li class="selected"><a href="/mypage">회원 정보</a></li>
+         <li><a href="/ordering/{{request.session.user}}">주문/배송현황</a></li>
+          <li><a href="/buylist/{{request.session.user}}">구매 목록</a></li>
+         <li><a href="/">찜  목록</a></li>
+         <li><a href="/">취소/환불/교환</a></li>
+
       </ul>
    </div>
    <div id="main-container">

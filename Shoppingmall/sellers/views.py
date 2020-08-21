@@ -129,6 +129,8 @@ def item(request):
 
 @csrf_exempt
 def itemRegister(request):
+    allcategory = Category.objects.all()
+    list = {'allcategory': allcategory}
     if request.method == 'POST':
         form = RegisterForm(request.POST, request.FILES)
         print(form.errors)
@@ -138,12 +140,13 @@ def itemRegister(request):
             post.upload_date = timezone.now()
             post.save()  # 저장하기
 
-            return render(request, 'sellers/success.html')
+            return render(request, 'sellers/success.html',list)
 
     # 빈 페이지 띄워주는 기능 -> GET
     else:
         form = RegisterForm()
-        return render(request, 'sellers/register.html', {'form': form})
+        list['form']= form
+        return render(request, 'sellers/register.html',list )
 
 
 def product(request, category, product):
@@ -201,9 +204,10 @@ def detail(request, category, product):
 
 
 def delete(request, category, product):
+    allcategory = Category.objects.all()
+    list = {'allcategory': allcategory}
     try:
-        allcategory = Category.objects.all()
-        list = {'allcategory': allcategory}
+
         thisproduct = Item.objects.get(name=product)
         list["product"] = thisproduct
         thisproduct.delete()
@@ -211,12 +215,12 @@ def delete(request, category, product):
     except Item.DoesNotExist:
         raise Http404('해당 게시물을 찾을 수 없습니다.')
 
-    return render(request, 'sellers/success.html')
+    return render(request, 'sellers/success.html',list)
 
 
 def edit(request, category, product):
-
     allcategory = Category.objects.all()
+    list = {'allcategory': allcategory}
     item = Item.objects.get(name=product)
 
     if request.method == 'POST':
@@ -231,17 +235,16 @@ def edit(request, category, product):
             item.category = form.cleaned_data['category']
             item.save()
 
-            return render(request, 'sellers/success.html')
+            return render(request, 'sellers/success.html',list)
 
     # 빈 페이지 띄워주는 기능 -> GET
     else:
         form = RegisterForm(instance=item)
-        context = {
-            'form': form,
-            'writing': True,
-            'now': 'edit',
-        }
-        return render(request, 'sellers/edit.html', context)
+        list['form']=form
+        list['writing']=True
+        list['now']='edit'
+
+        return render(request, 'sellers/edit.html', list)
 
 
 class NoticeListView(generic.ListView):
